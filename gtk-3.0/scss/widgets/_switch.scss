@@ -1,0 +1,16 @@
+/* Switch */
+GtkSwitch {
+	font: bold condensed 10;
+
+	&.slider {
+		padding: 2px;
+		background-color: $bg_color;
+		&:hover { background-color: lighten($bg_color, 10%) }
+	}
+
+	&.trough {
+		background-color: $base_color;
+		color: $text_color;
+		&:insensitive { color: $entry_ins_fg; }
+	}
+}

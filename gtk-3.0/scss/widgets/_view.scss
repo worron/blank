@@ -1,0 +1,28 @@
+ /* Views */
+
+//Settings
+$c_header_pad_v: 4px;
+$c_header_pad_h: 6px;
+$c_header_sep: 1px;
+
+$rb_border_width: 2px;
+$rb_alpha: 0.4;
+
+//Classes
+.view {
+	@extend %entry-colors;
+	@include progressbar-base;
+}
+
+column-header .button {
+	padding: $c_header_pad_v $c_header_pad_h;
+	border:solid $bg_color;
+	border-width: 0 $c_header_sep 0 0;
+
+	&.dnd { border-width: 0 $c_header_sep; }
+}
+
+.rubberband {
+	background-color: alpha($selected_bg_color, $rb_alpha);
+	border: solid $selected_bg_color $rb_border_width;
+}

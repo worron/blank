@@ -1,0 +1,45 @@
+/* Scale */
+
+//Settings
+$slider_width: 16px;
+$trough_width: 4px;
+$trough_margin: (($slider_width - $trough_width) / 2);
+
+$slider_length: 12px;
+$slider_gap: 4px;
+
+@mixin scale-colors-fix($scale_gap_color, $scale_ins_color: mix($scale_gap_color, $slider_color, 80%)) {
+	&.trough:insensitive { background-color: $scale_ins_color; }
+	&.slider {
+		border-color: $scale_gap_color;
+		&:insensitive { background-color: $scale_ins_color; }
+	}
+}
+
+//Classes
+.scale {
+	-GtkRange-trough-border: 0;
+	-GtkRange-slider-width: $slider_width;
+	-GtkScale-slider-length: $slider_length;
+
+	&.slider {
+		border-style: solid;
+		background-color: $slider_color;
+
+		&.horizontal { border-width: 0 $slider_gap 0 $slider_gap; }
+		&.vertical { border-width: $slider_gap 0 $slider_gap 0; }
+		&:hover { background-color: lighten($slider_color, 20%) }
+	}
+
+	&.mark { color: $slider_color; }
+
+	&.trough {
+		margin: $trough_margin 0;
+		background-color: $slider_color;
+
+		&.vertical { margin: 0 $trough_margin; }
+	}
+
+	@include scale-colors-fix($bg_color);
+	&.highlight { background-color: $selected_bg_color; }
+}

@@ -1,0 +1,96 @@
+/* Buttons */
+
+// Settings
+$button_focus_shadow: 0 -2px;
+
+$normal_button_pad_v: 5px;
+$normal_button_pad_h: 8px;
+
+$flat_button_pad_v: 4px;
+$flat_button_pad_h: 4px;
+
+@mixin button-normal(
+	$normal_fg_color: $button_fg_color,
+	$normal_bg_color: $button_bg_color,
+	$normal_active_color: mix($normal_bg_color, $selected_bg_color, 50%),
+	$normal_ins_color: mix($button_bg_color, $button_fg_color, 50%)
+) {
+	color: $normal_fg_color;
+	background-color: $normal_bg_color;
+	padding: $normal_button_pad_v $normal_button_pad_h;
+	border: none;
+
+	&:hover {
+		color: lighten($normal_fg_color, 20%);
+		background-color: lighten($normal_bg_color, 20%);
+	}
+
+	&:active, &:checked { background-color: $normal_active_color; }
+	&:focus, &:checked:focus, &:checked:hover:focus { box-shadow: inset $button_focus_shadow $selected_bg_color; }
+
+	*:insensitive { color: $normal_ins_color; };
+
+	.separator { border: none; } // no separator inside buttons
+}
+
+%clear-button-shadow { &:focus, &:checked:focus, &:checked:hover:focus { box-shadow: none; } }
+
+@mixin button-flat(
+	$flat_fg_color: $fg_color,
+	$flat_bg_color: transparent,
+	$flat_active_color: mix($flat_fg_color, $selected_bg_color, 30%),
+	$flat_hl_color: lighten($flat_fg_color, 20%),
+	$flat_ins_color: darken($flat_fg_color, 40%)
+) {
+	@extend %clear-button-shadow;
+	padding: $flat_button_pad_v $flat_button_pad_h;
+
+	color: $flat_fg_color;
+	&, &:focus, &:hover, &:active, &:checked { background-color: $flat_bg_color; }
+
+	&:hover { color: $flat_hl_color; }
+	*:insensitive { color: $flat_ins_color; };
+
+	&:active, &:checked { color: $flat_active_color; };
+}
+
+// Classes
+.button {
+	@include button-normal;
+	&.flat:not(.menuitem) { @include button-flat }
+	&.titlebutton { @include button-flat }
+}
+
+GtkLinkButton {
+	@include button-flat($link_color, $flat_hl_color: lighten($link_color, 10%));
+}
+
+/* Linked buttons */
+
+// Settings
+$button_linked_r: 4px;
+
+// Neet to optimize this
+@mixin first-last-linked($pair1, $pair2) {
+	&:first-child { border-radius: $pair1 $pair2; }
+	&:last-child { border-radius: $pair2 $pair1; }
+}
+
+@mixin linked-border($radius, $dir: horizontal) {
+	$p1: $radius 0; $p2: 0 $radius;
+	@if $dir == vertical { $p1: $radius $radius; $p2: 0 0; }
+
+	@include first-last-linked($p1, $p2);
+	&:only-child { border-radius: $radius $radius $radius $radius; }
+}
+
+@mixin linked-button($radius, $dir) {
+	@extend %clear-button-shadow;
+	@include linked-border($radius, $dir)
+}
+
+// Classes
+.linked:not(.stack-switcher) {
+	&.horizontal > .button { @include linked-button($button_linked_r, horizontal); }
+	&.vertical > .button { @include linked-button($button_linked_r, vertical); }
+}

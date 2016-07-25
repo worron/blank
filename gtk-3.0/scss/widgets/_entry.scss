@@ -1,0 +1,44 @@
+ /* ! Entry * */
+
+// Settings
+$entry_ins_bg: mix($base_color, $bg_color, 50%);
+$entry_ins_fg: mix($bg_color, $fg_color, 70%);
+
+$entry_pad_v: 4px;
+$entry_pad_h: 4px;
+
+%entry-colors {
+	background-color: $base_color;
+	color: $text_color;
+
+	&:selected { @extend %selected; }
+
+	&:insensitive {
+		background-color: $entry_ins_bg;
+		color: $entry_ins_fg;
+	}
+}
+
+// Classes
+.entry {
+	@extend %entry-colors;
+	padding: $entry_pad_v $entry_pad_h;
+	border: none;
+
+	&.progressbar { @extend %selected; }
+}
+
+/* Linked entry */
+
+// Settings
+$linked_entry_sep: 4px;
+
+// Classes
+.linked {
+	> .entry { @include linked-border($button_linked_r) }
+
+	> .entry:not(:last-child) {
+		border: solid $bg_color;
+		border-width: 0 $linked_entry_sep 0 0;
+	}
+}

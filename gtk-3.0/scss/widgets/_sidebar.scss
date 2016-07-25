@@ -1,0 +1,12 @@
+/* Sidebar */
+
+//Settings
+$side_icon_padding: 8px;
+
+//Classes
+GtkPlacesSidebar.sidebar {
+	.sidebar-icon {
+		padding-left: $side_icon_padding;
+		padding-right: $side_icon_padding;
+	}
+}

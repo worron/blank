@@ -1,0 +1,68 @@
+/* Assets */
+
+@mixin plain-check($unchecked, $unchecked-ins, $checked, $checked-ins, $mixed, $mixed-ins) {
+	-gtk-icon-source: url($unchecked);
+
+	&:insensitive { -gtk-icon-source: url($unchecked-ins); }
+	&:checked {
+		-gtk-icon-source: url($checked);
+		&:insensitive { -gtk-icon-source: url($checked-ins); }
+	}
+	&:inconsistent {
+		-gtk-icon-source: url($mixed);
+		&:insensitive { -gtk-icon-source: url($mixed-ins); }
+	}
+}
+
+@mixin menuitem-check($checked, $checked-ins) {
+	-gtk-icon-source: none;
+
+	&:active, &:checked {
+		-gtk-icon-source: url($checked);
+		&:insensitive { -gtk-icon-source: url($checked-ins); }
+	}
+
+	&:inconsistent {
+		-gtk-icon-source: url("../../assets/gtk3/menuitem-checkbox-mixed.svg");
+		&:hover { -gtk-icon-source: url("../../assets/gtk3/menuitem-checkbox-mixed-hover.svg"); }
+		&:insensitive { -gtk-icon-source: url("../../assets/gtk3/menuitem-checkbox-mixed-insensitive.svg"); }
+	}
+}
+
+.check {
+	@include plain-check(
+		"../../assets/gtk3/checkbox-unchecked.svg",
+		"../../assets/gtk3/checkbox-unchecked-insensitive.svg",
+		"../../assets/gtk3/checkbox-checked.svg",
+		"../../assets/gtk3/checkbox-checked-insensitive.svg",
+		"../../assets/gtk3/checkbox-mixed.svg",
+		"../../assets/gtk3/checkbox-mixed-insensitive.svg"
+	);
+}
+
+.radio {
+	@include plain-check(
+		"../../assets/gtk3/radio-unselected.svg",
+		"../../assets/gtk3/radio-unselected-insensitive.svg",
+		"../../assets/gtk3/radio-selected.svg",
+		"../../assets/gtk3/radio-selected-insensitive.svg",
+		"../../assets/gtk3/radio-mixed.svg",
+		"../../assets/gtk3/radio-mixed-insensitive.svg"
+	);
+}
+
+.menuitem {
+	&.check {
+		@include menuitem-check(
+			"../../assets/gtk3/menuitem-checkbox-checked.svg",
+			"../../assets/gtk3/menuitem-checkbox-checked-insensitive.svg"
+		);
+	}
+
+	&.radio {
+		@include menuitem-check(
+			"../../assets/gtk3/menuitem-radio-checked.svg",
+			"../../assets/gtk3/menuitem-radio-checked-insensitive.svg"
+		);
+	}
+}

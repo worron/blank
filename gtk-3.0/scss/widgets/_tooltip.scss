@@ -1,0 +1,8 @@
+ /* Tooltip */
+
+.tooltip {
+	background-color: $tooltip_bg_color;
+	color: $tooltip_fg_color;
+	border: solid $frame_color 2px;
+	border: solid lighten($tooltip_bg_color, 5%) 2px;
+}

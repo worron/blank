@@ -1,0 +1,40 @@
+// default color scheme
+$bg_color: #202020;
+$fg_color: #bbbbbb;
+$base_color: #161616;
+$text_color: #aaaaaa;
+$selected_bg_color: #b1222b;
+$selected_fg_color: #eeeeee;
+
+// misc colors used by gtk+
+$tab_color: #303030;
+$tab_fg_color: lighten($fg_color, 10%);
+
+$bar_color: #303030;
+$toolbar_color: #303030;
+$frame_color: #303030;
+
+$slider_color: #525252;
+
+$button_bg_color: #525252;
+$button_fg_color: #cccccc;
+
+$menu_bg_color: #272727;
+$menu_fg_color: $fg_color;
+
+$info_bg_color: #167167;
+$warning_bg_color: #b66123;
+$question_bg_color: #2d961d;
+$error_bg_color: #b1222b;
+
+$link_color: $selected_bg_color;
+$visited_link_color: #b66123;
+
+$tooltip_bg_color: mix($bg_color, $selected_bg_color, 80%);
+$tooltip_fg_color: $fg_color;
+
+$toolbar_bg_color: $bg_color;
+$toolbar_fg_color: $fg_color;
+
+$titlebar_bg_color: $bg_color;
+$titlebar_fg_color: $fg_color;

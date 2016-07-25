@@ -1,0 +1,9 @@
+/* Stack switcher */
+
+.stack-switcher > .button {
+	@include tab($tab_color);
+	&:active, &:checked {
+		box-shadow: inset 0 (-$tab_underline) $selected_bg_color;
+		background-color: $tab_color;
+	}
+}

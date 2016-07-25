@@ -1,0 +1,42 @@
+/* Toolbar */
+
+//Settings
+%title-font {
+	.title { font-weight: bold; }
+	.subtitle {
+		font-size: smaller;
+		opacity: 0.5;
+	}
+}
+
+//Classes
+@mixin toolbar-button {
+	> .button:not(.text-button),
+	.button:not(GtkRadioButton):not(GtkToggleButton):not(.text-button) { @include button-flat($fg_color); }
+}
+
+.toolbar {
+	@include toolbar-button;
+	background-color: $toolbar_color;
+
+	.scale { @include scale-colors-fix($toolbar_color); }
+
+	&.horizontal {
+		padding: 4px 8px;
+	}
+	&.vertical {
+		padding: 8px 4px;
+		background-color: transparent;
+	}
+}
+
+.header-bar {
+	@extend %title-font;
+	padding: 4px 8px 8px 8px;
+	@include toolbar-button;
+}
+
+.titlebar {
+	@extend %title-font;
+	background-color: $bg_color;
+}

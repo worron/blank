@@ -1,0 +1,20 @@
+/* Colorchoser */
+
+GtkColorSwatch {
+	&:selected {
+		background-color: transparent;
+		.color-light {color: $bg_color }
+	}
+}
+
+GtkColorChooserWidget {
+	#add-color-button {
+		&:hover { color: lighten($fg_color, 20%); }
+	}
+
+	.scale {
+		-GtkScale-slider-length: ($slider_length - $slider_gap);
+		-GtkRange-slider-width: ($slider_width + 2px);
+		&.slider { border: none }
+	}
+}

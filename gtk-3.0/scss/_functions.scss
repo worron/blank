@@ -1,0 +1,5 @@
+// User functions
+
+@function alpha($color, $amount) {
+	@return unquote("alpha(#{$color},#{$amount})");
+}

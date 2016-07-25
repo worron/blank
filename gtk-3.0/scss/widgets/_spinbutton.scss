@@ -1,0 +1,5 @@
+/* Spinbutton */
+.spinbutton.button {
+	@include button-flat($text_color);
+	&:insensitive { color: darken($text_color, 40%); };
+}

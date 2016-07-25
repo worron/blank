@@ -1,0 +1,39 @@
+/* OSD */
+
+//Settings
+$osd_fg_color: $fg_color;
+$osd_bg_color: mix($selected_bg_color, $bg_color, 20%);
+
+$osd_pad: 4px;
+$osd_border_radius: 4px;
+
+$notification_pad: 4px;
+$notification_border_radius: 0;
+
+%osd {
+	color: $osd_fg_color;
+	background-color: $osd_bg_color;
+	.scale { @include scale-colors-fix($osd_bg_color); }
+}
+
+@mixin osd {
+	color: $osd_fg_color;
+	background-color: $osd_bg_color;
+	.scale { @include scale-colors-fix($osd_bg_color); }
+}
+
+//Classes
+.osd {
+	@include osd;
+	padding: $osd_pad;
+	border-radius: $osd_border_radius;
+
+	&.toolbar { @include osd; }
+	.button { @include button-flat($fg_color); }
+}
+
+.app-notification {
+	@include osd;
+	padding: $notification_pad;
+	border-radius: $notification_border_radius;
+}

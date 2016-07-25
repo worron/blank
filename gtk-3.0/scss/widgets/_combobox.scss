@@ -1,0 +1,19 @@
+/* Combobox */
+GtkComboBox {
+	.button { padding: ($normal_button_pad_v - 2px) $normal_button_pad_h; }
+
+	&.combobox-entry {
+		.button {
+			@include button-flat($text_color, $base_color);
+			&:insensitive { background-color: $entry_ins_bg; }
+		}
+	}
+}
+
+/* Linked combobox */
+$linked_combo_sep: 1px;
+
+.linked > GtkComboBox:not(:last-child) > .button {
+		border: solid $bg_color ;
+		border-width: 0 $linked_combo_sep 0 0;
+}

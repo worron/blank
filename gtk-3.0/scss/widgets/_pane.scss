@@ -1,0 +1,15 @@
+/* Pane */
+
+//Settings
+$pane_sep_width: 6px;
+
+//Classes
+* {
+	-GtkPaned-handle-size: $pane_sep_width;
+}
+
+.pane-separator {
+	// dirty trick
+	background-color: darken($fg_color, 50%);
+	border: solid $bg_color ($pane_sep_width / 2);
+}

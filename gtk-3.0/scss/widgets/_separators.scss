@@ -1,0 +1,34 @@
+/* Separators */
+
+//Settings
+$sep_light_color: lighten($bg_color, 5%);
+$sep_dark_color: darken($bg_color, 5%);
+
+@mixin sep-colors-set($s_light_color, $s_dark_color) {
+	&.horizontal {
+		border-top-color: $s_dark_color;
+		border-bottom-color: $s_light_color;
+	}
+	&.vertical {
+		border-left-color: $s_dark_color;
+		border-right-color: $s_light_color;
+	}
+}
+
+//Classes
+.separator {
+	-GtkWidget-wide-separators: true;
+	border: solid 0;
+
+	&.horizontal {
+		-GtkWidget-separator-height: 2;
+		border-width: 1px 0;
+	}
+
+	&.vertical {
+		-GtkWidget-separator-width: 2;
+		border-width: 0 1px;
+	}
+
+	@include sep-colors-set($sep_light_color, $sep_dark_color)
+}
