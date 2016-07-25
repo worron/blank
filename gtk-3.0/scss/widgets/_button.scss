@@ -90,7 +90,7 @@ $button_linked_r: 4px;
 }
 
 // Classes
-.linked:not(.stack-switcher) {
+.linked {
 	&.horizontal > .button { @include linked-button($button_linked_r, horizontal); }
 	&.vertical > .button { @include linked-button($button_linked_r, vertical); }
 }

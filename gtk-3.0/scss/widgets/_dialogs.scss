@@ -1,0 +1,12 @@
+/* Dialogs */
+
+//Message
+$message_buttons_gap: 4px;
+
+.message-dialog .linked.dialog-action-area .button {
+	border-radius: 0;
+
+	// Fix this
+	border: solid $bg_color;
+	border-width: 0 ($message_buttons_gap / 2);
+}
