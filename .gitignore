@@ -1,0 +1,5 @@
+# Ignore SASS files
+.sass-cache
+
+# Ignore CSS output
+gtk-3.0/build/*
