@@ -31,14 +31,24 @@ $entry_pad_h: 4px;
 /* Linked entry */
 
 // Settings
-$linked_entry_sep: 4px;
+$linked_entry_sep: 2px;
+
+@mixin linked-separator($sep_width, $dir: horizontal) {
+	$sw: $sep_width 0;
+	@if $dir == vertical { $sw: 0 $sep_width; }
+
+	border: solid $bg_color;
+	border-width: 0 $sw 0;
+}
 
 // Classes
 .linked {
-	> .entry { @include linked-border($button_linked_r) }
-
-	> .entry:not(:last-child) {
-		border: solid $bg_color;
-		border-width: 0 $linked_entry_sep 0 0;
+	&.horizontal {
+		> .entry { @include linked-border($button_linked_r) }
+		> .entry:not(:last-child) { @include linked-separator($linked_entry_sep); }
+	}
+	&.vertical {
+		> .entry { @include linked-border($button_linked_r, vertical) }
+		> .entry:not(:last-child) { @include linked-separator($linked_entry_sep, vertical); }
 	}
 }

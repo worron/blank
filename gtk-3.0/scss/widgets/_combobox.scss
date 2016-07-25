@@ -11,9 +11,12 @@ GtkComboBox {
 }
 
 /* Linked combobox */
+
+// Settings
 $linked_combo_sep: 1px;
 
-.linked > GtkComboBox:not(:last-child) > .button {
-		border: solid $bg_color ;
-		border-width: 0 $linked_combo_sep 0 0;
+// Classes
+.linked {
+	&.horizontal { > GtkComboBox:not(:last-child) > .button { @include linked-separator($linked_combo_sep); } }
+	&.vertical { GtkComboBox:not(:last-child) > .button { @include linked-separator($linked_combo_sep, vertical); } }
 }
