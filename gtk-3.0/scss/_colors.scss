@@ -4,6 +4,7 @@ $fg_color: #bbbbbb;
 $base_color: #161616;
 $text_color: #aaaaaa;
 $selected_bg_color: #b1222b;
+//$selected_bg_color: #246b99;
 $selected_fg_color: #eeeeee;
 
 // misc colors used by gtk+
@@ -18,6 +19,7 @@ $slider_color: #525252;
 
 $button_bg_color: #525252;
 $button_fg_color: #cccccc;
+$button_act_color: mix($tab_color, $selected_bg_color, 50%);
 
 $menu_bg_color: #272727;
 $menu_fg_color: $fg_color;
