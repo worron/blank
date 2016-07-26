@@ -1,0 +1,35 @@
+/* Nemo file manager */
+
+//Settings
+$toolbar_tb_pad_h: 8px;
+$pathbar_tb_bg_color: $tab_color;
+$pathbar_tb_active_color: mix($button_bg_color, $selected_bg_color, 50%);
+
+//Classes
+NemoToolbar .primary-toolbar {
+	background-color: transparent;
+
+	* { padding: 0; }
+	.linked > GtkToggleButton { padding: 0 $toolbar_tb_pad_h; }
+}
+
+NemoPathBar {
+	GtkArrow {
+		-GtkArrow-arrow-scaling: 1;
+		opacity: 0.8
+	}
+
+	.button {
+		background-color: $pathbar_tb_bg_color;
+		&:active, &:checked { background-color:$pathbar_tb_active_color ; }
+	}
+}
+
+NemoPlacesTreeView {
+	-NemoPlacesTreeView-disk-full-bar-width: 0; // Disable disk bar
+}
+
+NemoWindow .sidebar .view {
+	background-color:$bg_color;
+	&:selected { background-color: $selected_bg_color; }
+}
