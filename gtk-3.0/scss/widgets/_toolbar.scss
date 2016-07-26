@@ -1,6 +1,10 @@
 /* Toolbar */
 
 //Settings
+$toolbar_pad_v: 4px;
+$toolbar_pad_h: 8px;
+$headbar_pad_full: 4px 8px 8px 8px;
+
 %title-font {
 	.title { font-weight: bold; }
 	.subtitle {
@@ -9,31 +13,32 @@
 	}
 }
 
-//Classes
 @mixin toolbar-button {
-	> .button:not(.text-button),
-	.button:not(GtkRadioButton):not(GtkToggleButton):not(.text-button) { @include button-flat($fg_color); }
+	> .button:not(.text-button) { @include button-flat($fg_color); }
 }
 
+//Classes
 .toolbar {
 	@include toolbar-button;
-	background-color: $toolbar_color;
-
-	.scale { @include scale-colors-fix($toolbar_color); }
 
 	&.horizontal {
-		padding: 4px 8px;
+		padding: $toolbar_pad_v $toolbar_pad_h;
+		background-color: $toolbar_color;
+		.scale { @include scale-colors-fix($toolbar_color); }
 	}
+
 	&.vertical {
-		padding: 8px 4px;
+		padding: $toolbar_pad_h $toolbar_pad_v;
 		background-color: transparent;
+		.scale { @include scale-colors-fix($bg_color); }
 	}
 }
 
 .header-bar {
 	@extend %title-font;
-	padding: 4px 8px 8px 8px;
 	@include toolbar-button;
+
+	padding: $headbar_pad_full;
 }
 
 .titlebar {

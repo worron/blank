@@ -1,27 +1,33 @@
 /* Nemo file manager */
 
 //Settings
-$toolbar_tb_pad_h: 8px;
-$pathbar_tb_bg_color: $tab_color;
-$pathbar_tb_active_color: mix($button_bg_color, $selected_bg_color, 50%);
+$toolbar_button_pad_h: 4px;
+$pathbar_bg_color: $tab_color;
 
 //Classes
 NemoToolbar .primary-toolbar {
-	background-color: transparent;
+	&.horizontal {
+		background-color: transparent;
+		padding: $headbar_pad_full;
+	}
 
-	* { padding: 0; }
-	.linked > GtkToggleButton { padding: 0 $toolbar_tb_pad_h; }
+	> GtkToolItem:first-child,
+	> GtkToolItem:nth-child(3) {
+		.button { @include button-flat($fg_color); }
+	}
+
+	* { padding: 0 $toolbar_button_pad_h; }
 }
 
 NemoPathBar {
 	GtkArrow {
-		-GtkArrow-arrow-scaling: 1;
+		/* -GtkArrow-arrow-scaling: 1; */
 		opacity: 0.8
 	}
 
 	.button {
-		background-color: $pathbar_tb_bg_color;
-		&:active, &:checked { background-color:$pathbar_tb_active_color ; }
+		&:not(GtkToggleButton) { padding: 0px; }
+		@include button-normal($normal_bg_color: $pathbar_bg_color);
 	}
 }
 

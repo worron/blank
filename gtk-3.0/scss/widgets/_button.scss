@@ -13,7 +13,7 @@ $flat_button_pad_h: 4px;
 	$normal_fg_color: $button_fg_color,
 	$normal_bg_color: $button_bg_color,
 	$normal_active_color: mix($normal_bg_color, $selected_bg_color, 50%),
-	$normal_ins_color: mix($button_bg_color, $button_fg_color, 50%)
+	$normal_ins_color: mix($normal_bg_color, $normal_fg_color, 50%)
 ) {
 	color: $normal_fg_color;
 	background-color: $normal_bg_color;
