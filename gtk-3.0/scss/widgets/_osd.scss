@@ -37,3 +37,7 @@ $notification_border_radius: 0;
 	padding: $notification_pad;
 	border-radius: $notification_border_radius;
 }
+
+.floating-bar {
+	@include osd;
+}
