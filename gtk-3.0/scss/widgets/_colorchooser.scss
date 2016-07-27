@@ -1,5 +1,10 @@
 /* Colorchoser */
 
+//Settings
+$color_slider_width: $slider_width + 2px;
+$color_slider_length: $slider_length - $slider_gap - 2px;
+
+//Classes
 GtkColorSwatch {
 	&:selected {
 		background-color: transparent;
@@ -13,8 +18,8 @@ GtkColorChooserWidget {
 	}
 
 	.scale {
-		-GtkScale-slider-length: ($slider_length - $slider_gap);
-		-GtkRange-slider-width: ($slider_width + 2px);
+		-GtkScale-slider-length: $color_slider_length;
+		-GtkRange-slider-width: $color_slider_width;
 		&.slider { border: none }
 	}
 }
