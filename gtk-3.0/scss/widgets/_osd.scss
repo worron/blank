@@ -28,7 +28,7 @@ $notification_border_radius: 0;
 	padding: $osd_pad;
 	border-radius: $osd_border_radius;
 
-	&.toolbar { @include osd; }
+	&.toolbar { &.vertical, &.horizontal { @include osd; } }
 	.button { @include button-flat($fg_color); }
 }
 
