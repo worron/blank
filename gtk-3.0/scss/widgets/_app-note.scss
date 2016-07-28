@@ -1,0 +1,13 @@
+/* App notification */
+
+//Settings
+$notification_pad: 4px;
+$notification_border_radius: 0;
+
+
+//Classes
+.app-notification {
+	@include osd;
+	padding: $notification_pad;
+	border-radius: $notification_border_radius;
+}
