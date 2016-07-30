@@ -15,8 +15,8 @@ visited_link_color:#b66123"
 
 # Default Style
 style "default" {
-	xthickness = 2
-	ythickness = 2
+	xthickness = 0
+	ythickness = 0
 
 	GtkButton::child-displacement-x = 0
 	GtkButton::child-displacement-y = 0
@@ -65,12 +65,12 @@ style "default" {
 	# GtkWindow::resize-grip-width = 10
 
 	GtkMenuBar::window-dragging = 1
-	GtkMenuBar::internal-padding = 0
+	GtkMenuBar::internal-padding = 1
 	GtkMenuBar::shadow-type = GTK_SHADOW_NONE
-	GtkExpander::expander-size = 12
+	GtkExpander::expander-size = 10
 	GtkToolbar::internal-padding = 2
 	GtkToolbar::shadow-type = GTK_SHADOW_NONE
-	GtkTreeView::expander-size = 8
+	GtkTreeView::expander-size = 6
 	GtkTreeView::vertical-separator = 0
 	# GtkTreeView::odd-row-color = shade (0.96, @base_color)
 	# GtkNotebook::tab-overlap = -1
@@ -191,6 +191,9 @@ class "GtkWidget" style "default"
 
 # Button style
 style "button" {
+	xthickness = 2
+	ythickness = 2
+
 	bg[NORMAL] = @button_bg_color
 	fg[NORMAL] = @button_fg_color
 	fg[PRELIGHT] = shade (1.2, @button_fg_color)
@@ -209,6 +212,9 @@ widget_class "*<GtkButton>*<GtkLabel>" style "button"
 
 # Notebook style
 style "notebook" {
+	xthickness = 3
+	ythickness = 2
+
 	bg[NORMAL] = @bg_color
 	bg[ACTIVE] = @tab_bg_color
 
@@ -218,3 +224,10 @@ style "notebook" {
 }
 
 widget_class "*<GtkNotebook>" style "notebook"
+
+style "menu_item" {
+	xthickness = 2
+	ythickness = 3
+}
+
+widget_class "*<GtkMenuItem>*" style "menu_item"
