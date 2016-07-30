@@ -5,12 +5,14 @@ selected_fg_color:#eeeeee
 selected_bg_color:#b1222b
 text_color:#aaaaaa
 base_color:#161616
+button_bg_color:#525252
+button_fg_color:#cccccc
+button_act_color:#71292e
+tab_bg_color:#303030
 link_color:#b1222b
 visited_link_color:#b66123"
 
-
 # Default Style
-
 style "default" {
 	xthickness = 2
 	ythickness = 2
@@ -102,20 +104,19 @@ style "default" {
 
 	engine "murrine" {
 		animation = FALSE
+		colorize_scrollbar = FALSE
 
 		# 0 = normal arrows, 1 = filled arrows
 		arrowstyle = 1
 
 		# gradient to draw on border
-		border_shades = { 1.0, 1.0 }
-
-		colorize_scrollbar = FALSE
+		# border_shades = { 1.0, 1.0 }
 
 		# 0 = normal combobox, 1 = colorized combobox below arrow
 		comboboxstyle = 0
 
 		# overal contrast with borders
-		contrast = 0.99
+		contrast = 1.0
 
 		# 0 = none, 1 = grey dotted, 2 = colored with fill, 3 = colored glow
 		focusstyle = 0
@@ -185,3 +186,20 @@ style "default" {
 }
 
 class "GtkWidget" style "default"
+
+# Button style
+style "button" {
+	bg[NORMAL] = @button_bg_color
+	fg[NORMAL] = @button_fg_color
+	fg[PRELIGHT] = shade (1.2, @button_fg_color)
+	bg[PRELIGHT] = @button_bg_color
+	bg[ACTIVE] = @button_act_color
+	bg[INSENSITIVE] = @button_bg_color
+	fg[INSENSITIVE] = mix(0.5, @button_bg_color, @button_fg_color)
+
+	engine "murrine" {
+	}
+}
+
+widget_class "*<GtkButton>" style "button"
+widget_class "*<GtkButton>*<GtkLabel>" style "button"
