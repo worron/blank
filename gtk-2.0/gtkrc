@@ -9,6 +9,7 @@ button_bg_color:#525252
 button_fg_color:#cccccc
 button_act_color:#71292e
 tab_bg_color:#303030
+frame_color:#303030
 link_color:#b1222b
 visited_link_color:#b66123"
 
@@ -105,12 +106,13 @@ style "default" {
 	engine "murrine" {
 		animation = FALSE
 		colorize_scrollbar = FALSE
+		# textstyle = 0
 
 		# 0 = normal arrows, 1 = filled arrows
 		arrowstyle = 1
 
 		# gradient to draw on border
-		# border_shades = { 1.0, 1.0 }
+		border_shades = { 0.0, 0.0 }
 
 		# 0 = normal combobox, 1 = colorized combobox below arrow
 		comboboxstyle = 0
@@ -203,3 +205,16 @@ style "button" {
 
 widget_class "*<GtkButton>" style "button"
 widget_class "*<GtkButton>*<GtkLabel>" style "button"
+
+
+# Notebook style
+style "notebook" {
+	bg[NORMAL] = @bg_color
+	bg[ACTIVE] = @tab_bg_color
+
+	engine "murrine" {
+		# lightborder_shade = 2.0
+	}
+}
+
+widget_class "*<GtkNotebook>" style "notebook"
