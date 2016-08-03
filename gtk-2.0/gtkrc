@@ -10,7 +10,6 @@ button_fg_color:#cccccc
 button_act_color:#71292e
 tab_bg_color:#303030
 bar_color:#303030
-frame_color:#303030
 slider_color:#525252
 link_color:#b1222b
 visited_link_color:#b66123"
@@ -49,8 +48,8 @@ style "default" {
 	GtkScrollbar::has-secondary-backward-stepper = 0
 	GtkScrollbar::has-secondary-forward-stepper = 0
 	GtkScrollbar::min-slider-length = 20
-	# GtkScrollbar::slider-width = 12
 	GtkScrollbar::trough-border = 0
+	# GtkScrollbar::slider-width = 12
 
 	GtkScrolledWindow::scrollbar-spacing = 0
 	GtkScrolledWindow::scrollbars-within-bevel = 1
@@ -69,12 +68,16 @@ style "default" {
 	GtkMenuBar::window-dragging = 1
 	GtkMenuBar::internal-padding = 1
 	GtkMenuBar::shadow-type = GTK_SHADOW_NONE
+
 	GtkExpander::expander-size = 10
+
 	GtkToolbar::internal-padding = 2
 	GtkToolbar::shadow-type = GTK_SHADOW_NONE
+
 	GtkTreeView::expander-size = 6
 	GtkTreeView::vertical-separator = 0
 	# GtkTreeView::odd-row-color = shade (0.96, @base_color)
+
 	# GtkNotebook::tab-overlap = -1
 
 	GtkWidget::link-color = @link_color
@@ -108,32 +111,31 @@ style "default" {
 	engine "murrine" {
 		animation = FALSE
 		colorize_scrollbar = FALSE
-		# textstyle = 0
 
 		# 0 = normal arrows, 1 = filled arrows
 		arrowstyle = 1
 
 		# gradient to draw on border
-		border_shades = { 0.0, 0.0 }
+		border_shades = { 1.0, 1.0 }
 
 		# 0 = normal combobox, 1 = colorized combobox below arrow
 		comboboxstyle = 0
 
 		# overal contrast with borders
-		contrast = 1.0
+		contrast = 2.0
 
 		# 0 = none, 1 = grey dotted, 2 = colored with fill, 3 = colored glow
 		focusstyle = 0
 
 		# 0 = flat highlight, 1 = curved highlight, 2 = concave, 3 = top curved highlight, 4 = beryl highlight
-		glazestyle = 0
+		# glazestyle = 0
 
 		# 0 = glow on top, 1 = glow on bottom, 2 = glow on top and bottom, 3 = glow on middle vertically,
 		# 4 = glow on middle horizontally, 5 = glow on all sides
-		glowstyle = 0
+		# glowstyle = 0
 
 		# amount of glow
-		glow_shade = 1.0
+		# glow_shade = 1.0
 
 		# gradient to draw on widgets
 		gradient_shades = { 1.0, 1.0, 1.0, 1.0 }
@@ -142,10 +144,10 @@ style "default" {
 		highlight_shade = 1.0
 
 		# amount of inset light border
-		lightborder_shade = 1.0
+		# lightborder_shade = 1.0
 
 		# 0 = lightborder on top side, 1 = lightborder on all sides
-		lightborderstyle = 1
+		# lightborderstyle = 1
 
 		# 0 = flat, 1 = glassy, 2 = raised
 		listviewheaderstyle = 0
@@ -191,6 +193,15 @@ style "default" {
 
 class "GtkWidget" style "default"
 
+
+# Common styles
+style "no-border-contrast" {
+	engine "murrine" {
+		contrast = 0.0
+	}
+}
+
+
 # Button style
 style "button" {
 	xthickness = 2
@@ -214,19 +225,18 @@ widget_class "*<GtkButton>*<GtkLabel>" style "button"
 
 # Notebook style
 style "notebook" {
-	xthickness = 3
+	xthickness = 4
 	ythickness = 2
 
 	bg[NORMAL] = @bg_color
 	bg[ACTIVE] = @tab_bg_color
 
 	engine "murrine" {
-		# lightborder_shade = 5.0
-		# border_colors = { "#ffffff", "#ffffff" }
 	}
 }
 
 widget_class "*<GtkNotebook>" style "notebook"
+
 
 # Menu style
 style "menu_item" {
@@ -236,6 +246,7 @@ style "menu_item" {
 
 widget_class "*<GtkMenuItem>*" style "menu_item"
 
+
 # Scale style
 style "scale" {
 	bg[NORMAL] = @slider_color
@@ -244,9 +255,13 @@ style "scale" {
 	bg[INSENSITIVE] = mix(0.5, @bg_color, @bar_color)
 
 	engine "murrine" {
-		border_shades = { 1.0, 1.0 }
+		contrast = 0.0
 		border_colors = { @bg_color, @bg_color }
 	}
 }
 
 class "GtkScale" style "scale"
+
+
+# Widgets
+widget_class "*<GtkProgress>" style "no-border-contrast"
