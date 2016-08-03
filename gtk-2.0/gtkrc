@@ -9,7 +9,9 @@ button_bg_color:#525252
 button_fg_color:#cccccc
 button_act_color:#71292e
 tab_bg_color:#303030
+bar_color:#303030
 frame_color:#303030
+slider_color:#525252
 link_color:#b1222b
 visited_link_color:#b66123"
 
@@ -219,15 +221,32 @@ style "notebook" {
 	bg[ACTIVE] = @tab_bg_color
 
 	engine "murrine" {
-		# lightborder_shade = 2.0
+		# lightborder_shade = 5.0
+		# border_colors = { "#ffffff", "#ffffff" }
 	}
 }
 
 widget_class "*<GtkNotebook>" style "notebook"
 
+# Menu style
 style "menu_item" {
 	xthickness = 2
 	ythickness = 3
 }
 
 widget_class "*<GtkMenuItem>*" style "menu_item"
+
+# Scale style
+style "scale" {
+	bg[NORMAL] = @slider_color
+	bg[ACTIVE] = @bar_color
+	bg[PRELIGHT] = lighter(@slider_color)
+	bg[INSENSITIVE] = mix(0.5, @bg_color, @bar_color)
+
+	engine "murrine" {
+		border_shades = { 1.0, 1.0 }
+		border_colors = { @bg_color, @bg_color }
+	}
+}
+
+class "GtkScale" style "scale"
