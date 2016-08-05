@@ -308,3 +308,24 @@ class "GtkScrollbar" style "scrollbar"
 
 # === Widgets =================================================================
 widget_class "*<GtkProgress>" style "no-border-contrast"
+
+
+# === Fixes and workarounds ===================================================
+
+#Combobox
+style "combobox_fix" {
+	text[NORMAL] = @button_fg_color
+	text[PRELIGHT] = shade (1.2, @button_fg_color)
+	text[INSENSITIVE] = mix(0.5, @button_bg_color, @button_fg_color)
+}
+
+style "menuitem_combobox_fix" {
+	text[NORMAL]        = @fg_color
+	text[PRELIGHT]      = @selected_fg_color
+	text[SELECTED]      = @selected_fg_color
+	text[ACTIVE]        = @fg_color
+	text[INSENSITIVE]   = mix(0.5, @bg_color, @fg_color)
+}
+
+widget_class "*.<GtkComboBox>.<GtkCellView>" style "combobox_fix"
+widget "*.gtk-combobox-popup-menu.*" style "menuitem_combobox_fix"
