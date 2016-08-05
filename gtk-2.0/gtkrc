@@ -310,5 +310,13 @@ style "tooltips" {
 widget "gtk-tooltip*" style "tooltips"
 
 
+# Scrollbar style
+style "scrollbar" = "button" {
+	bg[ACTIVE] = @selected_bg_color
+}
+
+class "GtkScrollbar" style "scrollbar"
+
+
 # Widgets
 widget_class "*<GtkProgress>" style "no-border-contrast"
