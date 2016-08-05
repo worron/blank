@@ -1,20 +1,18 @@
-gtk-color-scheme =
-"bg_color:#202020
-fg_color:#bbbbbb
-selected_fg_color:#eeeeee
-selected_bg_color:#b1222b
-text_color:#aaaaaa
-base_color:#161616
-button_bg_color:#525252
-button_fg_color:#cccccc
-button_act_color:#71292e
-tab_bg_color:#303030
-bar_color:#303030
-slider_color:#525252
-link_color:#b1222b
-visited_link_color:#b66123"
+gtk-color-scheme = "bg_color:#202020"
+gtk-color-scheme = "fg_color:#bbbbbb"
+gtk-color-scheme = "selected_bg_color:#b1222b"
+gtk-color-scheme = "selected_fg_color:#eeeeee"
+gtk-color-scheme = "text_color:#aaaaaa"
+gtk-color-scheme = "base_color:#161616"
+gtk-color-scheme = "button_bg_color:#525252"
+gtk-color-scheme = "button_fg_color:#cccccc"
+gtk-color-scheme = "tab_bg_color:#303030"
+gtk-color-scheme = "bar_bg_color:#303030"
+gtk-color-scheme = "slider_color:#525252"
+gtk-color-scheme = "link_color:#b1222b"
+gtk-color-scheme = "visited_link_color:#b66123"
 
-# Default Style
+# === Default Style ===========================================================
 style "default" {
 	xthickness = 0
 	ythickness = 0
@@ -190,11 +188,10 @@ style "default" {
 		toolbarstyle = 0
 	}
 }
-
 class "GtkWidget" style "default"
 
 
-# Common styles
+# === Common styles ===========================================================
 style "no-border-contrast" {
 	engine "murrine" {
 		contrast = 0.0
@@ -202,7 +199,7 @@ style "no-border-contrast" {
 }
 
 
-# Button style
+# === Button style ============================================================
 style "button" {
 	xthickness = 2
 	ythickness = 2
@@ -211,19 +208,18 @@ style "button" {
 	fg[NORMAL] = @button_fg_color
 	fg[PRELIGHT] = shade (1.2, @button_fg_color)
 	bg[PRELIGHT] = @button_bg_color
-	bg[ACTIVE] = @button_act_color
+	bg[ACTIVE] = mix(0.5, @selected_bg_color, @tab_bg_color)
 	bg[INSENSITIVE] = @button_bg_color
 	fg[INSENSITIVE] = mix(0.5, @button_bg_color, @button_fg_color)
 
 	engine "murrine" {
 	}
 }
-
 widget_class "*<GtkButton>" style "button"
 widget_class "*<GtkButton>*<GtkLabel>" style "button"
 
 
-# Notebook style
+# === Notebook style ==========================================================
 style "notebook" {
 	xthickness = 4
 	ythickness = 2
@@ -234,36 +230,33 @@ style "notebook" {
 	engine "murrine" {
 	}
 }
-
 widget_class "*<GtkNotebook>" style "notebook"
 
 
-# Menu style
+# === Menu style ==============================================================
 style "menu_item" {
 	xthickness = 2
 	ythickness = 3
 }
-
 widget_class "*<GtkMenuItem>*" style "menu_item"
 
 
-# Scale style
+# === Scale style =============================================================
 style "scale" {
 	bg[NORMAL] = @slider_color
-	bg[ACTIVE] = @bar_color
+	bg[ACTIVE] = @bar_bg_color
 	bg[PRELIGHT] = lighter(@slider_color)
-	bg[INSENSITIVE] = mix(0.5, @bg_color, @bar_color)
+	bg[INSENSITIVE] = mix(0.5, @bg_color, @bar_bg_color)
 
 	engine "murrine" {
 		contrast = 0.0
 		border_colors = { @bg_color, @bg_color }
 	}
 }
-
 class "GtkScale" style "scale"
 
 
-# Entry style
+# === Entry style =============================================================
 style "entry" {
 	xthickness = 4
 	ythickness = 3
@@ -272,31 +265,28 @@ style "entry" {
 		contrast = 0.0
 	}
 }
-
 class "GtkEntry" style "entry"
 
 
-# Spinbutton style
+# === Spinbutton style ========================================================
 style "spinbutton" {
 	bg[NORMAL] = @base_color
 	bg[INSENSITIVE] = mix(0.5, @base_color, @bg_color)
 }
-
 class "GtkSpinButton" style "spinbutton"
 
 
-# Checkbutton and radiobutton style
+# === Checkbutton and radiobutton style =======================================
 style "radiocheck" {
 	bg[SELECTED] = @base_color
 	text[NORMAL] = "#cccccc" # FIX THIS
 	text[PRELIGHT] = lighter(@text_color)
 }
-
 class "GtkRadio*" style "radiocheck"
 class "GtkCheck*" style "radiocheck"
 
 
-# Tooltip style
+# === Tooltip style ===========================================================
 style "tooltips" {
 	xthickness = 6
 	ythickness = 4
@@ -306,17 +296,15 @@ style "tooltips" {
 		contrast = 0.0
 	}
 }
-
 widget "gtk-tooltip*" style "tooltips"
 
 
-# Scrollbar style
+# === Scrollbar style =========================================================
 style "scrollbar" = "button" {
 	bg[ACTIVE] = @selected_bg_color
 }
-
 class "GtkScrollbar" style "scrollbar"
 
 
-# Widgets
+# === Widgets =================================================================
 widget_class "*<GtkProgress>" style "no-border-contrast"
