@@ -276,5 +276,14 @@ style "entry" {
 class "GtkEntry" style "entry"
 
 
+# Spinbutton style
+style "spinbutton" {
+	bg[NORMAL] = @base_color
+	bg[INSENSITIVE] = mix(0.5, @base_color, @bg_color)
+}
+
+class "GtkSpinButton" style "spinbutton"
+
+
 # Widgets
 widget_class "*<GtkProgress>" style "no-border-contrast"
