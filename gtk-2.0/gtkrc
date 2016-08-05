@@ -9,6 +9,7 @@ gtk-color-scheme = "button_fg_color:#cccccc"
 gtk-color-scheme = "tab_bg_color:#303030"
 gtk-color-scheme = "bar_bg_color:#303030"
 gtk-color-scheme = "slider_color:#525252"
+gtk-color-scheme = "frame_color:#303030"
 gtk-color-scheme = "link_color:#b1222b"
 gtk-color-scheme = "visited_link_color:#b66123"
 
@@ -206,7 +207,7 @@ style "button" {
 
 	bg[NORMAL] = @button_bg_color
 	fg[NORMAL] = @button_fg_color
-	fg[PRELIGHT] = shade (1.2, @button_fg_color)
+	fg[PRELIGHT] = shade(1.2, @button_fg_color)
 	bg[PRELIGHT] = @button_bg_color
 	bg[ACTIVE] = mix(0.5, @selected_bg_color, @tab_bg_color)
 	bg[INSENSITIVE] = @button_bg_color
@@ -302,12 +303,31 @@ widget "gtk-tooltip*" style "tooltips"
 # === Scrollbar style =========================================================
 style "scrollbar" = "button" {
 	bg[ACTIVE] = @selected_bg_color
+	bg[PRELIGHT] = shade(1.2, @button_bg_color)
 }
 class "GtkScrollbar" style "scrollbar"
 
 
+# === Frame style =========================================================
+style "frame" {
+	xthickness = 6
+	ythickness = 4
+
+	bg[NORMAL] = @frame_color
+
+	engine "murrine" {
+		contrast = 0.0
+	}
+}
+
+class "GtkFrame" style "frame"
+widget_class "*<GtkStatusbar>*<GtkFrame>" style "default"
+widget_class "*<GtkColorButton>*<GtkFrame>" style "button"
+
+
 # === Widgets =================================================================
 widget_class "*<GtkProgress>" style "no-border-contrast"
+widget_class "*<GtkStatusbar>" style "button"
 
 
 # === Fixes and workarounds ===================================================
@@ -315,7 +335,7 @@ widget_class "*<GtkProgress>" style "no-border-contrast"
 #Combobox
 style "combobox_fix" {
 	text[NORMAL] = @button_fg_color
-	text[PRELIGHT] = shade (1.2, @button_fg_color)
+	text[PRELIGHT] = shade(1.2, @button_fg_color)
 	text[INSENSITIVE] = mix(0.5, @button_bg_color, @button_fg_color)
 }
 
