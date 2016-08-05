@@ -285,5 +285,16 @@ style "spinbutton" {
 class "GtkSpinButton" style "spinbutton"
 
 
+# Checkbutton and radiobutton style
+style "radiocheck" {
+	bg[SELECTED] = @base_color
+	text[NORMAL] = "#cccccc" # FIX THIS
+	text[PRELIGHT] = lighter(@text_color)
+}
+
+class "GtkRadio*" style "radiocheck"
+class "GtkCheck*" style "radiocheck"
+
+
 # Widgets
 widget_class "*<GtkProgress>" style "no-border-contrast"
