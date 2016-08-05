@@ -212,12 +212,23 @@ style "button" {
 	bg[ACTIVE] = mix(0.5, @selected_bg_color, @tab_bg_color)
 	bg[INSENSITIVE] = @button_bg_color
 	fg[INSENSITIVE] = mix(0.5, @button_bg_color, @button_fg_color)
-
-	engine "murrine" {
-	}
 }
 widget_class "*<GtkButton>" style "button"
 widget_class "*<GtkButton>*<GtkLabel>" style "button"
+
+style "toggle-button" {
+	bg[PRELIGHT] = mix(0.25, @selected_bg_color, @tab_bg_color)
+}
+widget_class "*<GtkToggleButton>" style "toggle-button"
+
+style "toolbar-button" {
+	bg[PRELIGHT] = shade(1.5, @bg_color)
+
+	engine "murrine" {
+		contrast = 0.0
+	}
+}
+widget_class "*<GtkToolbar>.*.<GtkButton>*" style "toolbar-button"
 
 
 # === Notebook style ==========================================================
@@ -349,3 +360,13 @@ style "menuitem_combobox_fix" {
 
 widget_class "*.<GtkComboBox>.<GtkCellView>" style "combobox_fix"
 widget "*.gtk-combobox-popup-menu.*" style "menuitem_combobox_fix"
+
+# Linkbutton
+style "linkbutton_fix" {
+	bg[PRELIGHT] = @bg_color
+
+	engine "murrine" {
+		contrast = 0.0
+	}
+}
+widget_class "*<GtkLinkButton>" style "linkbutton_fix"
