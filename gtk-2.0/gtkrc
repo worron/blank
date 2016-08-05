@@ -296,5 +296,19 @@ class "GtkRadio*" style "radiocheck"
 class "GtkCheck*" style "radiocheck"
 
 
+# Tooltip style
+style "tooltips" {
+	xthickness = 6
+	ythickness = 4
+
+	bg[NORMAL] = mix(0.85, @bg_color, @selected_bg_color)
+	engine "murrine" {
+		contrast = 0.0
+	}
+}
+
+widget "gtk-tooltip*" style "tooltips"
+
+
 # Widgets
 widget_class "*<GtkProgress>" style "no-border-contrast"
