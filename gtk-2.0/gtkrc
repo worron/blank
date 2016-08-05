@@ -231,6 +231,14 @@ style "toolbar-button" {
 widget_class "*<GtkToolbar>.*.<GtkButton>*" style "toolbar-button"
 
 
+# === Toolbar style ===========================================================
+style "toolbar" {
+	xthickness = 2
+	ythickness = 2
+}
+widget_class "*<GtkToolbar>*" style "toolbar"
+
+
 # === Notebook style ==========================================================
 style "notebook" {
 	xthickness = 4
@@ -251,6 +259,17 @@ style "menu_item" {
 	ythickness = 3
 }
 widget_class "*<GtkMenuItem>*" style "menu_item"
+widget_class "*<GtkMenu>*" style "no-border-contrast"
+
+style "separator_menu_item" {
+	xthickness = 8
+	ythickness = 4
+
+	engine "murrine" {
+		contrast = 2.5
+	}
+}
+widget_class "*<GtkSeparatorMenuItem>*" style "separator_menu_item"
 
 
 # === Scale style =============================================================
