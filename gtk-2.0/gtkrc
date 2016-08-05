@@ -263,5 +263,18 @@ style "scale" {
 class "GtkScale" style "scale"
 
 
+# Entry style
+style "entry" {
+	xthickness = 4
+	ythickness = 3
+
+	engine "murrine" {
+		contrast = 0.0
+	}
+}
+
+class "GtkEntry" style "entry"
+
+
 # Widgets
 widget_class "*<GtkProgress>" style "no-border-contrast"
