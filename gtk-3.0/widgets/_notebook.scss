@@ -8,7 +8,7 @@ $tab_sep: 1px;
 $notetab_pad_v: 6px;
 $notetab_pad_h: 8px;
 
-@mixin tab($t_bg_color: $tab_color, $t_fg_color: $tab_fg_color) {
+@mixin tab($t_bg_color: $tab_bg_color, $t_fg_color: $tab_fg_color) {
 	background-color: $t_bg_color;
 
 	&:hover {
@@ -29,7 +29,7 @@ $notetab_pad_h: 8px;
 	-GtkNotebook-tab-overlap: 1px;
 
 	&.frame {
-		border: solid $tab_color;
+		border: solid $tab_bg_color;
 
 		&.top { border-width: 0 $note_border $note_border $note_border; }
 		&.right { border-width: $note_border 0 $note_border $note_border; }
@@ -37,10 +37,10 @@ $notetab_pad_h: 8px;
 		&.left { border-width: $note_border $note_border $note_border 0; }
 	}
 
-	&.header { background-color: $tab_color; }
+	&.header { background-color: $tab_bg_color; }
 
 	& tab {
-		@include tab($tab_color);
+		@include tab($tab_bg_color);
 		padding: $notetab_pad_v $notetab_pad_h;
 
 		&.top:active { box-shadow: inset 0 (-$tab_underline) $selected_bg_color; }

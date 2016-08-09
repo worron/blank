@@ -12,7 +12,7 @@ $selected_bar_color: lighten($selected_bg_color, 10%);
 		background-color: $selected_bg_color;
 		&:selected { background-color: $selected_bar_color; }
 	}
-	.trough { background-color: $bar_color; }
+	.trough { background-color: $bar_bg_color; }
 }
 
 //Classes
@@ -39,6 +39,6 @@ GtkLevelBar {
 		}
 		&.level-high { background-color: $selected_bg_color; }
 		&.level-low { background-color: $info_bg_color; }
-		&.empty-fill-block { background-color: $bar_color; }
+		&.empty-fill-block { background-color: $bar_bg_color; }
 	}
 }
