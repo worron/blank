@@ -23,8 +23,8 @@ $headbar_pad_full: 4px 8px 8px 8px;
 
 	&.horizontal {
 		padding: $toolbar_pad_v $toolbar_pad_h;
-		background-color: $toolbar_color;
-		.scale { @include scale-colors-fix($toolbar_color); }
+		background-color: $tab_bg_color;
+		.scale { @include scale-colors-fix($tab_bg_color); }
 	}
 
 	&.vertical {
