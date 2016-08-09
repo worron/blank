@@ -21,10 +21,11 @@ $tab_fg_color: lighten($fg_color, 10%);
 
 $button_act_color: mix($tab_bg_color, $selected_bg_color, 50%);
 
-$info_bg_color: #167167;
-$warning_bg_color: #b66123;
-$question_bg_color: #2d961d;
-$error_bg_color: #b1222b;
+$tetradic_angle: 45;
+$info_bg_color: $selected_bg_color;
+$warning_bg_color: adjust_hue($selected_bg_color, $tetradic_angle);
+$question_bg_color: adjust_hue($selected_bg_color, ($tetradic_angle - 180));
+$error_bg_color: adjust_hue($selected_bg_color, 180);
 
 $tooltip_bg_color: mix($bg_color, $selected_bg_color, 80%);
 $tooltip_fg_color: $fg_color;
