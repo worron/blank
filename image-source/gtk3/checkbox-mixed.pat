@@ -48,14 +48,14 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2" />
   <path
-     style="fill:#161616;fill-opacity:1;stroke:#404040;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     style="fill:@base_color;fill-opacity:1;stroke:@check_color;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
      d="M 1,1 1,15 15,15 15,1 z"
      id="path3772"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="ccccc" />
   <rect
      id="rect10"
-     style="fill:#aaaaaa;fill-opacity:1"
+     style="fill:@text_color;fill-opacity:1"
      height="2"
      y="7"
      x="4"

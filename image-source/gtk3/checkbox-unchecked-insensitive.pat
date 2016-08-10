@@ -13,7 +13,7 @@
    inkscape:version="0.48.4 r9939"
    width="100%"
    height="100%"
-   sodipodi:docname="checkbox-unchecked.svg">
+   sodipodi:docname="checkbox-unchecked-insensitive.svg">
   <metadata
      id="metadata14">
     <rdf:RDF>
@@ -40,16 +40,16 @@
      inkscape:window-height="1022"
      id="namedview10"
      showgrid="false"
-     inkscape:zoom="14.75"
-     inkscape:cx="-0.27118643"
-     inkscape:cy="8"
+     inkscape:zoom="29.5"
+     inkscape:cx="7.1882688"
+     inkscape:cy="8.6021779"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2" />
   <path
-     style="fill:#161616;fill-opacity:1;stroke:#404040;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-     d="m 0.99999995,1 0,14 L 15,15 15,1 z"
+     style="fill:@base_color;fill-opacity:1;stroke:@check_color;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     d="m 0.9999999,1 0,14 L 15,15 15,1 z"
      id="path3772"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="ccccc" />

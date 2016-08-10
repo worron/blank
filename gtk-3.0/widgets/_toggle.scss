@@ -23,46 +23,46 @@
 	}
 
 	&:inconsistent {
-		-gtk-icon-source: url("../assets/gtk3/menuitem-checkbox-mixed.svg");
-		&:hover { -gtk-icon-source: url("../assets/gtk3/menuitem-checkbox-mixed-hover.svg"); }
-		&:insensitive { -gtk-icon-source: url("../assets/gtk3/menuitem-checkbox-mixed-insensitive.svg"); }
+		-gtk-icon-source: url("images/menuitem-checkbox-mixed.svg");
+		&:hover { -gtk-icon-source: url("images/menuitem-checkbox-mixed-hover.svg"); }
+		&:insensitive { -gtk-icon-source: url("images/menuitem-checkbox-mixed-insensitive.svg"); }
 	}
 }
 
 .check {
 	@include plain-check(
-		"../assets/gtk3/checkbox-unchecked.svg",
-		"../assets/gtk3/checkbox-unchecked-insensitive.svg",
-		"../assets/gtk3/checkbox-checked.svg",
-		"../assets/gtk3/checkbox-checked-insensitive.svg",
-		"../assets/gtk3/checkbox-mixed.svg",
-		"../assets/gtk3/checkbox-mixed-insensitive.svg"
+		"images/checkbox-unchecked.svg",
+		"images/checkbox-unchecked-insensitive.svg",
+		"images/checkbox-checked.svg",
+		"images/checkbox-checked-insensitive.svg",
+		"images/checkbox-mixed.svg",
+		"images/checkbox-mixed-insensitive.svg"
 	);
 }
 
 .radio {
 	@include plain-check(
-		"../assets/gtk3/radio-unselected.svg",
-		"../assets/gtk3/radio-unselected-insensitive.svg",
-		"../assets/gtk3/radio-selected.svg",
-		"../assets/gtk3/radio-selected-insensitive.svg",
-		"../assets/gtk3/radio-mixed.svg",
-		"../assets/gtk3/radio-mixed-insensitive.svg"
+		"images/radio-unselected.svg",
+		"images/radio-unselected-insensitive.svg",
+		"images/radio-selected.svg",
+		"images/radio-selected-insensitive.svg",
+		"images/radio-mixed.svg",
+		"images/radio-mixed-insensitive.svg"
 	);
 }
 
 .menuitem {
 	&.check {
 		@include menuitem-check(
-			"../assets/gtk3/menuitem-checkbox-checked.svg",
-			"../assets/gtk3/menuitem-checkbox-checked-insensitive.svg"
+			"images/menuitem-checkbox-checked.svg",
+			"images/menuitem-checkbox-checked-insensitive.svg"
 		);
 	}
 
 	&.radio {
 		@include menuitem-check(
-			"../assets/gtk3/menuitem-radio-checked.svg",
-			"../assets/gtk3/menuitem-radio-checked-insensitive.svg"
+			"images/menuitem-radio-checked.svg",
+			"images/menuitem-radio-checked-insensitive.svg"
 		);
 	}
 }

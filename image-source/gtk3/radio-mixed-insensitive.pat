@@ -13,20 +13,21 @@
    inkscape:version="0.48.4 r9939"
    width="100%"
    height="100%"
-   sodipodi:docname="checkbox-checked-insensitive.svg">
+   sodipodi:docname="radio-mixed.svg">
   <metadata
-     id="metadata18">
+     id="metadata16">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs16" />
+     id="defs14" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -38,25 +39,30 @@
      inkscape:pageshadow="2"
      inkscape:window-width="1912"
      inkscape:window-height="1022"
-     id="namedview14"
+     id="namedview12"
      showgrid="false"
-     inkscape:zoom="29.5"
-     inkscape:cx="10.202124"
-     inkscape:cy="6.3853609"
+     inkscape:zoom="14.75"
+     inkscape:cx="-5.7627119"
+     inkscape:cy="8"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2" />
   <path
-     style="fill:#1d1d1d;fill-opacity:1;stroke:#404040;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-     d="M 1,0.99999987 1,15 15,15 15,0.99999987 z"
-     id="path3772"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="ccccc" />
-  <path
-     style="fill:none;stroke:#404040;stroke-width:2.40000010000000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-     d="M 3.2457628,7.5847457 6.7203402,11.059322 12.754237,4.9406779"
-     id="path3782"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="ccc" />
+     sodipodi:type="arc"
+     style="fill:@base_color;fill-opacity:1;stroke:@check_color;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+     id="path2993"
+     sodipodi:cx="9.1016951"
+     sodipodi:cy="9.2033901"
+     sodipodi:rx="6.5593219"
+     sodipodi:ry="6.5593219"
+     d="m 15.661017,9.2033901 a 6.5593219,6.5593219 0 1 1 -13.1186438,0 6.5593219,6.5593219 0 1 1 13.1186438,0 z"
+     transform="matrix(1.058296,0,0,1.058296,-1.6322875,-1.739911)" />
+  <rect
+     id="rect10"
+     style="fill:@check_color;fill-opacity:1"
+     height="2"
+     y="7"
+     x="4"
+     width="8" />
 </svg>

@@ -13,7 +13,7 @@
    inkscape:version="0.48.4 r9939"
    width="100%"
    height="100%"
-   sodipodi:docname="menuitem-radio-checked-insensitive.svg">
+   sodipodi:docname="menuitem-radio-checked.svg">
   <metadata
      id="metadata12">
     <rdf:RDF>
@@ -22,7 +22,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -51,9 +50,9 @@
   <g
      transform="translate(0,-1036.3622)"
      id="g4"
-     style="stroke:none;stroke-opacity:1;fill:#404040;fill-opacity:1">
+     style="stroke:none;stroke-opacity:1;fill:@text_color;fill-opacity:1">
     <path
-       style="fill:#404040;stroke:none;stroke-opacity:1;fill-opacity:1"
+       style="fill:@text_color;stroke:none;stroke-opacity:1;fill-opacity:1"
        d="M 11,8 C 11,9.6568542 9.6568542,11 8,11 6.3431458,11 5,9.6568542 5,8 5,6.3431458 6.3431458,5 8,5 c 1.6568542,0 3,1.3431458 3,3 z"
        transform="translate(0,1036.3622)"
        id="path6"

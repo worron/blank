@@ -13,21 +13,20 @@
    inkscape:version="0.48.4 r9939"
    width="100%"
    height="100%"
-   sodipodi:docname="radio-mixed.svg">
+   sodipodi:docname="menuitem-checkbox-checked.svg">
   <metadata
-     id="metadata16">
+     id="metadata12">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs14" />
+     id="defs10" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -39,30 +38,19 @@
      inkscape:pageshadow="2"
      inkscape:window-width="1912"
      inkscape:window-height="1022"
-     id="namedview12"
+     id="namedview8"
      showgrid="false"
      inkscape:zoom="14.75"
-     inkscape:cx="-5.7627119"
+     inkscape:cx="-19.322034"
      inkscape:cy="8"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2" />
   <path
-     sodipodi:type="arc"
-     style="fill:#1d1d1d;fill-opacity:1;stroke:#404040;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-     id="path2993"
-     sodipodi:cx="9.1016951"
-     sodipodi:cy="9.2033901"
-     sodipodi:rx="6.5593219"
-     sodipodi:ry="6.5593219"
-     d="m 15.661017,9.2033901 a 6.5593219,6.5593219 0 1 1 -13.1186438,0 6.5593219,6.5593219 0 1 1 13.1186438,0 z"
-     transform="matrix(1.058296,0,0,1.058296,-1.6322875,-1.739911)" />
-  <rect
-     id="rect10"
-     style="fill:#404040;fill-opacity:1"
-     height="2"
-     y="7"
-     x="4"
-     width="8" />
+     style="fill:none;stroke:@text_color;stroke-width:2.40000010000000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     d="M 3.245763,7.584746 6.72034,11.059322 12.754237,4.9406779"
+     id="path3782"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="ccc" />
 </svg>

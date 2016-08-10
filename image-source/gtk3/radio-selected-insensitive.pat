@@ -13,9 +13,9 @@
    inkscape:version="0.48.4 r9939"
    width="100%"
    height="100%"
-   sodipodi:docname="menuitem-checkbox-checked.svg">
+   sodipodi:docname="radio-selected-insensitive.svg">
   <metadata
-     id="metadata12">
+     id="metadata18">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -26,7 +26,7 @@
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs10" />
+     id="defs16" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -38,19 +38,28 @@
      inkscape:pageshadow="2"
      inkscape:window-width="1912"
      inkscape:window-height="1022"
-     id="namedview8"
+     id="namedview14"
      showgrid="false"
      inkscape:zoom="14.75"
-     inkscape:cx="-19.322034"
+     inkscape:cx="-5.7627119"
      inkscape:cy="8"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2" />
   <path
-     style="fill:none;stroke:#aaaaaa;stroke-width:2.40000010000000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-     d="M 3.245763,7.584746 6.72034,11.059322 12.754237,4.9406779"
-     id="path3782"
+     sodipodi:type="arc"
+     style="fill:@base_color;fill-opacity:1;stroke:@check_color;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+     id="path2993"
+     sodipodi:cx="9.1016951"
+     sodipodi:cy="9.2033901"
+     sodipodi:rx="6.5593219"
+     sodipodi:ry="6.5593219"
+     d="m 15.661017,9.2033901 a 6.5593219,6.5593219 0 1 1 -13.1186438,0 6.5593219,6.5593219 0 1 1 13.1186438,0 z"
+     transform="matrix(1.058296,0,0,1.058296,-1.6322875,-1.739911)" />
+  <path
      inkscape:connector-curvature="0"
-     sodipodi:nodetypes="ccc" />
+     id="path10"
+     d="M 10.5,7.9999997 C 10.5,9.3807113 9.3807117,10.5 8,10.5 6.6192883,10.5 5.5,9.3807113 5.5,7.9999997 5.5,6.6192882 6.6192883,5.5000001 8,5.5000001 c 1.3807117,0 2.5,1.1192881 2.5,2.4999996 z"
+     style="fill:@check_color;fill-opacity:1" />
 </svg>

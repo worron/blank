@@ -24,10 +24,31 @@ THEME_SETTINGS = {
 }
 
 
+THEME_IMAGES = [
+	{"source": "image-source/gtk3", "dest": "gtk-3.0/images"}
+]
+
+
 # Support functions
 def hex_from_rgba(rgba):
 	"""Translate color from Gdk.RGBA to html hex format"""
 	return "#%02X%02X%02X" % tuple([int(getattr(rgba, name) * 255) for name in ("red", "green", "blue")])
+
+
+def get_file_list(*dirlist, ext='.svg'):
+	"""Find all files in directories"""
+	filelist = []
+	for path in dirlist:
+		for root, _, files in os.walk(path):
+			filelist.extend([os.path.join(root, name) for name in files if name.endswith(ext)])
+	return filelist
+
+
+def rewrite_file(file_, text):
+	"""Rewrite opened file"""
+	file_.seek(0)
+	file_.write(text)
+	file_.truncate()
 
 
 # Main classes
@@ -38,6 +59,7 @@ class ThemeParser:
 		self.scss_command = [element.strip() for element in config["SCSS"]["command"].split(";")]
 
 	def write_colors(self, colors):
+		"""Rewrite colors in theme files"""
 		for theme in THEME_SETTINGS:
 			for file_ in THEME_SETTINGS[theme]["files"]:
 				with open(file_, 'r+') as themefile:
@@ -45,15 +67,44 @@ class ThemeParser:
 					old_colors = text.split(THEME_SETTINGS[theme]["separator"])[0]
 					new_colors = "".join([THEME_SETTINGS[theme]["pattern"] % (n, c) for n, c in colors.items()])
 
-					themefile.seek(0)
-					themefile.write(text.replace(old_colors, new_colors))
-					themefile.truncate()
+					rewrite_file(themefile, text.replace(old_colors, new_colors))
 
 	def update_scss(self):
+		"""Build css files from scss"""
 		try:
 			subprocess.call(self.scss_command, cwd=self.scss_dir)
 		except Exception as e:
 			print("Fail to update scss\n", e)
+
+	def make_image_from_pattern(self, colors):
+		"""Build theme svg images from patterns"""
+		for images in THEME_IMAGES:
+			for file_ in get_file_list(images["source"], ext=".pat"):
+				filename = os.path.basename(file_)
+
+				with open(file_, 'r') as imagefile:
+					text = imagefile.read()
+
+				for key, value in colors.items():
+					text = text.replace("@" + key, value)
+
+				with open(os.path.join(images["dest"], filename.split(".")[0] + ".svg"), 'w') as imagefile:
+					rewrite_file(imagefile, text)
+
+	def make_pattern_from_image(self, path, colors, image_cnames):
+		image_colors = {k: colors[k].lower() for k in image_cnames}
+		filelist = get_file_list(path)
+
+		for file_ in filelist:
+			with open(file_, 'r+') as imagefile:
+				text = imagefile.read()
+
+				for key, value in image_colors.items():
+					text = text.replace(value, "@" + key)
+
+				rewrite_file(imagefile, text)
+
+			os.rename(file_, file_.split(".")[0] + ".pat")
 
 
 class MainWindow:
@@ -96,6 +147,7 @@ class MainWindow:
 		self.gui['build_button'].connect("clicked", self.on_rebuild_click)
 		self.gui['exit_button'].connect("clicked", self.on_close_window)
 
+		# Application init
 		self.gui['window'].show_all()
 
 	def on_rebuild_click(self, widget):
@@ -106,6 +158,10 @@ class MainWindow:
 
 		self.parser.write_colors(self.config['Colors'])
 		self.parser.update_scss()
+
+		# inames = ["selected_fg_color", "text_color", "base_color", "check_color"]
+		# self.parser.make_pattern_from_image("image-source/test", self.config['Colors'], inames)
+		self.parser.make_image_from_pattern(self.config['Colors'])
 
 	def on_close_window(self, *args):
 		Gtk.main_quit(*args)
