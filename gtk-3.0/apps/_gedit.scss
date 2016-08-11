@@ -23,7 +23,6 @@ GeditOpenDocumentSelector .open-document-selector-treeview:prelight {
 
 GeditWindow {
 	.popover {
-		.button { @extend %clear-button-shadow; }
 		GtkSearchEntry {
 			//Fix this
 			border: solid $menu_bg_color;

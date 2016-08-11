@@ -24,7 +24,6 @@ $menu_sep_dark_color: darken($menu_bg_color, 5%);
 
 	.menuitem {
 		&.button {
-			@extend %clear-button-shadow;
 			&, &:focus, &:active, &:checked {
 				background-color: transparent;
 				&:hover { @extend %selected; };

@@ -1,7 +1,8 @@
 /* Buttons */
 
 // Settings
-$button_focus_shadow: 0 -2px;
+$button_act_color: darken(mix($button_bg_color, $selected_bg_color, 50%), 10%);
+$button_foc_color: mix($button_bg_color, $selected_bg_color, 80%);
 
 $normal_button_pad_v: 5px;
 $normal_button_pad_h: 8px;
@@ -13,6 +14,7 @@ $flat_button_pad_h: 4px;
 	$normal_fg_color: $button_fg_color,
 	$normal_bg_color: $button_bg_color,
 	$normal_active_color: $button_act_color,
+	$normal_focus_color: $button_foc_color,
 	$normal_ins_color: mix($normal_bg_color, $normal_fg_color, 50%)
 ) {
 	color: $normal_fg_color;
@@ -26,14 +28,15 @@ $flat_button_pad_h: 4px;
 	}
 
 	&:active, &:checked { background-color: $normal_active_color; }
-	&:focus, &:checked:focus, &:checked:hover:focus { box-shadow: inset $button_focus_shadow $selected_bg_color; }
+	&:focus {
+		background-color: $normal_focus_color;
+		&:checked { background-color: lighten($normal_active_color, 5%); }
+	}
 
 	*:insensitive { color: $normal_ins_color; };
 
 	.separator { border: none; } // no separator inside buttons
 }
-
-%clear-button-shadow { &:focus, &:checked:focus, &:checked:hover:focus { box-shadow: none; } }
 
 @mixin button-flat(
 	$flat_fg_color: $fg_color,
@@ -42,7 +45,6 @@ $flat_button_pad_h: 4px;
 	$flat_hl_color: lighten($flat_fg_color, 20%),
 	$flat_ins_color: darken($flat_fg_color, 40%)
 ) {
-	@extend %clear-button-shadow;
 	padding: $flat_button_pad_v $flat_button_pad_h;
 
 	color: $flat_fg_color;
@@ -85,7 +87,6 @@ $button_linked_r: 4px;
 }
 
 @mixin linked-button($radius, $dir) {
-	@extend %clear-button-shadow;
 	@include linked-border($radius, $dir)
 }
 

@@ -20,8 +20,6 @@ $visited_link_color: mix($fg_color, $selected_bg_color, 30%);
 
 $tab_fg_color: lighten($fg_color, 10%);
 
-$button_act_color: mix($tab_bg_color, $selected_bg_color, 50%);
-
 $tetradic_angle: 45;
 $info_bg_color: $selected_bg_color;
 $warning_bg_color: adjust_hue($selected_bg_color, $tetradic_angle);
