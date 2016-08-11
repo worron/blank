@@ -15,11 +15,13 @@ $flat_button_pad_h: 4px;
 	$normal_bg_color: $button_bg_color,
 	$normal_active_color: $button_act_color,
 	$normal_focus_color: $button_foc_color,
-	$normal_ins_color: mix($normal_bg_color, $normal_fg_color, 50%)
+	$normal_ins_color: mix($normal_bg_color, $normal_fg_color, 50%),
+	$normal_pad_v: $normal_button_pad_v,
+	$normal_pad_h: $normal_button_pad_h
 ) {
 	color: $normal_fg_color;
 	background-color: $normal_bg_color;
-	padding: $normal_button_pad_v $normal_button_pad_h;
+	padding: $normal_pad_v $normal_pad_h;
 	border: none;
 
 	&:hover {

@@ -1,7 +1,7 @@
 /* Nemo file manager */
 
 //Settings
-$toolbar_button_pad_h: 4px;
+$nemo_toolbar_button_pad_h: 4px;
 
 //Classes
 NemoToolbar .primary-toolbar {
@@ -15,7 +15,7 @@ NemoToolbar .primary-toolbar {
 		.button { @include button-flat($fg_color); }
 	}
 
-	* { padding: 0 $toolbar_button_pad_h; }
+	* { padding: 0 $nemo_toolbar_button_pad_h; }
 }
 
 NemoPathBar {
