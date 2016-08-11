@@ -30,6 +30,7 @@ $flat_button_pad_h: 4px;
 	&:active, &:checked { background-color: $normal_active_color; }
 	&:focus {
 		background-color: $normal_focus_color;
+		&:hover { background-color: lighten($normal_focus_color, 20%); }
 		&:checked { background-color: lighten($normal_active_color, 5%); }
 	}
 
@@ -43,12 +44,14 @@ $flat_button_pad_h: 4px;
 	$flat_bg_color: transparent,
 	$flat_active_color: mix($flat_fg_color, $selected_bg_color, 30%),
 	$flat_hl_color: lighten($flat_fg_color, 20%),
-	$flat_ins_color: darken($flat_fg_color, 40%)
+	$flat_ins_color: darken($flat_fg_color, 40%),
+	$flat_pad_v: $flat_button_pad_v,
+	$flat_pad_h: $flat_button_pad_h
 ) {
-	padding: $flat_button_pad_v $flat_button_pad_h;
+	padding: $flat_pad_v $flat_pad_h;
 
 	color: $flat_fg_color;
-	&, &:focus, &:hover, &:active, &:checked { background-color: $flat_bg_color; }
+	&, &:focus, &:focus:hover, &:hover, &:active, &:checked { background-color: $flat_bg_color; }
 
 	&:hover { color: $flat_hl_color; }
 	*:insensitive { color: $flat_ins_color; };
@@ -63,9 +66,15 @@ $flat_button_pad_h: 4px;
 	&.titlebutton { @include button-flat }
 }
 
-GtkLinkButton {
+GtkLinkButton.button {
+	> .label { color: $link_color; }
 	@include button-flat($link_color, $flat_hl_color: lighten($link_color, 10%));
 }
+
+GtkMenuButton.button:not(.text-button) {
+	@include button-flat($fg_color);
+}
+
 
 /* Linked buttons */
 

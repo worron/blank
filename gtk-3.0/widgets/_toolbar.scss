@@ -13,25 +13,25 @@ $headbar_pad_full: 4px 8px 8px 8px;
 	}
 }
 
-@mixin toolbar-button {
-	> .button:not(.text-button) { @include button-flat($fg_color); }
+@mixin toolbar-button($toolbar_bg_color: $bg_color) {
+	> .button:not(.text-button) {
+		@include button-flat($fg_color);
+	}
+	> GtkToolButton > .button.flat:hover { background-color: lighten($toolbar_bg_color, 10%); }
 }
 
 //Classes
+.primary-toolbar {
+	@include toolbar-button($tab_bg_color);
+	background-color: $tab_bg_color;
+	.scale { @include scale-colors-fix($tab_bg_color); }
+}
+
 .toolbar {
 	@include toolbar-button;
 
-	&.horizontal {
-		padding: $toolbar_pad_v $toolbar_pad_h;
-		background-color: $tab_bg_color;
-		.scale { @include scale-colors-fix($tab_bg_color); }
-	}
-
-	&.vertical {
-		padding: $toolbar_pad_h $toolbar_pad_v;
-		background-color: transparent;
-		.scale { @include scale-colors-fix($bg_color); }
-	}
+	&.horizontal { padding: $toolbar_pad_v $toolbar_pad_h; }
+	&.vertical { padding: $toolbar_pad_h $toolbar_pad_v; }
 }
 
 .header-bar {
