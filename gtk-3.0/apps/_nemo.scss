@@ -39,3 +39,7 @@ NemoWindow .sidebar .view {
 	background-color:$bg_color;
 	&:selected { background-color: $selected_bg_color; }
 }
+
+#nemo-tab-close-button GtkImage {
+	-gtk-icon-transform: scale(0.6);
+}
