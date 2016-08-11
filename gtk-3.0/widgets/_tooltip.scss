@@ -1,8 +1,13 @@
  /* Tooltip */
 
+//Settings
+$tooltip_bg_color: mix($bg_color, $selected_bg_color, 85%);
+$tooltip_border: 0;
+$tooltip_r: 2px;
+
+//Classes
 .tooltip {
+	border-radius: $tooltip_r;
 	background-color: $tooltip_bg_color;
-	color: $tooltip_fg_color;
-	border: solid $frame_color 2px;
-	border: solid lighten($tooltip_bg_color, 5%) 2px;
+	border: solid darken($tooltip_bg_color, 5%) $tooltip_border;
 }

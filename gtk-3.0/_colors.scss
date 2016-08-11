@@ -26,9 +26,6 @@ $warning_bg_color: adjust_hue($selected_bg_color, $tetradic_angle);
 $question_bg_color: adjust_hue($selected_bg_color, ($tetradic_angle - 180));
 $error_bg_color: adjust_hue($selected_bg_color, 180);
 
-$tooltip_bg_color: mix($bg_color, $selected_bg_color, 80%);
-$tooltip_fg_color: $fg_color;
-
 $toolbar_bg_color: $bg_color;
 $toolbar_fg_color: $fg_color;
 

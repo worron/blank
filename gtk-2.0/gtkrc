@@ -211,7 +211,7 @@ style "button" {
 	fg[NORMAL] = @button_fg_color
 	fg[PRELIGHT] = shade(1.2, @button_fg_color)
 	bg[PRELIGHT] = @button_bg_color
-	bg[ACTIVE] = mix(0.5, @selected_bg_color, @tab_bg_color)
+	bg[ACTIVE] = shade(0.7, mix(0.25, @button_bg_color, @selected_bg_color))
 	bg[INSENSITIVE] = @button_bg_color
 	fg[INSENSITIVE] = mix(0.5, @button_bg_color, @button_fg_color)
 }
@@ -219,7 +219,7 @@ widget_class "*<GtkButton>" style "button"
 widget_class "*<GtkButton>*<GtkLabel>" style "button"
 
 style "toggle-button" {
-	bg[PRELIGHT] = mix(0.25, @selected_bg_color, @tab_bg_color)
+	bg[PRELIGHT] = shade(0.8, mix(0.25, @button_bg_color, @selected_bg_color))
 }
 widget_class "*<GtkToggleButton>" style "toggle-button"
 
@@ -334,7 +334,7 @@ widget "gtk-tooltip*" style "tooltips"
 
 # === Scrollbar style =========================================================
 style "scrollbar" = "button" {
-	bg[ACTIVE] = @selected_bg_color
+	bg[ACTIVE] = shade(0.7, mix(0.25, @button_bg_color, @selected_bg_color))
 	bg[PRELIGHT] = shade(1.2, @button_bg_color)
 }
 class "GtkScrollbar" style "scrollbar"
