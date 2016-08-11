@@ -1,13 +1,13 @@
 /* Frames */
 
-/* .frame { */
-/* GtkFrame.frame { */
-/* 	padding: 6px; */
-/* 	border: 2px solid $frame_color; */
-/* 	&.flat { border-style: none; } */
-/* } */
+//Settings
+$frame_pad: 4px;
+$frame_border: 2px;
 
-/* GtkScrolledWindow .frame { border-style: none; } */
-/* GtkViewport.frame { border-style: none; } */
-/* GtkScrolledWindow .frame { border: 2px solid $frame_color; } */
-/* GtkViewport.frame { border: 2px solid $frame_color; } */
+//Classes
+GtkFrame.frame {
+	padding: $frame_pad;
+	border: $frame_border solid $frame_color;
+	&.flat,
+	&.app-notification { border: none; }
+}
