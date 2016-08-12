@@ -10,3 +10,7 @@ GtkPlacesSidebar.sidebar {
 		padding-right: $side_icon_padding;
 	}
 }
+
+.sidebar-toolbar {
+	.button.image-button:not(GtkToggleButton) { @include button-flat; }
+}
