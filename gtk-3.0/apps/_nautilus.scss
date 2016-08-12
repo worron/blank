@@ -6,12 +6,11 @@ $nau_switcher_pad_v: 8px;
 
 //Classes
 NautilusToolbar.header-bar {
+	> .linked {
+		.button { @include button-normal($normal_pad_v: $nau_switcher_pad_v, $normal_pad_h: $nau_switcher_pad_h) }
+	}
 	> *:last-child {
 		.button { @include button-flat($fg_color); }
-	}
-
-	> *:nth-child(2) {
-		.button { @include button-normal($normal_pad_v: $nau_switcher_pad_v, $normal_pad_h: $nau_switcher_pad_h) }
 	}
 }
 
