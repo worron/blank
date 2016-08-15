@@ -51,21 +51,29 @@ def rewrite_file(file_, text):
 	file_.truncate()
 
 
+def read_list(key):
+	"Read list from config"
+	return [element.strip() for element in key.split(";")]
+
+
 # Main classes
 class ThemeParser:
 	"Config files parser"
 	def __init__(self, config):
+		self.config = config
 		self.scss_dir = config["SCSS"]["directory"]
-		self.scss_command = [element.strip() for element in config["SCSS"]["command"].split(";")]
+		self.scss_command = read_list(config["SCSS"]["command"])
 
-	def write_colors(self, colors):
+	def write_colors(self):
 		"""Rewrite colors in theme files"""
 		for theme in THEME_SETTINGS:
 			for file_ in THEME_SETTINGS[theme]["files"]:
 				with open(file_, 'r+') as themefile:
 					text = themefile.read()
 					old_colors = text.split(THEME_SETTINGS[theme]["separator"])[0]
-					new_colors = "".join([THEME_SETTINGS[theme]["pattern"] % (n, c) for n, c in colors.items()])
+					new_colors = "".join(
+						[THEME_SETTINGS[theme]["pattern"] % (n, c) for n, c in self.config['Colors'].items()]
+					)
 
 					rewrite_file(themefile, text.replace(old_colors, new_colors))
 
@@ -76,7 +84,7 @@ class ThemeParser:
 		except Exception as e:
 			print("Fail to update scss\n", e)
 
-	def make_image_from_pattern(self, colors):
+	def make_image_from_pattern(self):
 		"""Build theme svg images from patterns"""
 		for images in THEME_IMAGES:
 			for file_ in get_file_list(images["source"], ext=".pat"):
@@ -85,15 +93,16 @@ class ThemeParser:
 				with open(file_, 'r') as imagefile:
 					text = imagefile.read()
 
-				for key, value in colors.items():
+				for key, value in self.config['Colors'].items():
 					text = text.replace("@" + key, value)
 
 				with open(os.path.join(images["dest"], filename.split(".")[0] + ".svg"), 'w') as imagefile:
 					rewrite_file(imagefile, text)
 
-	def make_pattern_from_image(self, path, colors, image_cnames):
-		image_colors = {k: colors[k].lower() for k in image_cnames}
-		filelist = get_file_list(path)
+	def make_pattern_from_image(self):
+		image_color_names = read_list(self.config["Pattern"]["colors"])
+		image_colors = {k: self.config['Colors'][k] for k in image_color_names}
+		filelist = get_file_list(self.config["Pattern"]["directory"])
 
 		for file_ in filelist:
 			with open(file_, 'r+') as imagefile:
@@ -101,6 +110,7 @@ class ThemeParser:
 
 				for key, value in image_colors.items():
 					text = text.replace(value, "@" + key)
+					text = text.replace(value.lower(), "@" + key)
 
 				rewrite_file(imagefile, text)
 
@@ -122,7 +132,7 @@ class MainWindow:
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file('scripts/gui.glade')
 
-		gui_elements = ('window', "colors_box", "build_button", "exit_button")
+		gui_elements = ('window', "colors_box", "build_button", "exit_button", "pattern_button")
 		self.gui = {element: self.builder.get_object(element) for element in gui_elements}
 
 		# Fill up GUI
@@ -145,6 +155,7 @@ class MainWindow:
 		self.signals = dict()
 		self.gui['window'].connect("delete-event", self.on_close_window)
 		self.gui['build_button'].connect("clicked", self.on_rebuild_click)
+		self.gui['pattern_button'].connect("clicked", self.on_pattern_click)
 		self.gui['exit_button'].connect("clicked", self.on_close_window)
 
 		# Application init
@@ -156,12 +167,13 @@ class MainWindow:
 		with open(self.configfile, 'w') as configfile:
 			self.config.write(configfile)
 
-		self.parser.write_colors(self.config['Colors'])
+		self.parser.write_colors()
 		self.parser.update_scss()
 
-		# inames = ["selected_fg_color", "text_color", "base_color", "check_color"]
-		# self.parser.make_pattern_from_image("image-source/test", self.config['Colors'], inames)
-		self.parser.make_image_from_pattern(self.config['Colors'])
+		self.parser.make_image_from_pattern()
+
+	def on_pattern_click(self, widget):
+		self.parser.make_pattern_from_image()
 
 	def on_close_window(self, *args):
 		Gtk.main_quit(*args)
