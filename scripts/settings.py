@@ -24,11 +24,6 @@ THEME_SETTINGS = {
 }
 
 
-THEME_IMAGES = [
-	{"source": "image-source/gtk3", "dest": "gtk-3.0/images"}
-]
-
-
 # Support functions
 def hex_from_rgba(rgba):
 	"""Translate color from Gdk.RGBA to html hex format"""
@@ -63,6 +58,10 @@ class ThemeParser:
 		self.config = config
 		self.scss_dir = config["SCSS"]["directory"]
 		self.scss_command = read_list(config["SCSS"]["command"])
+		self.images = []
+
+		for directories in self.config['Images'].values():
+			self.images.append(dict(zip(("source", "dest"), read_list(directories))))
 
 	def write_colors(self):
 		"""Rewrite colors in theme files"""
@@ -86,7 +85,7 @@ class ThemeParser:
 
 	def make_image_from_pattern(self):
 		"""Build theme svg images from patterns"""
-		for images in THEME_IMAGES:
+		for images in self.images:
 			for file_ in get_file_list(images["source"], ext=".pat"):
 				filename = os.path.basename(file_)
 
