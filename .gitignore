@@ -2,7 +2,7 @@
 .sass-cache
 
 # Ignore CSS output
-gtk-3.0/gtk.css
+gtk-3.18/gtk.css
 
 # Ignore python cache
 **/__pycache__
