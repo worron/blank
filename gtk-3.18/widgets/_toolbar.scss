@@ -4,6 +4,7 @@
 $toolbar_pad_v: 4px;
 $toolbar_pad_h: 8px;
 $headbar_pad_full: 4px 8px 8px 8px;
+$primary_sep_width: 2px;
 
 %title-font {
 	.title { font-weight: bold; }
@@ -25,6 +26,9 @@ $headbar_pad_full: 4px 8px 8px 8px;
 	@include toolbar-button($tab_bg_color);
 	background-color: $tab_bg_color;
 	.scale { @include scale-colors-fix($tab_bg_color); }
+
+
+	.separator { @include sep-colors-set($tab_bg_color) }
 }
 
 .toolbar {

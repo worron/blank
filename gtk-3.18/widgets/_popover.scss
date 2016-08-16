@@ -4,9 +4,6 @@
 $popover_border_width: 1px;
 $popover_border_radius: 4px;
 
-$menu_sep_light_color: lighten($menu_bg_color, 8%);
-$menu_sep_dark_color: darken($menu_bg_color, 5%);
-
 //Classes
 .popover {
 	.background {
@@ -20,7 +17,7 @@ $menu_sep_dark_color: darken($menu_bg_color, 5%);
 	border-radius: $popover_border_radius;
 	box-shadow: 0 2px 3px rgba(black, 0.5);
 
-	.separator { @include sep-colors-set($menu_sep_light_color, $menu_sep_dark_color) }
+	.separator { @include sep-colors-set($menu_bg_color, 8%) }
 
 	.menuitem {
 		&.button {
