@@ -1,0 +1,16 @@
+/* Unity */
+
+//Settings
+%panel {
+	background-color: $titlebar_bg_color;
+	color: $titlebar_fg_color;
+}
+
+//Classes
+UnityDecoration {
+	@extend %panel;
+}
+
+.unity-panel {
+	@extend %panel;
+}
