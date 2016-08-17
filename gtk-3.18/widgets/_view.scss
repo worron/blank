@@ -8,10 +8,28 @@ $c_header_sep: 1px;
 $rb_border_width: 2px;
 $rb_alpha: 0.4;
 
+$expander_size: 10px;
+
 //Classes
+GtkTreeView {
+	-GtkTreeView-expander-size: $expander_size;
+
+	-GtkTreeView-tree-line-pattern: '\0';
+	-GtkTreeView-grid-line-pattern: '\0';
+}
+
 .view {
 	@extend %entry-colors;
 	@include progressbar-base;
+	.separator {
+		color: $frame_color;
+	}
+
+	> .expander { border: none; }
+
+	// tree and greed colors
+	border-left-color: $frame_color;
+	border-top-color: $frame_color;
 }
 
 column-header .button {
