@@ -3,7 +3,8 @@
 //Settings
 $slider_width: 16px;
 $trough_width: 4px;
-$trough_margin: (($slider_width - $trough_width) / 2);
+$trough_margin_v: (($slider_width - $trough_width) / 2);
+$trough_margin_h: 2px;
 
 $slider_length: 12px;
 $slider_gap: 4px;
@@ -21,7 +22,6 @@ $slider_gap: 4px;
 	-GtkRange-trough-border: 0;
 	-GtkRange-slider-width: $slider_width;
 	-GtkScale-slider-length: $slider_length;
-
 	&.slider {
 		border-style: solid;
 		background-color: $slider_color;
@@ -34,10 +34,10 @@ $slider_gap: 4px;
 	&.mark { color: $slider_color; }
 
 	&.trough {
-		margin: $trough_margin 0;
+		margin: $trough_margin_v $trough_margin_h;
 		background-color: $slider_color;
 
-		&.vertical { margin: 0 $trough_margin; }
+		&.vertical { margin: $trough_margin_h $trough_margin_v; }
 	}
 
 	@include scale-colors-fix($bg_color);
