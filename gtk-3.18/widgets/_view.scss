@@ -30,6 +30,8 @@ GtkTreeView {
 	// tree and greed colors
 	border-left-color: $frame_color;
 	border-top-color: $frame_color;
+
+	.pane-separator { border-color: $bg_color }
 }
 
 column-header .button {
