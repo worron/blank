@@ -1,6 +1,14 @@
 /* Combobox */
+
+// Settings
+$arrow_pad_r: 4px;
+
+//Classes
 GtkComboBox {
-	.button { padding: ($normal_button_pad_v - 2px) $normal_button_pad_h; }
+	.button {
+		padding: ($normal_button_pad_v - 2px) $normal_button_pad_h;
+		padding-right: $arrow_pad_r;
+	}
 
 	&.combobox-entry {
 		.button {

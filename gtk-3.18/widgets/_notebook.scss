@@ -57,7 +57,7 @@ $notetab_pad_h: 8px;
 
 		& .button {
 			@include button-flat($tab_fg_color);
-			GtkImage { padding: 0 0 0 8px}
+			GtkImage:last-child { padding: 0 0 0 8px}
 		}
 	}
 }

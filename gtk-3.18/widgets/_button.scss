@@ -10,6 +10,8 @@ $normal_button_pad_h: 8px;
 $flat_button_pad_v: 4px;
 $flat_button_pad_h: 4px;
 
+$image_child_pad_h: 4px;
+
 @mixin button-normal(
 	$normal_fg_color: $button_fg_color,
 	$normal_bg_color: $button_bg_color,
@@ -39,6 +41,7 @@ $flat_button_pad_h: 4px;
 	*:insensitive { color: $normal_ins_color; };
 
 	.separator { border: none; } // no separator inside buttons
+
 }
 
 @mixin button-flat(
@@ -66,6 +69,11 @@ $flat_button_pad_h: 4px;
 	@include button-normal;
 	&.flat:not(.menuitem) { @include button-flat }
 	&.titlebutton { @include button-flat }
+
+	GtkBox > GtkImage {
+		&:first-child:not(:only-child) { padding-right: $image_child_pad_h }
+		&:last-child:not(:only-child) { padding-left: $image_child_pad_h }
+	}
 }
 
 GtkLinkButton.button {
