@@ -1,5 +1,18 @@
 /* Spinbutton */
+
+//Settings
+$view_spin_frame: 0;
+/* $view_spin_frame: 2px; */
+$view_spin_pad: 0 2px;
+
+//Classes
 .spinbutton.button {
 	@include button-flat($text_color);
 	&:insensitive { color: darken($text_color, 40%); };
+}
+
+.view .spinbutton {
+	border: solid $view_spin_frame $frame_color;
+	&.button { border: none; }
+	&.entry { padding: $view_spin_pad; }
 }
