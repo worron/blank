@@ -23,12 +23,11 @@ class MainWindow:
 
 		gui_elements = (
 			'window', "colors_box", "build_button", "exit_button", "images_iconview", "notebook",
-			"colors_scrolledwindow"
+			"colors_scrolledwindow", "patterns_iconview", "patterns_delete_button", "images_delete_button"
 		)
 		self.gui = {element: self.builder.get_object(element) for element in gui_elements}
 
 		# Pages
-
 		self.pages = [ColorsConfig(self.config, self.gui), IconView(self.config, self.gui)]
 		self.last_handlers = dict()
 
@@ -57,6 +56,10 @@ class MainWindow:
 
 	def on_close_window(self, *args):
 		self.config.save()
+
+		for page in self.pages:
+			if hasattr(page, 'on_exit'): page.on_exit()
+
 		Gtk.main_quit(*args)
 
 

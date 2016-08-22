@@ -6,6 +6,7 @@ from .common import read_params, get_file_list, rewrite_file
 
 
 def make_pattern_from_image(dir_, image_colors):
+	"""Build pattern from svg image"""
 	filelist = get_file_list(dir_)
 
 	for file_ in filelist:
@@ -18,6 +19,21 @@ def make_pattern_from_image(dir_, image_colors):
 
 		with open(file_.split(".")[0] + ".pat", 'w') as patfile:
 			rewrite_file(patfile, text)
+
+
+def make_image_from_pattern(source_dir, dest_dir, image_colors):
+	"""Build image from pattern"""
+	for file_ in get_file_list(source_dir, ext=".pat"):
+		filename = os.path.basename(file_)
+
+		with open(file_, 'r') as imagefile:
+			text = imagefile.read()
+
+		for key, value in image_colors.items():
+			text = text.replace("@" + key, value)
+
+			with open(os.path.join(dest_dir, filename.split(".")[0] + ".svg"), 'w') as imagefile:
+				rewrite_file(imagefile, text)
 
 
 class ThemeParser:
@@ -62,14 +78,4 @@ class ThemeParser:
 	def rebuild_images(self):
 		"""Build theme svg images from patterns"""
 		for images in self.images:
-			for file_ in get_file_list(images["source"], ext=".pat"):
-				filename = os.path.basename(file_)
-
-				with open(file_, 'r') as imagefile:
-					text = imagefile.read()
-
-				for key, value in self.config['Colors'].items():
-					text = text.replace("@" + key, value)
-
-				with open(os.path.join(images["dest"], filename.split(".")[0] + ".svg"), 'w') as imagefile:
-					rewrite_file(imagefile, text)
+			make_image_from_pattern(images["source"], images["dest"], self.config['Colors'])
