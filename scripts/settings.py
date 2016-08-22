@@ -2,18 +2,13 @@
 # -*- Mode: Python; indent-tabs-mode: t; python-indent: 4; tab-width: 4 -*-
 import os
 
-from helpers.cfreader import ConfigReader
-from helpers.themeparser import ThemeParser
-
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk
 
-
-# Support functions
-def hex_from_rgba(rgba):
-	"""Translate color from Gdk.RGBA to html hex format"""
-	return "#%02X%02X%02X" % tuple([int(getattr(rgba, name) * 255) for name in ("red", "green", "blue")])
+from helpers.cfreader import ConfigReader
+from helpers.viewer import IconView
+from helpers.colors import ColorsConfig
 
 
 class MainWindow:
@@ -22,64 +17,43 @@ class MainWindow:
 		# Read config
 		self.config = ConfigReader("scripts/settings.ini")
 
-		# Load parser
-		self.parser = ThemeParser(self.config)
-
 		# Load GUI
 		self.builder = Gtk.Builder()
 		self.builder.add_from_file('scripts/gui/main.glade')
 
-		gui_elements = ('window', "colors_box", "build_button", "exit_button", "pattern_button")
+		gui_elements = (
+			'window', "colors_box", "build_button", "exit_button", "images_iconview", "notebook",
+			"colors_scrolledwindow"
+		)
 		self.gui = {element: self.builder.get_object(element) for element in gui_elements}
 
-		# Fill up GUI
-		self.color_buttons = dict()
-		self.pattern_checks = dict()
-		self.gui["colors_box"].pack_start(Gtk.Separator(), False, False, 0)
+		# Pages
 
-		current_pattents = self.config.get_list("Pattern", "colors")
-		for key, value in self.config['Colors'].items():
-			box = Gtk.Box(spacing=8)
-			label = Gtk.Label(key)
-			self.color_buttons[key] = Gtk.ColorButton()
-			self.pattern_checks[key] = Gtk.CheckButton()
-
-			color = Gdk.RGBA()
-			color.parse(value)
-			self.color_buttons[key].set_rgba(color)
-
-			self.pattern_checks[key].set_active(key in current_pattents)
-
-			box.pack_start(label, False, False, 0)
-			box.pack_end(self.pattern_checks[key], False, False, 0)
-			box.pack_end(self.color_buttons[key], False, False, 0)
-			self.gui["colors_box"].pack_start(box, False, False, 0)
-			self.gui["colors_box"].pack_start(Gtk.Separator(), False, False, 0)
+		self.pages = [ColorsConfig(self.config, self.gui), IconView(self.config, self.gui)]
+		self.last_handlers = dict()
 
 		# Connect signals
 		self.signals = dict()
 		self.gui['window'].connect("delete-event", self.on_close_window)
-		self.gui['build_button'].connect("clicked", self.on_rebuild_click)
-		self.gui['pattern_button'].connect("clicked", self.on_pattern_click)
 		self.gui['exit_button'].connect("clicked", self.on_close_window)
+		self.gui['notebook'].connect("switch_page", self.on_page_changed)
 
 		# Application init
 		self.gui['window'].show_all()
+		self.gui['notebook'].emit("switch_page", self.gui['colors_scrolledwindow'], 0)
 
-	def on_rebuild_click(self, widget):
-		for key, button in self.color_buttons.items():
-			self.config['Colors'][key] = hex_from_rgba(button.get_rgba())
+	def on_page_changed(self, nb, page, index):
+		for button in ['build_button']:
+			if button in self.last_handlers:
+				self.gui[button].disconnect_by_func(self.last_handlers[button])
+			if button in self.pages[index].mhandlers:
+				self.gui[button].connect("clicked", self.pages[index].mhandlers[button])
+			# self.gui[button].set_sensitive(button in self.pages[index].mhandlers)
 
-		self.parser.write_colors()
-		self.parser.update_scss()
+		self.last_handlers = self.pages[index].mhandlers
 
-		self.parser.make_image_from_pattern()
-
-	def on_pattern_click(self, widget):
-		current_pattents = [key for key in self.pattern_checks if self.pattern_checks[key].get_active()]
-		self.config.set_list("Pattern", "colors", current_pattents)
-
-		self.parser.make_pattern_from_image()
+		if hasattr(self.pages[index], 'on_page_switch'):
+			self.pages[index].on_page_switch()
 
 	def on_close_window(self, *args):
 		self.config.save()

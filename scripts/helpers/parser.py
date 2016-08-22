@@ -2,23 +2,22 @@
 import os
 import subprocess
 
-from .cfreader import read_params
+from .common import read_params, get_file_list, rewrite_file
 
 
-def get_file_list(*dirlist, ext='.svg'):
-	"""Find all files in directories"""
-	filelist = []
-	for path in dirlist:
-		for root, _, files in os.walk(path):
-			filelist.extend([os.path.join(root, name) for name in files if name.endswith(ext)])
-	return filelist
+def make_pattern_from_image(dir_, image_colors):
+	filelist = get_file_list(dir_)
 
+	for file_ in filelist:
+		with open(file_, 'r+') as imagefile:
+			text = imagefile.read()
 
-def rewrite_file(file_, text):
-	"""Rewrite opened file"""
-	file_.seek(0)
-	file_.write(text)
-	file_.truncate()
+		for key, value in image_colors.items():
+			text = text.replace(value, "@" + key)
+			text = text.replace(value.lower(), "@" + key)
+
+		with open(file_.split(".")[0] + ".pat", 'w') as patfile:
+			rewrite_file(patfile, text)
 
 
 class ThemeParser:
@@ -60,7 +59,7 @@ class ThemeParser:
 		except Exception as e:
 			print("Fail to update scss\n", e)
 
-	def make_image_from_pattern(self):
+	def rebuild_images(self):
 		"""Build theme svg images from patterns"""
 		for images in self.images:
 			for file_ in get_file_list(images["source"], ext=".pat"):
@@ -74,20 +73,3 @@ class ThemeParser:
 
 				with open(os.path.join(images["dest"], filename.split(".")[0] + ".svg"), 'w') as imagefile:
 					rewrite_file(imagefile, text)
-
-	def make_pattern_from_image(self):
-		image_color_names = self.config.get_list("Pattern", "colors")
-		image_colors = {k: self.config['Colors'][k] for k in image_color_names}
-		filelist = get_file_list(self.config["Pattern"]["directory"])
-
-		for file_ in filelist:
-			with open(file_, 'r+') as imagefile:
-				text = imagefile.read()
-
-				for key, value in image_colors.items():
-					text = text.replace(value, "@" + key)
-					text = text.replace(value.lower(), "@" + key)
-
-				rewrite_file(imagefile, text)
-
-			os.rename(file_, file_.split(".")[0] + ".pat")
