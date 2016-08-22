@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- Mode: Python; indent-tabs-mode: t; python-indent: 4; tab-width: 4 -*-
 import os
-import configparser
 import subprocess
+
+from helpers.cfreader import ConfigReader, read_params
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -31,18 +32,13 @@ def rewrite_file(file_, text):
 	file_.truncate()
 
 
-def read_list(key):
-	"Read list from config"
-	return [element.strip() for element in key.split(";")]
-
-
 # Main classes
 class ThemeParser:
 	"Config files parser"
 	def __init__(self, config):
 		self.config = config
 		self.scss_dir = config["SCSS"]["directory"]
-		self.scss_command = read_list(config["SCSS"]["command"])
+		self.scss_command = self.config.get_list("SCSS", "command")
 		self.images = []
 
 		theme_sections = ["GTK2", "GTK3"]
@@ -50,14 +46,14 @@ class ThemeParser:
 
 		for theme in theme_sections:
 			td = {
-				"files": read_list(self.config[theme]["files"]),
+				"files": self.config.get_list(theme, "files"),
 				"separator": self.config.get(theme, "separator"),
 				"pattern": self.config.get(theme, "pattern") + '\n'
 			}
 			self.themes.append(td)
 
 		for directories in self.config['Images'].values():
-			self.images.append(dict(zip(("source", "dest"), read_list(directories))))
+			self.images.append(dict(zip(("source", "dest"), read_params(directories))))
 
 	def write_colors(self):
 		"""Rewrite colors in theme files"""
@@ -92,7 +88,7 @@ class ThemeParser:
 					rewrite_file(imagefile, text)
 
 	def make_pattern_from_image(self):
-		image_color_names = read_list(self.config["Pattern"]["colors"])
+		image_color_names = self.config.get_list("Pattern", "colors")
 		image_colors = {k: self.config['Colors'][k] for k in image_color_names}
 		filelist = get_file_list(self.config["Pattern"]["directory"])
 
@@ -113,9 +109,7 @@ class MainWindow:
 	"""Main program"""
 	def __init__(self):
 		# Read config
-		self.configfile = "scripts/settings.ini"
-		self.config = configparser.ConfigParser()
-		self.config.read(self.configfile)
+		self.config = ConfigReader("scripts/settings.ini")
 
 		# Load parser
 		self.parser = ThemeParser(self.config)
@@ -129,16 +123,24 @@ class MainWindow:
 
 		# Fill up GUI
 		self.color_buttons = dict()
+		self.pattern_checks = dict()
+		self.gui["colors_box"].pack_start(Gtk.Separator(), False, False, 0)
+
+		current_pattents = self.config.get_list("Pattern", "colors")
 		for key, value in self.config['Colors'].items():
 			box = Gtk.Box(spacing=8)
 			label = Gtk.Label(key)
 			self.color_buttons[key] = Gtk.ColorButton()
+			self.pattern_checks[key] = Gtk.CheckButton()
 
 			color = Gdk.RGBA()
 			color.parse(value)
 			self.color_buttons[key].set_rgba(color)
 
+			self.pattern_checks[key].set_active(key in current_pattents)
+
 			box.pack_start(label, False, False, 0)
+			box.pack_end(self.pattern_checks[key], False, False, 0)
 			box.pack_end(self.color_buttons[key], False, False, 0)
 			self.gui["colors_box"].pack_start(box, False, False, 0)
 			self.gui["colors_box"].pack_start(Gtk.Separator(), False, False, 0)
@@ -156,8 +158,6 @@ class MainWindow:
 	def on_rebuild_click(self, widget):
 		for key, button in self.color_buttons.items():
 			self.config['Colors'][key] = hex_from_rgba(button.get_rgba())
-		with open(self.configfile, 'w') as configfile:
-			self.config.write(configfile)
 
 		self.parser.write_colors()
 		self.parser.update_scss()
@@ -165,9 +165,13 @@ class MainWindow:
 		self.parser.make_image_from_pattern()
 
 	def on_pattern_click(self, widget):
+		current_pattents = [key for key in self.pattern_checks if self.pattern_checks[key].get_active()]
+		self.config.set_list("Pattern", "colors", current_pattents)
+
 		self.parser.make_pattern_from_image()
 
 	def on_close_window(self, *args):
+		self.config.save()
 		Gtk.main_quit(*args)
 
 
