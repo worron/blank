@@ -42,7 +42,6 @@ class ThemeParser:
 		self.config = config
 		self.scss_dir = config["SCSS"]["directory"]
 		self.scss_command = self.config.get_list("SCSS", "command")
-		self.images = []
 
 		theme_sections = ["GTK2", "GTK3"]
 		self.themes = []
@@ -54,9 +53,6 @@ class ThemeParser:
 				"pattern": self.config.get(theme, "pattern") + '\n'
 			}
 			self.themes.append(td)
-
-		for directories in self.config['Images'].values():
-			self.images.append(dict(zip(("source", "dest"), read_params(directories))))
 
 	def write_colors(self):
 		"""Rewrite colors in theme files"""
@@ -77,5 +73,5 @@ class ThemeParser:
 
 	def rebuild_images(self):
 		"""Build theme svg images from patterns"""
-		for images in self.images:
-			make_image_from_pattern(images["source"], images["dest"], self.config['Colors'])
+		for image_dir in self.config['Images'].values():
+			make_image_from_pattern(image_dir, image_dir, self.config['Colors'])

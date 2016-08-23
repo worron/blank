@@ -11,7 +11,10 @@ def get_file_list(path, ext='.svg', deep=False):
 	"""Find all files in directories"""
 	filelist = []
 	for root, _, files in os.walk(path):
-		filelist.extend([os.path.join(root, name) for name in files if name.endswith(ext)])
+		for name in files:
+			fullname = os.path.join(root, name)
+			if (name.endswith(ext) and not os.path.islink(fullname)):
+				filelist.append(fullname)
 		if not deep: break
 	return filelist
 
