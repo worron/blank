@@ -9,8 +9,18 @@ $rb_border_width: 2px;
 $rb_alpha: 0.4;
 
 $expander_size: 10px;
+$toolgroup_expander_size: 12px;
 
 //Classes
+GtkToolItemGroup {
+	-GtkToolItemGroup-expander-size: $toolgroup_expander_size;
+
+	> .button {
+		border: solid 0 $bg_color;
+		border-bottom-width: 1px;
+	}
+}
+
 GtkTreeView {
 	-GtkTreeView-expander-size: $expander_size;
 
