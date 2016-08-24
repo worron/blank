@@ -11,7 +11,7 @@ class ParentColorDialog(Gtk.Dialog):
 			self, "Parent Color", parent, 0,
 			(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK)
 		)
-		self.set_default_size(200, 100)
+		self.set_default_size(300, 100)
 
 		self.combo = Gtk.ComboBoxText()
 		self.combo.set_entry_text_column(0)
@@ -61,7 +61,7 @@ class ColorsConfig:
 			self.pattern_checks[key].connect("toggled", self.on_pattern_check_toggled, key)
 
 			# set parent button
-			self.parent_buttons[key].set_property("width-request", 250)
+			self.parent_buttons[key].set_property("width-request", 300)
 			self.set_parent_button_state(self.config["Colors"][key], key)
 			self.parent_buttons[key].connect("clicked", self.on_parent_color_click, key)
 
