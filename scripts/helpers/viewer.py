@@ -18,7 +18,6 @@ class IconView:
 
 		# Pattern location dialog
 		self.location_dialog = Gtk.FileChooserDialog(
-			# "Choose pattern directory", self.gui["window"], Gtk.FileChooserAction.OPEN,
 			"Choose pattern directory", self.gui["window"], Gtk.FileChooserAction.SELECT_FOLDER,
 			(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OPEN, Gtk.ResponseType.OK)
 		)
@@ -48,7 +47,7 @@ class IconView:
 	def make_pattern(self, widget):
 		"""Make patterns form images"""
 		image_color_names = self.config.get_list("Pattern", "colors")
-		image_colors = {k: self.config['Colors'][k] for k in image_color_names}
+		image_colors = {k: self.config.colors[k] for k in image_color_names}
 		make_pattern_from_image(self.curdir, image_colors)
 
 		self.update_patterns_view()
@@ -70,7 +69,7 @@ class IconView:
 	def update_patterns_view(self):
 		"""Update patterns"""
 		for oldfile in get_file_list(self.tempdir.name, ".svg"): os.remove(oldfile)
-		make_image_from_pattern(self.curdir, self.tempdir.name, self.config['Colors'])
+		make_image_from_pattern(self.curdir, self.tempdir.name, self.config.colors)
 		self.load_images(self.tempdir.name, self.pattern_store)
 
 	def on_patterns_delete_click(self, *args):
@@ -99,3 +98,4 @@ class IconView:
 
 	def on_exit(self):
 		self.tempdir.cleanup()
+		self.location_dialog.destroy()

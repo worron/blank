@@ -61,7 +61,7 @@ class ThemeParser:
 				with open(file_, 'r+') as themefile:
 					text = themefile.read()
 					old_colors = text.split(theme["separator"])[0]
-					new_colors = "".join([theme["pattern"] % (n, c) for n, c in self.config['Colors'].items()])
+					new_colors = "".join([theme["pattern"] % (n, c) for n, c in self.config.colors.items()])
 					rewrite_file(themefile, text.replace(old_colors, new_colors))
 
 	def update_scss(self):
@@ -74,4 +74,4 @@ class ThemeParser:
 	def rebuild_images(self):
 		"""Build theme svg images from patterns"""
 		for image_dir in self.config['Images'].values():
-			make_image_from_pattern(image_dir, image_dir, self.config['Colors'])
+			make_image_from_pattern(image_dir, image_dir, self.config.colors)
