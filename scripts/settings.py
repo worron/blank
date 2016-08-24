@@ -1,173 +1,66 @@
 #!/usr/bin/env python3
 # -*- Mode: Python; indent-tabs-mode: t; python-indent: 4; tab-width: 4 -*-
 import os
-import configparser
-import subprocess
 
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk
 
-
-# Support functions
-def hex_from_rgba(rgba):
-	"""Translate color from Gdk.RGBA to html hex format"""
-	return "#%02X%02X%02X" % tuple([int(getattr(rgba, name) * 255) for name in ("red", "green", "blue")])
-
-
-def get_file_list(*dirlist, ext='.svg'):
-	"""Find all files in directories"""
-	filelist = []
-	for path in dirlist:
-		for root, _, files in os.walk(path):
-			filelist.extend([os.path.join(root, name) for name in files if name.endswith(ext)])
-	return filelist
-
-
-def rewrite_file(file_, text):
-	"""Rewrite opened file"""
-	file_.seek(0)
-	file_.write(text)
-	file_.truncate()
-
-
-def read_list(key):
-	"Read list from config"
-	return [element.strip() for element in key.split(";")]
-
-
-# Main classes
-class ThemeParser:
-	"Config files parser"
-	def __init__(self, config):
-		self.config = config
-		self.scss_dir = config["SCSS"]["directory"]
-		self.scss_command = read_list(config["SCSS"]["command"])
-		self.images = []
-
-		theme_sections = ["GTK2", "GTK3"]
-		self.themes = []
-
-		for theme in theme_sections:
-			td = {
-				"files": read_list(self.config[theme]["files"]),
-				"separator": self.config.get(theme, "separator"),
-				"pattern": self.config.get(theme, "pattern") + '\n'
-			}
-			self.themes.append(td)
-
-		for directories in self.config['Images'].values():
-			self.images.append(dict(zip(("source", "dest"), read_list(directories))))
-
-	def write_colors(self):
-		"""Rewrite colors in theme files"""
-		for theme in self.themes:
-			for file_ in theme["files"]:
-				with open(file_, 'r+') as themefile:
-					text = themefile.read()
-					old_colors = text.split(theme["separator"])[0]
-					new_colors = "".join([theme["pattern"] % (n, c) for n, c in self.config['Colors'].items()])
-					rewrite_file(themefile, text.replace(old_colors, new_colors))
-
-	def update_scss(self):
-		"""Build css files from scss"""
-		try:
-			subprocess.call(self.scss_command, cwd=self.scss_dir)
-		except Exception as e:
-			print("Fail to update scss\n", e)
-
-	def make_image_from_pattern(self):
-		"""Build theme svg images from patterns"""
-		for images in self.images:
-			for file_ in get_file_list(images["source"], ext=".pat"):
-				filename = os.path.basename(file_)
-
-				with open(file_, 'r') as imagefile:
-					text = imagefile.read()
-
-				for key, value in self.config['Colors'].items():
-					text = text.replace("@" + key, value)
-
-				with open(os.path.join(images["dest"], filename.split(".")[0] + ".svg"), 'w') as imagefile:
-					rewrite_file(imagefile, text)
-
-	def make_pattern_from_image(self):
-		image_color_names = read_list(self.config["Pattern"]["colors"])
-		image_colors = {k: self.config['Colors'][k] for k in image_color_names}
-		filelist = get_file_list(self.config["Pattern"]["directory"])
-
-		for file_ in filelist:
-			with open(file_, 'r+') as imagefile:
-				text = imagefile.read()
-
-				for key, value in image_colors.items():
-					text = text.replace(value, "@" + key)
-					text = text.replace(value.lower(), "@" + key)
-
-				rewrite_file(imagefile, text)
-
-			os.rename(file_, file_.split(".")[0] + ".pat")
+from helpers.cfreader import ConfigReader
+from helpers.viewer import IconView
+from helpers.colors import ColorsConfig
 
 
 class MainWindow:
 	"""Main program"""
 	def __init__(self):
 		# Read config
-		self.configfile = "scripts/settings.ini"
-		self.config = configparser.ConfigParser()
-		self.config.read(self.configfile)
-
-		# Load parser
-		self.parser = ThemeParser(self.config)
+		self.config = ConfigReader("scripts/settings.ini")
 
 		# Load GUI
 		self.builder = Gtk.Builder()
-		self.builder.add_from_file('scripts/gui.glade')
+		self.builder.add_from_file('scripts/gui/main.glade')
 
-		gui_elements = ('window', "colors_box", "build_button", "exit_button", "pattern_button")
+		gui_elements = (
+			'window', "colors_box", "build_button", "exit_button", "images_iconview", "notebook",
+			"colors_scrolledwindow", "patterns_iconview", "patterns_delete_button", "images_delete_button",
+			"pattern_location_label", "pattern_directory_button"
+		)
 		self.gui = {element: self.builder.get_object(element) for element in gui_elements}
 
-		# Fill up GUI
-		self.color_buttons = dict()
-		for key, value in self.config['Colors'].items():
-			box = Gtk.Box(spacing=8)
-			label = Gtk.Label(key)
-			self.color_buttons[key] = Gtk.ColorButton()
-
-			color = Gdk.RGBA()
-			color.parse(value)
-			self.color_buttons[key].set_rgba(color)
-
-			box.pack_start(label, False, False, 0)
-			box.pack_end(self.color_buttons[key], False, False, 0)
-			self.gui["colors_box"].pack_start(box, False, False, 0)
-			self.gui["colors_box"].pack_start(Gtk.Separator(), False, False, 0)
+		# Pages
+		self.pages = [ColorsConfig(self.config, self.gui), IconView(self.config, self.gui)]
+		self.last_handlers = dict()
 
 		# Connect signals
 		self.signals = dict()
 		self.gui['window'].connect("delete-event", self.on_close_window)
-		self.gui['build_button'].connect("clicked", self.on_rebuild_click)
-		self.gui['pattern_button'].connect("clicked", self.on_pattern_click)
 		self.gui['exit_button'].connect("clicked", self.on_close_window)
+		self.gui['notebook'].connect("switch_page", self.on_page_changed)
 
 		# Application init
 		self.gui['window'].show_all()
+		self.gui['notebook'].emit("switch_page", self.gui['colors_scrolledwindow'], 0)
 
-	def on_rebuild_click(self, widget):
-		for key, button in self.color_buttons.items():
-			self.config['Colors'][key] = hex_from_rgba(button.get_rgba())
-		with open(self.configfile, 'w') as configfile:
-			self.config.write(configfile)
+	def on_page_changed(self, nb, page, index):
+		for button in ['build_button']:
+			if button in self.last_handlers:
+				self.gui[button].disconnect_by_func(self.last_handlers[button])
+			if button in self.pages[index].mhandlers:
+				self.gui[button].connect("clicked", self.pages[index].mhandlers[button])
+			# self.gui[button].set_sensitive(button in self.pages[index].mhandlers)
 
-		self.parser.write_colors()
-		self.parser.update_scss()
+		self.last_handlers = self.pages[index].mhandlers
 
-		self.parser.make_image_from_pattern()
-
-	def on_pattern_click(self, widget):
-		self.parser.make_pattern_from_image()
+		if hasattr(self.pages[index], 'on_page_switch'):
+			self.pages[index].on_page_switch()
 
 	def on_close_window(self, *args):
+		self.config.save()
+
+		for page in self.pages:
+			if hasattr(page, 'on_exit'): page.on_exit()
+
 		Gtk.main_quit(*args)
 
 

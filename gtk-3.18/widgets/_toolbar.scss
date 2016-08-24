@@ -23,12 +23,12 @@ $primary_sep_width: 2px;
 
 //Classes
 .primary-toolbar {
-	@include toolbar-button($tab_bg_color);
-	background-color: $tab_bg_color;
-	.scale { @include scale-colors-fix($tab_bg_color); }
+	@include toolbar-button($primary_bar_bg_color);
+	background-color: $primary_bar_bg_color;
+	.scale { @include scale-colors-fix($primary_bar_bg_color); }
 
 
-	.separator { @include sep-colors-set($tab_bg_color) }
+	.separator { @include sep-colors-set($primary_bar_bg_color) }
 }
 
 .toolbar {
