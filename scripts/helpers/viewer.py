@@ -13,14 +13,22 @@ class IconView:
 		self.config = config
 		self.gui = gui
 		self.curdir = self.config.get("Pattern", "directory")
-		self.ISIZE = int(self.config.get("GUI", "icon_size"))
 		self.tempdir = tempfile.TemporaryDirectory()
+
+		self.isize = int(self.config.get("GUI", "icon_size"))
+		self.psize = int(self.config.get("GUI", "pattern_size"))
 
 		# Pattern location dialog
 		self.location_dialog = Gtk.FileChooserDialog(
 			"Choose pattern directory", self.gui["window"], Gtk.FileChooserAction.SELECT_FOLDER,
 			(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OPEN, Gtk.ResponseType.OK)
 		)
+
+		# Icon sizes
+		self.gui["images_size_spinbutton"].set_value(self.isize)
+		self.gui["patterns_size_spinbutton"].set_value(self.psize)
+		self.gui['images_size_spinbutton'].connect("value_changed", self.on_image_size_changed)
+		self.gui['patterns_size_spinbutton'].connect("value_changed", self.on_patterns_size_changed)
 
 		# Cleate icon stores
 		self.images_store = Gtk.ListStore(GdkPixbuf.Pixbuf)
@@ -52,25 +60,34 @@ class IconView:
 
 		self.update_patterns_view()
 
-	def load_images(self, path, store):
+	@staticmethod
+	def load_images(path, store, size):
 		"""Show svg images"""
 		images = get_file_list(path, ".svg")
 
 		store.clear()
 		for image in images:
-			pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(image, self.ISIZE, self.ISIZE)
+			pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(image, size, size)
 			store.append([pixbuf])
 
 	def on_page_switch(self):
 		"""Notebook handler"""
-		self.load_images(self.curdir, self.images_store)
+		self.load_images(self.curdir, self.images_store, self.isize)
 		self.update_patterns_view()
 
 	def update_patterns_view(self):
 		"""Update patterns"""
 		for oldfile in get_file_list(self.tempdir.name, ".svg"): os.remove(oldfile)
 		make_image_from_pattern(self.curdir, self.tempdir.name, self.config.colors)
-		self.load_images(self.tempdir.name, self.pattern_store)
+		self.load_images(self.tempdir.name, self.pattern_store, self.psize)
+
+	def on_image_size_changed(self, button):
+		self.isize = int(button.get_value())
+		self.load_images(self.curdir, self.images_store, self.isize)
+
+	def on_patterns_size_changed(self, button):
+		self.psize = int(button.get_value())
+		self.update_patterns_view()
 
 	def on_patterns_delete_click(self, *args):
 		for patfile in get_file_list(self.curdir, ".pat"): os.remove(patfile)
@@ -78,7 +95,7 @@ class IconView:
 
 	def on_images_delete_click(self, *args):
 		for imagefile in get_file_list(self.curdir, ".svg"): os.remove(imagefile)
-		self.load_images(self.curdir, self.images_store)
+		self.load_images(self.curdir, self.images_store, self.isize)
 
 	def on_change_directory_click(self, *args):
 		self.location_dialog.set_current_folder(self.curdir)
@@ -88,7 +105,7 @@ class IconView:
 			self.curdir = self.location_dialog.get_current_folder()
 			self.update_location_label()
 
-			self.load_images(self.curdir, self.images_store)
+			self.load_images(self.curdir, self.images_store, self.isize)
 			self.update_patterns_view()
 
 		self.location_dialog.hide()
