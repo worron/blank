@@ -17,7 +17,7 @@ def make_pattern_from_image(dir_, image_colors):
 			text = text.replace(value, "@" + key)
 			text = text.replace(value.lower(), "@" + key)
 
-		with open(file_.split(".")[0] + ".pat", 'w') as patfile:
+		with open(file_[:-3] + "pat", 'w') as patfile: # FIX THIS
 			rewrite_file(patfile, text)
 
 
