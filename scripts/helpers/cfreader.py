@@ -4,7 +4,7 @@ import collections
 
 
 def read_params(str_):
-	"""Read list of parametrs from srtring"""
+	"""Read list of parameters from string"""
 	return [element.strip() for element in str_.split(";")]
 
 
@@ -25,8 +25,8 @@ class ConfigReader(configparser.ConfigParser):
 
 	def load_colors(self):
 		"""Read color scheme from config"""
-		for cname in (self["Colors"]):
-			self.colors[cname] = get_real_value(self["Colors"], cname)
+		for color_name in (self["Colors"]):
+			self.colors[color_name] = get_real_value(self["Colors"], color_name)
 
 	def get_list(self, section, option):
 		"""Read list of values"""

@@ -8,6 +8,5 @@ gtk-3.18/gtk.css
 **/__pycache__
 **/*.pyc
 
-# Ignore my tox files
-**/tox.ini
-**/.tox
+# Ignore IDE settings
+.idea/

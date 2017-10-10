@@ -42,22 +42,23 @@ class MainWindow:
 		self.gui['window'].show_all()
 		self.gui['notebook'].emit("switch_page", self.gui['colors_scrolledwindow'], 0)
 
+	# noinspection PyUnusedLocal
 	def on_page_changed(self, nb, page, index):
 		for button in ['build_button']:
 			if button in self.last_handlers:
 				self.gui[button].disconnect_by_func(self.last_handlers[button])
-			if button in self.pages[index].mhandlers:
-				self.gui[button].connect("clicked", self.pages[index].mhandlers[button])
-			# self.gui[button].set_sensitive(button in self.pages[index].mhandlers)
+			if button in self.pages[index].main_handlers:
+				self.gui[button].connect("clicked", self.pages[index].main_handlers[button])
 
-		self.last_handlers = self.pages[index].mhandlers
+		self.last_handlers = self.pages[index].main_handlers
 
 		if hasattr(self.pages[index], 'on_page_switch'):
 			self.pages[index].on_page_switch()
 
 	def on_close_window(self, *args):
 		for page in self.pages:
-			if hasattr(page, 'on_exit'): page.on_exit()
+			if hasattr(page, 'on_exit'):
+				page.on_exit()
 
 		self.config.save()
 		Gtk.main_quit(*args)

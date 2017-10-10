@@ -6,7 +6,7 @@ from .parser import ThemeParser
 
 class ParentColorDialog(Gtk.Dialog):
 	"""Choose parent color dialog"""
-	def __init__(self, parent, clist, current):
+	def __init__(self, parent, color_list, current):
 		Gtk.Dialog.__init__(
 			self, "Parent Color", parent, 0,
 			(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK)
@@ -16,10 +16,10 @@ class ParentColorDialog(Gtk.Dialog):
 		self.combo = Gtk.ComboBoxText()
 		self.combo.set_entry_text_column(0)
 
-		clist.insert(0, "None")
-		for cname in clist:
-			self.combo.append_text(cname)
-		self.combo.set_active(clist.index(current) if current in clist else 0)
+		color_list.insert(0, "None")
+		for color_name in color_list:
+			self.combo.append_text(color_name)
+		self.combo.set_active(color_list.index(current) if current in color_list else 0)
 
 		box = self.get_content_area()
 		box.add(self.combo)
@@ -27,7 +27,7 @@ class ParentColorDialog(Gtk.Dialog):
 
 
 class ColorsConfig:
-	"Colors settings helper"
+	"""Colors settings helper"""
 	def __init__(self, config, gui):
 		self.config = config
 		self.gui = gui
@@ -38,11 +38,11 @@ class ColorsConfig:
 		self.color_buttons = dict()
 		self.parent_buttons = dict()
 		self.pattern_checks = dict()
-		self.bsignals = dict()
+		self.button_signals = dict()
 		self.gui["colors_box"].pack_start(Gtk.Separator(), False, False, 0)
 
 		# colors list
-		current_pattents = self.config.get_list("Pattern", "colors")
+		current_patterns = self.config.get_list("Pattern", "colors")
 		for key, value in self.config.colors.items():
 			box = Gtk.Box(spacing=8)
 			label = Gtk.Label(key)
@@ -54,10 +54,10 @@ class ColorsConfig:
 
 			# set color button
 			self.set_color_button_state(key, value)
-			self.bsignals[key] = self.color_buttons[key].connect("color_set", self.on_color_changed, key)
+			self.button_signals[key] = self.color_buttons[key].connect("color_set", self.on_color_changed, key)
 
 			# set pattern check
-			self.pattern_checks[key].set_active(key in current_pattents)
+			self.pattern_checks[key].set_active(key in current_patterns)
 			self.pattern_checks[key].connect("toggled", self.on_pattern_check_toggled, key)
 
 			# set parent button
@@ -65,7 +65,7 @@ class ColorsConfig:
 			self.set_parent_button_state(self.config["Colors"][key], key)
 			self.parent_buttons[key].connect("clicked", self.on_parent_color_click, key)
 
-			# built color settins row
+			# built color settings row
 			box.pack_start(label, False, False, 0)
 			box.pack_end(self.pattern_checks[key], False, False, 0)
 			box.pack_end(self.color_buttons[key], False, False, 0)
@@ -73,38 +73,41 @@ class ColorsConfig:
 			self.gui["colors_box"].pack_start(box, False, False, 0)
 			self.gui["colors_box"].pack_start(Gtk.Separator(), False, False, 0)
 
-		# Mainpage buttnons hanlers
-		self.mhandlers = dict()
-		self.mhandlers['build_button'] = self.rebuild_theme
+		# Main page buttons handlers
+		self.main_handlers = dict()
+		self.main_handlers['build_button'] = self.rebuild_theme
 
+	# noinspection PyUnusedLocal
 	def rebuild_theme(self, widget):
 		"""Full theme rebuild with current colors"""
 		self.parser.write_colors()
 		self.parser.update_scss()
 		self.parser.rebuild_images()
 
-	def set_color_button_state(self, bname, hex_color):
+	def set_color_button_state(self, button_name, hex_color):
 		"""Set button rgba form hex color"""
 		color = Gdk.RGBA()
 		color.parse(hex_color)
-		self.color_buttons[bname].set_rgba(color)
+		self.color_buttons[button_name].set_rgba(color)
 
-	def set_parent_button_state(self, pcolor, name):
+	def set_parent_button_state(self, parent_color, name):
 		"""Set parent button label"""
-		is_inherited = pcolor in self.config.colors.keys()
+		is_inherited = parent_color in self.config.colors.keys()
 		self.color_buttons[name].set_sensitive(not is_inherited)
-		self.parent_buttons[name].set_label("Parent: " + pcolor if is_inherited else self.NO_PARENT)
+		self.parent_buttons[name].set_label("Parent: " + parent_color if is_inherited else self.NO_PARENT)
 
+	# noinspection PyUnusedLocal
 	def on_pattern_check_toggled(self, button, name):
-		current_pattents = [key for key in self.pattern_checks if self.pattern_checks[key].get_active()]
-		self.config.set_list("Pattern", "colors", current_pattents)
+		current_patterns = [key for key in self.pattern_checks if self.pattern_checks[key].get_active()]
+		self.config.set_list("Pattern", "colors", current_patterns)
 
+	# noinspection PyUnusedLocal
 	def on_parent_color_click(self, button, name):
-		# build list of parent color candidats
+		# build list of parent color candidates
 		ccd = self.config["Colors"]
 		parent_colors = [k for k in ccd.keys() if ccd[k] not in ccd.keys() and k != name]
 
-		# show dilaog
+		# show dialog
 		dialog = ParentColorDialog(self.gui["window"], parent_colors, ccd[name])
 		response = dialog.run()
 
@@ -116,7 +119,7 @@ class ColorsConfig:
 			# write config
 			if selected in self.config.colors.keys():
 				ccd[name] = selected
-				with self.color_buttons[name].handler_block(self.bsignals[name]):
+				with self.color_buttons[name].handler_block(self.button_signals[name]):
 					self.set_color_button_state(name, ccd[selected])
 			else:
 				ccd[name] = hex_from_rgba(self.color_buttons[name].get_rgba())
@@ -128,8 +131,8 @@ class ColorsConfig:
 	def on_color_changed(self, button, name):
 		hex_color = hex_from_rgba(button.get_rgba())
 		self.config["Colors"][name] = hex_color
-		for cname in self.config.colors.keys():
-			if self.config["Colors"][cname] == name:
-				with self.color_buttons[cname].handler_block(self.bsignals[cname]):
-					self.set_color_button_state(cname, hex_color)
+		for color_name in self.config.colors.keys():
+			if self.config["Colors"][color_name] == name:
+				with self.color_buttons[color_name].handler_block(self.button_signals[color_name]):
+					self.set_color_button_state(color_name, hex_color)
 		self.config.load_colors()

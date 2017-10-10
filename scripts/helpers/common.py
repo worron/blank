@@ -2,21 +2,17 @@
 import os
 
 
-def read_params(str_):
-	"""Read list of parametrs from srtring"""
-	return [element.strip() for element in str_.split(";")]
-
-
 def get_file_list(path, ext='.svg', deep=False):
 	"""Find all files in directories"""
-	filelist = []
+	file_list = []
 	for root, _, files in os.walk(path):
 		for name in files:
 			fullname = os.path.join(root, name)
-			if (name.endswith(ext) and not os.path.islink(fullname)):
-				filelist.append(fullname)
-		if not deep: break
-	return filelist
+			if name.endswith(ext) and not os.path.islink(fullname):
+				file_list.append(fullname)
+		if not deep:
+			break
+	return file_list
 
 
 def rewrite_file(file_, text):
