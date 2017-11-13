@@ -1,0 +1,405 @@
+@import "button";
+
+
+/**********
+ ! Notebook
+***********/
+
+@include exports("notebook") {
+    notebook {
+        &.frame {
+            border-color: border_normal($base_color);
+
+            &.top {
+                border-width: 1px 1px 0;
+            }
+
+            &.right {
+                border-width: 1px 1px 1px 0;
+            }
+
+            &.bottom {
+                border-width: 0 1px 1px;
+            }
+
+            &.left {
+                border-width: 1px 0 1px 1px;
+            }
+        }
+
+        > header {
+            padding: 0;
+            margin: 0;
+            border-width: 1px;
+            border-radius: 0;
+            border-color: $borders_color;
+            background-image: none;
+            background-clip: border-box;
+            background-color: shade($base_color, .9);
+            color: $text_color;
+
+            tabs { margin: -1px; }
+
+            &.top {
+                border-bottom-style: solid;
+
+                tabs {
+                    margin-top: 0;
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+            }
+
+            &.right {
+                border-left-style: solid;
+
+                tabs {
+                    margin-right: 0;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                }
+            }
+
+            &.bottom {
+                border-top-style: solid;
+
+                tabs {
+                    margin-bottom: 0;
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+            }
+
+            &.left {
+                border-right-style: solid;
+
+                tabs {
+                    margin-left: 0;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                }
+            }
+
+            &.top > tabs > arrow {
+                @extend %notebook_vert_arrows;
+
+                border-top-style: none;
+            }
+
+            &.bottom > tabs > arrow {
+                @extend %notebook_vert_arrows;
+
+                border-bottom-style: none;
+            }
+
+            @at-root %notebook_vert_arrows {
+                margin-left: 0;
+                margin-right: 0;
+                padding-left: 4px;
+                padding-right: 4px;
+
+                &.down { -gtk-icon-source: -gtk-icontheme('pan-start-symbolic'); }
+
+                &.up { -gtk-icon-source: -gtk-icontheme('pan-end-symbolic'); }
+            }
+
+            &.left > tabs > arrow {
+                @extend %notebook_horz_arrows;
+
+                border-left-style: none;
+            }
+
+            &.right > tabs > arrow {
+                @extend %notebook_horz_arrows;
+
+                border-right-style: none;
+            }
+
+            @at-root %notebook_horz_arrows {
+                margin-top: 0;
+                margin-bottom: 0;
+                padding-top: 4px;
+                padding-bottom: 4px;
+
+                &.down { -gtk-icon-source: -gtk-icontheme('pan-up-symbolic'); }
+
+                &.up { -gtk-icon-source: -gtk-icontheme('pan-down-symbolic'); }
+            }
+
+            > tabs > arrow {
+                @extend %close_button;
+
+                min-height: 16px;
+                min-width: 16px;
+
+                &:hover:not(:active):not(:backdrop) {
+                    background-clip: padding-box;
+                    background-image: none;
+                    background-color: transparentize($white, .7);
+                    border-color: transparent;
+                    box-shadow: none;
+                }
+
+                &:disabled { @extend %undecorated_button; }
+            }
+
+            tab {
+                padding: 0;
+                outline: none;
+
+                > box,
+                > label,
+                > widget > box {
+                    padding: ($spacing + 2px) $spacing * 2; // top/bottom | left/right
+                    box-shadow: 1px 1px transparent; //duplicate shadows used for transition?
+                    transition: box-shadow .2s linear;
+                }
+
+                &.reorderable-page {
+                    > box,
+                    > label,
+                    > widget > box {
+                        padding: ($spacing + 2px) $spacing * 2; // top | right | bottom | left
+                    }
+                }
+
+                /* close button styling */
+                button,
+                button.flat {
+                    @extend %close_button;
+
+                    min-height: 16px;
+                    min-width: 16px;
+                    padding: 0;
+                    margin-left: $spacing * 2;
+                    //border: 1px solid transparent;
+                    transition: all .1s linear;
+                }
+
+                &:hover {
+                    background-color: shade($base_color, .93);
+                    border-color: transparent;
+                    outline: none;
+                }
+
+                &:checked {
+                    @if (lightness($bg_color) > 50) {
+                        background-color: mix($bg_color, $base_color, .7);
+                    } @else {
+                        background-color: mix($bg_color, $base_color, .4);
+                    }
+
+                    border-bottom-color: transparent;
+                    outline: none;
+
+                    label {
+                        color: $selected_bg_color;
+                    }
+
+                    &:hover {
+                        @if (lightness($bg_color) > 50) {
+                            background-color: mix($bg_color, $base_color, .9);
+                        } @else {
+                            background-color: mix($bg_color, $base_color, .6);
+                        }
+                    }
+                }
+
+                label {
+                    color: mix($text_color, $base_color, .3);
+                }
+            }
+
+
+            &.top tab {
+                box-shadow: inset 0 -1px $borders_color; 
+                transition: box-shadow .2s ease-out;
+
+                &:hover {
+                    outline: none; 
+                    &:not(:first-child):not(:last-child):not(:only-child) {
+                        box-shadow: 1px 0 1px shade($base_color, .85), -1px 0 1px shade($base_color, .85), inset 0 -1px $borders_color;
+                    }
+
+                    &:last-child:not(:only-child) {
+                        box-shadow: -1px 0 1px shade($base_color, .85), inset 0 -1px $borders_color;
+                    }
+
+                    &:first-child:not(:only-child) {
+                        box-shadow: 1px 0 1px shade($base_color, .85), inset 0 -1px $borders_color;
+                    }       
+                }
+
+                &:checked {
+                    outline: none;
+
+                    label {
+                        margin-bottom: 0;
+                        color: $selected_bg_color;
+                    }
+
+                    &:hover {
+                        background-color: mix($bg_color, $base_color, .6);
+                    }
+
+                    &:not(:first-child):not(:last-child):not(:only-child) {
+                        box-shadow: 1px 0 1px shade($base_color, .8), -1px 0 1px shade($base_color, .8), inset 0 -2px $selected_bg_color;
+                    }
+
+                    &:last-child:not(:only-child) {
+                        box-shadow: -1px 0 1px shade($base_color, .8), inset 0 -2px $selected_bg_color;
+
+                    }
+
+                    &:first-child:not(:only-child) {
+                        box-shadow: 1px 0 1px shade($base_color, .8), inset 0 -2px $selected_bg_color;
+
+                    }
+                }
+            }
+
+            &.right tab {
+                box-shadow: inset 1px 0 $borders_color;
+                transition: box-shadow .3s ease-out;
+
+                &:hover {
+                    outline: none;
+
+                    &:not(:first-child):not(:last-child):not(:only-child) {
+                        box-shadow: 0 1px 1px shade($base_color, .85), 0 -1px 1px shade($base_color, .85), inset 1px 0 $borders_color;
+                    }
+
+                    &:last-child:not(:only-child) {
+                        box-shadow: 0 -1px 1px shade($base_color, .85), inset 1px 0 $borders_color;
+                    }
+
+                    &:first-child:not(:only-child) {
+                        box-shadow: 0 1px 1px shade($base_color, .85), inset 1px 0 $borders_color;
+                    }
+                }
+
+                &:checked {
+                    outline: none;
+
+                    label {
+                        margin-left: 0;
+                        color: $selected_bg_color;
+                    }
+
+                    &:hover {
+                        background-color: mix($bg_color, $base_color, .6);
+                    }
+
+                    &:not(:first-child):not(:last-child):not(:only-child) {
+                        box-shadow: 0 1px 1px shade($base_color, .8), 0 -1px 1px shade($base_color, .8), inset 2px 0 $selected_bg_color;
+                    }
+
+                    &:last-child:not(:only-child) {
+                        box-shadow: 0 -1px 1px shade($base_color, .8), inset 2px 0 $selected_bg_color;
+                    }
+
+                    &:first-child:not(:only-child) {
+                        box-shadow: 0 1px 1px shade($base_color, .8), inset 2px 0 $selected_bg_color;
+                    }
+                }
+            }
+
+            &.bottom tab {
+                box-shadow: inset 0 1px $borders_color;
+                transition: box-shadow .3s ease-out;
+
+                &:hover {
+                    outline: none;
+                    &:not(:first-child):not(:last-child):not(:only-child) {
+                        box-shadow: 1px 0 1px shade($base_color, .85), -1px 0 1px shade($base_color, .85), inset 0 1px $borders_color;
+                    }
+
+                    &:last-child:not(:only-child) {
+                        box-shadow: -1px 0 1px shade($base_color, .85), inset 0 1px $borders_color;
+                    }
+
+                    &:first-child:not(:only-child) {
+                        box-shadow: 1px 0 1px shade($base_color, .85), inset 0 1px $borders_color;
+                    }
+                }
+
+                &:checked {
+                    outline: none;
+
+                    label {
+                        margin-top: 0;
+                        color: $selected_bg_color;
+                    }
+
+                    &:hover {
+                        background-color: mix($bg_color, $base_color, .6);
+                    }
+
+                    &:not(:first-child):not(:last-child):not(:only-child) {
+                        box-shadow: 1px 0 1px shade($base_color, .8), -1px 0 1px shade($base_color, .8), inset 0 2px $selected_bg_color;
+                    }
+
+                    &:last-child:not(:only-child) {
+                        box-shadow: -1px 0 1px shade($base_color, .8), inset 0 2px $selected_bg_color;
+                    }
+
+                    &:first-child:not(:only-child) {
+                        box-shadow: 1px 0 1px shade($base_color, .8), inset 0 2px $selected_bg_color;
+                    }
+                }
+            }
+
+            &.left tab {
+                box-shadow: inset -1px 0 $borders_color;
+                transition: box-shadow .3s ease-out; 
+
+                &:hover {
+                    outline: none;
+
+                    &:not(:first-child):not(:last-child):not(:only-child) {
+                        box-shadow: 0 1px 1px shade($base_color, .85), 0 -1px 1px shade($base_color, .85), inset -1px 0 $borders_color;
+                    }
+
+                    &:last-child:not(:only-child) {
+                        box-shadow: 0 -1px 1px shade($base_color, .85), inset -1px 0 $borders_color;
+                    }
+
+                    &:first-child:not(:only-child) {
+                        box-shadow: 0 1px 1px shade($base_color, .85), inset -1px 0 $borders_color;
+                    }
+                }
+
+                &:checked {
+                    outline: none;
+
+                    label {
+                        margin-right: 0;
+                        color: $selected_bg_color;
+                    }
+
+                    &:hover {
+                        background-color: mix($bg_color, $base_color, .6);
+                    }
+
+                    &:not(:first-child):not(:last-child):not(:only-child) {
+                        box-shadow: 0 1px 1px shade($base_color, .8), 0 -1px 1px shade($base_color, .8), inset -2px 0 $selected_bg_color;
+                    }
+
+                    &:last-child:not(:only-child) {
+                        box-shadow: 0 -1px 1px shade($base_color, .8), inset -2px 0 $selected_bg_color;
+                    }
+
+                    &:first-child:not(:only-child) {
+                        box-shadow: 0 1px 1px shade($base_color, .8), inset -2px 0 $selected_bg_color;
+                    }
+                }
+            }
+        }
+
+        > stack:not(:only-child) {
+            background-color: $base_color;
+
+            &:backdrop { background-color: $backdrop_base_color; }
+        }
+    }
+}
