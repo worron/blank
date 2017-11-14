@@ -51,7 +51,7 @@
         }
 
         &:indeterminate,
-        &:indeterminate:backdrop { color: mix($fg_color, $bg_color, .5); }
+        &:indeterminate:backdrop { color: mix($fg_color, $bg_color, 50%); }
 
         &.highlight,
         &.highlight:backdrop {

@@ -23,7 +23,7 @@
     }
 
     &:indeterminate,
-    &:indeterminate:backdrop { color: mix($fg, $bg, .5); }
+    &:indeterminate:backdrop { color: mix($fg, $bg, 50%); }
 }
 
 
@@ -51,8 +51,8 @@
             color: $menubar_fg_color;
 
             &:hover {
-                border-color: mix($menubar_bg_color, $menubar_fg_color, .21);
-                background-color: mix($menubar_bg_color, $menubar_fg_color, .21);
+                border-color: mix($menubar_bg_color, $menubar_fg_color, 21%);
+                background-color: mix($menubar_bg_color, $menubar_fg_color, 21%);
                 background-image: none;
                 color: shade($menubar_fg_color, 1.08);
             }
@@ -107,7 +107,7 @@
 
             *:active, *:hover { color: $selected_fg_color; }
 
-            &:disabled, *:disabled { color: mix($menu_fg_color, $menu_bg_color, .5); }
+            &:disabled, *:disabled { color: mix($menu_fg_color, $menu_bg_color, 50%); }
 
             // submenu indicators
             arrow {
@@ -160,17 +160,17 @@
 
             &.top {
                 margin-top: -6px;
-                border-bottom: 1px solid mix($fg_color, $base_color, .1);
+                border-bottom: 1px solid mix($fg_color, $base_color, 10%);
                 -gtk-icon-source: -gtk-icontheme('pan-up-symbolic');
             }
 
             &.bottom {
                 margin-bottom: -6px;
-                border-top: 1px solid mix($fg_color, $base_color, .1);
+                border-top: 1px solid mix($fg_color, $base_color, 10%);
                 -gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
             }
 
-            &:hover { background-color: mix($fg_color, $base_color, .1); }
+            &:hover { background-color: mix($fg_color, $base_color, 10%); }
 
             &:backdrop { background-color: $backdrop_menu_color; }
 
@@ -192,7 +192,7 @@
 
             &:hover { color: alpha($selected_fg_color, .8); }
 
-            &:disabled { color: alpha(mix($menu_fg_color, $menu_bg_color, .5), .4); }
+            &:disabled { color: alpha(mix($menu_fg_color, $menu_bg_color, 50%), 0.4); }
         }
 
         check, radio {

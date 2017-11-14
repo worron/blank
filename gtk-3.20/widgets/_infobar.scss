@@ -33,7 +33,7 @@
                 button {
                     @include button($bg_color, $fg_color);
 
-                    &.close { @extend %close_button; }
+                    // &.close { @extend %close_button; }
                 }
             }
         }

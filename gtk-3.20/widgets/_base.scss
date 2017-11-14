@@ -8,7 +8,7 @@
 	outline-style: dashed;
 	outline-width: 1px;
 	outline-offset: -1px;
-	-gtk-outline-radius: $roundness;
+	-gtk-outline-radius: 0;
 }
 
 
@@ -27,7 +27,7 @@
 	&:selected { @extend %selected; }
 
 	&:disabled,
-	&:disabled:disabled { color: mix($fg_color, $bg_color, .5); }
+	&:disabled:disabled { color: mix($fg_color, $bg_color, 50%); }
 	&:disabled, &:disabled { -gtk-icon-effect: dim; }
 
 	&:hover { -gtk-icon-effect: highlight; }
@@ -57,7 +57,7 @@
 
 	&:disabled {
 		background-color: shade(shade($bg_color, .95), 1.05);
-		color: mix($fg_color, $bg_color, .5);
+		color: mix($fg_color, $bg_color, 50%);
 	}
 
 	&:selected { @extend %selected; }
@@ -96,5 +96,5 @@ assistant {
 	&.csd .sidebar { border-top-style: none; }
 
 	.sidebar label { padding: $spacing ($spacing * 2); }
-	.sidebar label.highlight { background-color: mix($fg_color, $bg_color, .8); }
+	.sidebar label.highlight { background-color: mix($fg_color, $bg_color, 80%); }
 }

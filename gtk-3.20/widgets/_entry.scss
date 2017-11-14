@@ -132,7 +132,7 @@
         &.#{$e_type} {
             color: $e_fg_color;
             border-color: border_normal($e_color);
-            background-color: mix($base_color, $e_color, .6);
+            background-color: mix($base_color, $e_color, 60%);
 
             image { color: $e_fg_color; }
 
@@ -166,7 +166,7 @@
     &:disabled {
         @include linear-gradient(shade($bg, .9), to top);
 
-        color: mix($bg, $fg, .5);
+        color: mix($bg, $fg, 50%);
     }
 }
 

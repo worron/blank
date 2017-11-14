@@ -127,7 +127,7 @@
             }
 
             > tabs > arrow {
-                @extend %close_button;
+                // @extend %close_button;
 
                 min-height: 16px;
                 min-width: 16px;
@@ -166,7 +166,7 @@
                 /* close button styling */
                 button,
                 button.flat {
-                    @extend %close_button;
+                    // @extend %close_button;
 
                     min-height: 16px;
                     min-width: 16px;
@@ -184,9 +184,9 @@
 
                 &:checked {
                     @if (lightness($bg_color) > 50) {
-                        background-color: mix($bg_color, $base_color, .7);
+                        background-color: mix($bg_color, $base_color, 70%);
                     } @else {
-                        background-color: mix($bg_color, $base_color, .4);
+                        background-color: mix($bg_color, $base_color, 40%);
                     }
 
                     border-bottom-color: transparent;
@@ -198,15 +198,15 @@
 
                     &:hover {
                         @if (lightness($bg_color) > 50) {
-                            background-color: mix($bg_color, $base_color, .9);
+                            background-color: mix($bg_color, $base_color, 90%);
                         } @else {
-                            background-color: mix($bg_color, $base_color, .6);
+                            background-color: mix($bg_color, $base_color, 60%);
                         }
                     }
                 }
 
                 label {
-                    color: mix($text_color, $base_color, .3);
+                    color: mix($text_color, $base_color, 30%);
                 }
             }
 
@@ -239,7 +239,7 @@
                     }
 
                     &:hover {
-                        background-color: mix($bg_color, $base_color, .6);
+                        background-color: mix($bg_color, $base_color, 60%);
                     }
 
                     &:not(:first-child):not(:last-child):not(:only-child) {
@@ -287,7 +287,7 @@
                     }
 
                     &:hover {
-                        background-color: mix($bg_color, $base_color, .6);
+                        background-color: mix($bg_color, $base_color, 60%);
                     }
 
                     &:not(:first-child):not(:last-child):not(:only-child) {
@@ -332,7 +332,7 @@
                     }
 
                     &:hover {
-                        background-color: mix($bg_color, $base_color, .6);
+                        background-color: mix($bg_color, $base_color, 60%);
                     }
 
                     &:not(:first-child):not(:last-child):not(:only-child) {
@@ -378,7 +378,7 @@
                     }
 
                     &:hover {
-                        background-color: mix($bg_color, $base_color, .6);
+                        background-color: mix($bg_color, $base_color, 60%);
                     }
 
                     &:not(:first-child):not(:last-child):not(:only-child) {

@@ -5,7 +5,7 @@
 @include exports("sidebar") {
     .sidebar {
         border-style: none;
-        background-color: mix($bg_color, $base_color, .5);
+        background-color: mix($bg_color, $base_color, 50%);
 
         @at-root %sidebar_left,
         &:dir(ltr),
