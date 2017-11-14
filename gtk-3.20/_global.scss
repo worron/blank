@@ -9,8 +9,10 @@ $base_color: #161616;
 $text_color: #aaaaaa;
 $selected_bg_color: #b1222b;
 $selected_fg_color: #eeeeee;
-$tooltip_bg_color: #444;
-$tooltip_fg_color: #eee;
+
+
+$tooltip_bg_color: mix($bg_color, $selected_bg_color, 85%);
+$tooltip_fg_color: $fg_color;
 
 $selected_borders_color: if($variant == 'light', darken($selected_bg_color, 30%), darken($selected_bg_color, 20%));
 $borders_color: if($variant == 'light', shade($bg_color, .85), shade($bg_color, .88));
@@ -125,7 +127,7 @@ $backdrop_menu_color: if($variant == 'light', $backdrop_base_color, mix($backdro
 $drop_target_color: #4e9a06;
 
 // widget styles
-$roundness: 2px;
+$roundness: 0px;
 $spacing: 5px;
 $gradient: 0;
 $contrast: .8;
