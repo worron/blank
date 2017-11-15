@@ -3,6 +3,9 @@ $link_roundness: 4px;
 $_button_pad_v: 5px;
 $_button_pad_h: 8px;
 
+$_spin_pad_v: 2px;
+$_spin_pad_h: 6px;
+
 $_linked_gap: 1px;
 
 // Shared
@@ -130,6 +133,14 @@ $_linked_gap: 1px;
 	border-style: none;
 }
 
+@mixin flat_button($fg) {
+	color: $fg;
+
+	&, &:focus, &:focus:hover, &:hover, &:active, &:checked { background-color: transparent; }
+	&:hover { color: lighten($fg, 10%); }
+	&:disabled { color: darken($fg, 40%); }
+	&:active, &:checked { color: mix($fg, $selected_bg_color, 30%); };
+}
 
 @mixin button($bg, $fg) {
 	$_active_color: darken(mix($bg, $selected_bg_color, 50%), 10%);
@@ -156,15 +167,6 @@ $_linked_gap: 1px;
 		background-color: mix($_active_color, $bg_color, 50%);
 	}
 
-	&.flat {
-		color: $fg;
-
-		&, &:focus, &:focus:hover, &:hover, &:active, &:checked { background-color: transparent; }
-		&:hover { color: lighten($fg, 10%); }
-		&:disabled { color: darken($fg, 40%); }
-		&:active, &:checked { color: mix($fg, $selected_bg_color, 30%); };
-	}
-
 	.inline-toolbar &,
 	.linked > & { @include linked_button(darken($bg, 10%)); }
 	.linked.vertical > & { @include linked_vertical_button(darken($bg, 10%)); }
@@ -183,6 +185,8 @@ $_linked_gap: 1px;
 
 		@include button($button_bg_color, $button_fg_color);
 
+		&.flat { @include flat_button($button_fg_color); }
+
 		&.circular,
 		&.circular-button {
 			padding: 0;
@@ -196,101 +200,108 @@ $_linked_gap: 1px;
 	}
 
 	spinbutton {
-		button {
-			color: mix($text_color, $base_color, 40%);
-			&:active, &:checked, &:hover { color: $text_color; }
-			&:disabled { color: alpha($insensitive_fg_color, .8); }
-		}
+		// button {
+			// color: mix($text_color, $base_color, 40%);
+			// color: $text_color;
+			// &:active, &:checked, &:hover { color: $text_color; }
+			// @include flat_button($text_color);
+			// &:disabled { color: darken($text_color, 40%); };
+			// &:disabled { color: alpha($insensitive_fg_color, .8); }
+		// }
 
 		&:not(.vertical) {
-			@if (lightness($bg_color) > 50) {
-				border: 1px solid border_normal($bg_color);
-				background-color: transparent;
-				background-image: none;
-				box-shadow: inset 1px 0 shade($base_color, .9);
-			} @else {
-				@extend %entry;
-				@include linear-gradient($base_color, to top);
-				@include border($base_color);
-			}
+			// @if (lightness($bg_color) > 50) {
+			// 	border: 1px solid border_normal($bg_color);
+			// 	background-color: transparent;
+			// 	background-image: none;
+			// 	box-shadow: inset 1px 0 shade($base_color, .9);
+			// } @else {
+			// 	@extend %entry;
+			// 	@include linear-gradient($base_color, to top);
+			// 	@include border($base_color);
+			// }
 
-			padding: 0;
 
 			color: $text_color;
 			caret-color: $text_color;
+			background-color: $base_color;
 
-			&:focus, &:active { border-color: border_focus($borders_color); }
+			// &:focus, &:active { border-color: border_focus($borders_color); }
 
-			&:disabled {
-				@include linear-gradient(shade($base_color, .9), to top);
-				color: mix($base_color, $text_color, 50%);
-			}
+			// &:disabled {
+			// 	@include linear-gradient(shade($base_color, .9), to top);
+			// 	color: mix($base_color, $text_color, 50%);
+			// }
 
 			entry {
-				// reset all the other props since the spinbutton node is styled here
-				border: 0;
-				border-radius: 0;
-				box-shadow: none;
-			}
-
-			button {
-				border-radius: 0;
-				border-color: alpha($borders_color, .8);
-				border-style: none none none solid;
+				padding: $_spin_pad_v $_spin_pad_h;
+				border-style: none;
 				background-image: none;
 				box-shadow: none;
-
-				@if (lightness($bg_color) > 50) {
-					background-color: shade($bg_color, 1.08);
-				}
-
-				&:hover {
-					@if (lightness($bg_color) > 50) {
-						background-color: shade($bg_color, 1.11);
-					}
-				}
-
-				&:dir(rtl) { border-style: none solid none none; }
-
-				&:active { box-shadow: inset 0 2px 3px -1px transparentize($black, .8); }
-
-				&:backdrop { border-color: alpha($backdrop_borders_color, .8); }
-
-				&:backdrop:disabled {
-					border-style: none none none solid; // It is needed or it gets overridden
-					&:dir(rtl) { border-style: none solid none none; }
-				}
-
-				&:dir(rtl):first-child { border-radius: $roundness 0 0 $roundness; }
-
-				&:dir(ltr):last-child { border-radius: 0 $roundness $roundness 0; }
-			}
-		}
-
-		&.vertical {
-			button, entry {
-				min-width: 0;
-				padding-left: $spacing - 2px;
-				padding-right: $spacing - 2px;
-			}
-
-			entry {
-				// reset all the other props since the spinbutton node is styled here
-				border-radius: 0;
 			}
 
 			button {
-				&.up {
-					border-style: solid solid none solid;
-					border-radius: $roundness $roundness 0 0;
-				}
+				@include flat_button($text_color);
+				&:disabled { color: darken($text_color, 40%); };
+				padding: $_spin_pad_v $_spin_pad_h;
+				// background-color: $base_color;
+				// border-radius: 0;
+				// border-color: alpha($borders_color, .8);
+				// border-style: none;
+				// background-image: none;
+				// box-shadow: none;
 
-				&.down {
-					border-style: none solid solid solid;
-					border-radius: 0 0 $roundness $roundness;
-				}
+				// @if (lightness($bg_color) > 50) {
+				// 	background-color: shade($bg_color, 1.08);
+				// }
+
+				// &:hover {
+				// 	@if (lightness($bg_color) > 50) {
+				// 		background-color: shade($bg_color, 1.11);
+				// 	}
+				// }
+
+				// &:dir(rtl) { border-style: none solid none none; }
+
+				// &:active { box-shadow: inset 0 2px 3px -1px transparentize($black, .8); }
+
+				// &:backdrop { border-color: alpha($backdrop_borders_color, .8); }
+
+				// &:backdrop:disabled {
+				// 	border-style: none none none solid; // It is needed or it gets overridden
+				// 	&:dir(rtl) { border-style: none solid none none; }
+				// }
+
+				// &:dir(rtl):first-child { border-radius: $roundness 0 0 $roundness; }
+
+				// &:dir(ltr):last-child { border-radius: 0 $roundness $roundness 0; }
 			}
 		}
+
+		// &.vertical {
+		// 	button, entry {
+		// 		min-width: 0;
+		// 		padding-left: $spacing - 2px;
+		// 		padding-right: $spacing - 2px;
+		// 	}
+
+		// 	entry {
+		// 		// reset all the other props since the spinbutton node is styled here
+		// 		border-radius: 0;
+		// 	}
+
+		// 	button {
+		// 		&.up {
+		// 			border-style: solid solid none solid;
+		// 			border-radius: $roundness $roundness 0 0;
+		// 		}
+
+		// 		&.down {
+		// 			border-style: none solid solid solid;
+		// 			border-radius: 0 0 $roundness $roundness;
+		// 		}
+		// 	}
+		// }
 	}
 }
 
