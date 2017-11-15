@@ -65,11 +65,11 @@ $_linked_gap: 1px;
 
 
 // Buttons
-@mixin linked_button($brd_color) {
+@mixin linked_object($brd_color, $gap: $_linked_gap ) {
 	@extend %linked;
 
 	border-style: solid;
-	border-width: 0 $_linked_gap 0 0;
+	border-width: 0 $gap 0 0;
 	border-color: $brd_color;
 
 	&:last-child, &:only-child {
@@ -77,11 +77,11 @@ $_linked_gap: 1px;
 	}
 }
 
-@mixin linked_vertical_button($brd_color) {
+@mixin linked_vertical_object($brd_color, $gap: $_linked_gap) {
 	@extend %linked_vertical;
 
 	border-style: solid;
-	border-width: 0 0 $_linked_gap 0;
+	border-width: 0 0 $gap 0;
 	border-color: $brd_color;
 
 	&:last-child, &:only-child {
@@ -168,8 +168,8 @@ $_linked_gap: 1px;
 	}
 
 	.inline-toolbar &,
-	.linked > & { @include linked_button(darken($bg, 10%)); }
-	.linked.vertical > & { @include linked_vertical_button(darken($bg, 10%)); }
+	.linked > & { @include linked_object(darken($bg, 10%)); }
+	.linked.vertical > & { @include linked_vertical_object(darken($bg, 10%)); }
 
 	&.separator, .separator {
 		color: transparent;
