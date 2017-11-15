@@ -1,12 +1,11 @@
 // Settngs
-$link_roundness: 4px;
+$_linked_gap: 1px;
+
 $_button_pad_v: 5px;
 $_button_pad_h: 8px;
 
 $_spin_pad_v: 3px;
 $_spin_pad_h: 6px;
-
-$_linked_gap: 1px;
 
 // Shared
 %button {
@@ -23,48 +22,7 @@ $_linked_gap: 1px;
 	box-shadow: none;
 }
 
-%linked_middle {
-	border-radius: 0;
-}
-
-%linked {
-	&:first-child {
-		border-radius: $link_roundness;
-		border-top-right-radius: 0;
-		border-bottom-right-radius: 0;
-	}
-
-	&:last-child {
-		border-radius: $link_roundness;
-		border-top-left-radius: 0;
-		border-bottom-left-radius: 0;
-	}
-
-	&:only-child {
-		border-radius: 0;
-	}
-}
-
-%linked_vertical {
-	&:first-child {
-		border-radius: $link_roundness;
-		border-bottom-left-radius: 0;
-		border-bottom-right-radius: 0;
-	}
-
-	&:last-child {
-		border-radius: $link_roundness;
-		border-top-left-radius: 0;
-		border-top-right-radius: 0;
-	}
-
-	&:only-child {
-		border-radius: 0;
-	}
-}
-
-
-// Buttons
+// Button mixins
 @mixin linked_object($brd_color, $gap: $_linked_gap ) {
 	@extend %linked;
 
@@ -88,7 +46,6 @@ $_linked_gap: 1px;
 		border-style: none;
 	}
 }
-
 
 @mixin linked_combobox_first($brd_color) {
 	@extend %linked:first-child;
@@ -178,72 +135,70 @@ $_linked_gap: 1px;
 	}
 }
 
-@include exports("button") {
-	button {
-		background-image: none;
-		box-shadow: none;
+// Button classes
+button {
+	background-image: none;
+	box-shadow: none;
 
-		@include button($button_bg_color, $button_fg_color);
+	@include button($button_bg_color, $button_fg_color);
 
-		&.flat { @include flat_button($button_fg_color); }
+	&.flat { @include flat_button($button_fg_color); }
 
-		&.circular,
-		&.circular-button {
-			padding: 0;
-			min-width: 32px;
-			min-height: 32px;
-			border-radius: 9999px;
-			-gtk-outline-radius: 9999px;
+	&.circular,
+	&.circular-button {
+		padding: 0;
+		min-width: 32px;
+		min-height: 32px;
+		border-radius: 9999px;
+		-gtk-outline-radius: 9999px;
 
-			label { padding: 0; }
-		}
+		label { padding: 0; }
+	}
+}
+
+// Spinbutton
+spinbutton {
+	color: $text_color;
+	caret-color: $text_color;
+	background-color: $base_color;
+
+	entry {
+		padding: $_spin_pad_v $_spin_pad_h;
 	}
 
-	spinbutton {
-		color: $text_color;
-		caret-color: $text_color;
-		background-color: $base_color;
+	button {
+		@include flat_button($text_color);
+		padding: $_spin_pad_v $_spin_pad_h;
 
-		entry {
-			padding: $_spin_pad_v $_spin_pad_h;
-		}
-
-		button {
-			@include flat_button($text_color);
-			padding: $_spin_pad_v $_spin_pad_h;
-
-			&:disabled {
-				color: mix($base_color, $text_color, 70%);
-				background: mix($bg_color, $base_color, 50%);
-			};
-		}
+		&:disabled {
+			color: mix($base_color, $text_color, 70%);
+			background: mix($bg_color, $base_color, 50%);
+		};
 	}
 }
 
 
-// ComboBoxes
-@include exports("combobox") {
-	combobox {
-		$_linked_border_color: darken($button_bg_color, 10%);
+// ComboBox
+combobox {
+	$_linked_border_color: darken($button_bg_color, 10%);
 
-		button.combo {
-			padding: ($_button_pad_v - 2px) $_button_pad_h;
-		}
-
-		arrow {
-			-gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
-			min-height: 16px;
-			min-width: 16px;
-		}
-
-		.linked:not(.vertical) > & > box > button.combo { @include linked_combobox_middle($_linked_border_color); }
-		.linked:not(.vertical) > &:first-child > box > button.combo { @include linked_combobox_first($_linked_border_color); }
-		.linked:not(.vertical) > &:last-child > box > button.combo { @include linked_combobox_last(); }
-		.linked:not(.vertical) > &:only-child > box > button.combo { @include linked_combobox_only(); }
-
-		.linked.vertical > & > box > button.combo { @include linked_vertical_combobox_middle($_linked_border_color); }
-		.linked.vertical > &:first-child > box > button.combo { @include linked_vertical_combobox_first($_linked_border_color); }
-		.linked.vertical > &:last-child > box > button.combo { @include linked_vertical_combobox_last(); }
-		.linked.vertical > &:only-child > box > button.combo { @include linked_combobox_only(); }
+	button.combo {
+		padding: ($_button_pad_v - 2px) $_button_pad_h;
 	}
+
+	arrow {
+		-gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
+		min-height: 16px;
+		min-width: 16px;
+	}
+
+	.linked:not(.vertical) > & > box > button.combo { @include linked_combobox_middle($_linked_border_color); }
+	.linked:not(.vertical) > &:first-child > box > button.combo { @include linked_combobox_first($_linked_border_color); }
+	.linked:not(.vertical) > &:last-child > box > button.combo { @include linked_combobox_last(); }
+	.linked:not(.vertical) > &:only-child > box > button.combo { @include linked_combobox_only(); }
+
+	.linked.vertical > & > box > button.combo { @include linked_vertical_combobox_middle($_linked_border_color); }
+	.linked.vertical > &:first-child > box > button.combo { @include linked_vertical_combobox_first($_linked_border_color); }
+	.linked.vertical > &:last-child > box > button.combo { @include linked_vertical_combobox_last(); }
+	.linked.vertical > &:only-child > box > button.combo { @include linked_combobox_only(); }
 }

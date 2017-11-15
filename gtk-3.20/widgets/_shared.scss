@@ -1,4 +1,4 @@
-// stuff for .needs-attention
+// Stuff for .needs-attention
 $_dot_color: lighten($selected_bg_color, .15);
 
 @keyframes needs_attention {
@@ -24,5 +24,48 @@ $_dot_color: lighten($selected_bg_color, .15);
 
 	&:dir(rtl) {
 		background-position: left 3px, left 2px;
+	}
+}
+
+// Shared stuff
+$link_roundness: 4px;
+
+%linked_middle {
+	border-radius: 0;
+}
+
+%linked {
+	&:first-child {
+		border-radius: $link_roundness;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	&:last-child {
+		border-radius: $link_roundness;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	&:only-child {
+		border-radius: 0;
+	}
+}
+
+%linked_vertical {
+	&:first-child {
+		border-radius: $link_roundness;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	&:last-child {
+		border-radius: $link_roundness;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+	&:only-child {
+		border-radius: 0;
 	}
 }

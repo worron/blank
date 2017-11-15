@@ -58,10 +58,9 @@ $_linked_entry_gap: 2px;
 	}
 }
 
-@include exports("entry") {
-	entry {
-		@include entry($base_color, $text_color);
-		.linked:not(.vertical) > & { @include linked_object($bg_color, $_linked_entry_gap); }
-		.linked.vertical > & { @include linked_vertical_object($bg_color, $_linked_entry_gap);; }
-	}
+entry {
+	@include entry($base_color, $text_color);
+	.linked:not(.vertical) > & { @include linked_object($bg_color, $_linked_entry_gap); }
+	.linked.vertical > & { @include linked_vertical_object($bg_color, $_linked_entry_gap);; }
 }
+
