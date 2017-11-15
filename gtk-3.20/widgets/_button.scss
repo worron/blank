@@ -5,93 +5,63 @@ $_button_pad_h: 8px;
 
 $_linked_gap: 1px;
 
-// Classes
-@include exports("button_extends") {
-	// stuff for .needs-attention
-	$_dot_color: lighten($selected_bg_color, .15);
+// Shared
+%button {
+	padding: $_button_pad_v $_button_pad_h;
+	border-style: none;
+	transition: 150ms ease;
+	outline-color: transparent;
+}
 
-	@keyframes needs_attention {
-		from {
-			background-image: -gtk-gradient(radial, center center, 0, center center, .01, to($_dot_color), to(transparent));
-		}
+%undecorated_button {
+	border-color: transparent;
+	background-color: transparent;
+	background-image: none;
+	box-shadow: none;
+}
 
-		to {
-			background-image: -gtk-gradient(radial, center center, 0, center center, .5, to($selected_bg_color), to(transparent));
-		}
+%linked_middle {
+	border-radius: 0;
+}
+
+%linked {
+	&:first-child {
+		border-radius: $link_roundness;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
 	}
 
-	%needs_attention {
-		animation: needs_attention 150ms ease-in;
-		$_dot_shadow: _text_shadow_color();
-		$_dot_shadow_r: .45;
-		background-image: -gtk-gradient(radial, center center, 0, center center, .5, to($_dot_color), to(transparent)),
-		                  -gtk-gradient(radial, center center, 0, center center, $_dot_shadow_r, to($_dot_shadow), to(transparent));
-		background-size: 6px 6px, 6px 6px;
-		background-repeat: no-repeat;
-
-		background-position: right 3px, right 2px;
-
-		&:dir(rtl) {
-			background-position: left 3px, left 2px;
-		}
+	&:last-child {
+		border-radius: $link_roundness;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
 	}
 
-	%button {
-		padding: $_button_pad_v $_button_pad_h;
-		border-style: none;
-		transition: 150ms ease;
-		outline-color: transparent;
-	}
-
-	%undecorated_button {
-		border-color: transparent;
-		background-color: transparent;
-		background-image: none;
-		box-shadow: none;
-	}
-
-	%linked_middle {
+	&:only-child {
 		border-radius: 0;
 	}
+}
 
-	%linked {
-		&:first-child {
-			border-radius: $link_roundness;
-			border-top-right-radius: 0;
-			border-bottom-right-radius: 0;
-		}
-
-		&:last-child {
-			border-radius: $link_roundness;
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-		}
-
-		&:only-child {
-			border-radius: 0;
-		}
+%linked_vertical {
+	&:first-child {
+		border-radius: $link_roundness;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
 	}
 
-	%linked_vertical {
-		&:first-child {
-			border-radius: $link_roundness;
-			border-bottom-left-radius: 0;
-			border-bottom-right-radius: 0;
-		}
+	&:last-child {
+		border-radius: $link_roundness;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
 
-		&:last-child {
-			border-radius: $link_roundness;
-			border-top-left-radius: 0;
-			border-top-right-radius: 0;
-		}
-
-		&:only-child {
-			border-radius: 0;
-		}
+	&:only-child {
+		border-radius: 0;
 	}
 }
 
 
+// Buttons
 @mixin linked_button($brd_color) {
 	@extend %linked;
 
@@ -115,7 +85,6 @@ $_linked_gap: 1px;
 		border-style: none;
 	}
 }
-
 
 
 @mixin linked_combobox_first($brd_color) {
