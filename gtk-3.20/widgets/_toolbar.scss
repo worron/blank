@@ -111,11 +111,9 @@
     toolbutton:backdrop {
         > button.flat { @extend %linked_middle; }
 
-        &:first-child > button.flat { @extend %linked_button:first-child; }
-
-        &:last-child > button.flat { @extend %linked_button:last-child; }
-
-        &:only-child > button.flat { @extend %linked_button:only-child; }
+        &:first-child > button.flat { @extend %linked:first-child; }
+        &:last-child > button.flat { @extend %linked:last-child; }
+        &:only-child > button.flat { @extend %linked:only-child; }
     }
 }
 
