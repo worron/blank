@@ -1,6 +1,10 @@
 // Settings
 $_progressbar_width: 8px;
 
+$_levelbar_width: 34px;
+$_levelbar_height: 5px;
+$_levelbar_block_margin: 3px;
+
 // Classes
 progressbar {
 	padding: 0;
@@ -27,70 +31,49 @@ progressbar {
 	&:selected { background-color: green; }
 }
 
+
+levelbar {
+	&.horizontal block {
+		min-width: $_levelbar_width;
+		min-height: $_levelbar_height;
+	}
+
+	&.vertical block {
+		min-width: $_levelbar_height;
+		min-height: $_levelbar_width;
+	}
+
+	&.horizontal.discrete block {
+		margin: 0 $_levelbar_block_margin;
+		&:first-child { margin: 0; }
+	}
+
+	&.vertical.discrete block {
+		margin: $_levelbar_block_margin 0;
+		&:first-child { margin: 0; }
+	}
+
+	block {
+		&.low {
+			background-color: $warning_color;
+		}
+
+		&.high,
+		&:not(.empty) {
+			background-color: $success_color;
+		}
+
+		&.full {
+			background-color: $selected_bg_color;
+		}
+
+		&.empty {
+			background-color: $bar_bg_color;
+		}
+	}
+}
+
 @include exports("progressbar") {
-    levelbar {
-        &.horizontal block {
-            min-width: 34px;
-            min-height: 4px;
-        }
-
-        &.vertical block {
-            min-width: 4px;
-            min-height: 34px;
-        }
-
-        &:backdrop { transition: 200ms ease-out; }
-
-        trough {
-            @include linear-gradient(shade($bg_color, 1.08), to top);
-
-            border: 1px solid alpha(border_normal($bg_color), .5);
-            border-radius: $roundness;
-            padding: 2px; // make discrete block appear inside levelbar
-        }
-
-        &.horizontal.discrete block {
-            margin: 0 1px;
-
-            &:first-child { margin: 0; }
-        }
-
-        &.vertical.discrete block {
-            margin: 1px 0;
-
-            &:first-child { margin: 0; }
-        }
-
-        block {
-            @include linear-gradient($selected_bg_color);
-
-            border-color: transparent;
-            border-radius: $roundness;
-
-            &.low {
-                background-color: $warning_color;
-                border-color: transparent;
-            }
-
-            &.high,
-            &:not(.empty) {
-                background-color: $success_color;
-                border-color: transparent;
-            }
-
-            &.full {
-                background-color: shade($selected_bg_color, .8);
-                border-color: transparent;
-            }
-
-            &.empty {
-                background-color: transparent;
-                border-color: transparent;
-                box-shadow: none;
-            }
-        }
-    }
-
     scale {
         $_marks_length: 3px;
         $_marks_distance: 1px;
