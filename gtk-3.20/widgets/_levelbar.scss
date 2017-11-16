@@ -1,0 +1,47 @@
+// Settings
+$_levelbar_width: 34px;
+$_levelbar_height: 4px;
+$_levelbar_block_margin: 3px;
+
+
+//Classes
+levelbar {
+	&.horizontal block {
+		min-width: $_levelbar_width;
+		min-height: $_levelbar_height;
+	}
+
+	&.vertical block {
+		min-width: $_levelbar_height;
+		min-height: $_levelbar_width;
+	}
+
+	&.horizontal.discrete block {
+		margin: 0 $_levelbar_block_margin;
+		&:first-child { margin: 0; }
+	}
+
+	&.vertical.discrete block {
+		margin: $_levelbar_block_margin 0;
+		&:first-child { margin: 0; }
+	}
+
+	block {
+		&.low {
+			background-color: $warning_color;
+		}
+
+		&.high,
+		&:not(.empty) {
+			background-color: $success_color;
+		}
+
+		&.full {
+			background-color: $selected_bg_color;
+		}
+
+		&.empty {
+			background-color: $bar_bg_color;
+		}
+	}
+}

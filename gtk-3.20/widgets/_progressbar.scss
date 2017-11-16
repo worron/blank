@@ -1,0 +1,28 @@
+// Settings
+$_progressbar_width: 8px;
+
+// Classes
+progressbar {
+	padding: 0;
+	font-size: smaller;
+
+	&.horizontal {
+		trough,
+		progress { min-height: $_progressbar_width; }
+	}
+
+	&.vertical {
+		trough,
+		progress { min-width: $_progressbar_width; }
+	}
+
+	trough {
+		background-color: $bar_bg_color;
+	}
+
+	progress {
+		background-color: $selected_bg_color;
+	}
+
+	&:selected { background-color: green; }
+}
