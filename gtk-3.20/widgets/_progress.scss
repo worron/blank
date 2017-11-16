@@ -1,246 +1,116 @@
-@include exports("progressbar") {
-    scale {
-        $_marks_length: 3px;
-        $_marks_distance: 1px;
-        $button_bg: if(hue($bg_color) == 0deg, shade($bg_color, 1.2), $bg_color);
-        $ease-out-quad: cubic-bezier(.25, .46, .45, .94);
-        $button_transition: all 200ms $ease-out-quad;
+// Settings
+$_slider_height: 16px;
+$_slider_width: 6px;
+$_slider_gap: 4px;
 
-        min-height: 10px;
-        min-width: 10px;
-        padding: $spacing;
+$_trough_width: 4px;
+$_slider_margin_v: (($_slider_height - $_trough_width) / 2);
 
-        &.horizontal {
-            trough { padding: 0 3px; }
+$_marks_length: 8px;
+$_marks_distance: 2px;
 
-            highlight, fill { margin: 0 -4px; }
-        }
+$button_transition: all 200ms cubic-bezier(.25, .46, .45, .94);
 
-        &.vertical {
-            trough { padding: 3px 0; }
+// Classes
+@mixin scale($_slider_bg_color: $bg_color) {
+	$_slider_bg_dis_color: mix($bar_bg_color, $_slider_bg_color, 50%);
 
-            highlight, fill { margin: -4px 0; }
-        }
+	padding: (0px + $_slider_margin_v) 0px;
 
-        // The slider is inside the trough, negative margin to make it bigger
-        slider {
-            min-height: 15px;
-            min-width: 15px;
-            margin: -7px;
-        }
+	trough {
+		background-color: $bar_bg_color;
+		&:disabled { background-color: $_slider_bg_dis_color; }
 
-        // Click-and-hold the slider to activate
-        &.fine-tune {
-            // Make the trough grow in fine-tune mode
-            slider { margin: -7px; }
+		menuitem:hover &,
+		row:selected &,
+		infobar & {
+			highlight {
+				background-color: lighten($selected_fg_color, 10%);
+			}
+		}
+	}
 
-            highlight { background-color: shade($selected_bg_color, 1.1); }
+	// The colored part of trough
+	highlight {
+		background-color: $selected_bg_color;
+		&:disabled { background-color: $_slider_bg_dis_color; }
+	}
 
-            fill,
-            highlight,
-            trough {
-                border-radius: 5px;
-                -gtk-outline-radius: 7px;
-            }
-        }
+	// this is another differently styled part of the trough, the most relevant use case is for example
+	// in media player to indicate how much video stream as been cached
+	fill {
+		background-color: transparentize($selected_bg_color, .5);
+		&:disabled { background-color: transparent; }
+	}
 
-        // Trough
-        trough {
-            $_scale_trough_bg: if($variant == 'light', shade($bg_color, .8), darken($bg_color, 5%));
+	slider {
+		border-style: solid;
+		border-color: $_slider_bg_color;
+		background-color: $slider_color;
 
-            outline-offset: 2px;
-            -gtk-outline-radius: 4.5px;
+		transition: $button_transition;
+		transition-property: background;
 
-            border-radius: 2.5px;
-            background-color: $_scale_trough_bg;
+		&:hover { background-color: lighten($slider_color, 10%); }
 
-            &:disabled { background-color: transparentize($_scale_trough_bg, .45); }
+		&:disabled {
+			background-color: $_slider_bg_dis_color;
+		}
+	}
 
-            // Troughs in selected list-rows and infobars
-            menuitem:hover &,
-            row:selected &,
-            infobar & {
-                background-color: transparentize($black, .8);
+	&.horizontal {
+		slider {
+			min-height: $_slider_height;
+			min-width: $_slider_width;
+			margin: (-$-slider_margin_v) 0;
 
-                highlight {
-                    background-color: $selected_fg_color;
+			border-width: 0 $_slider_gap 0 $_slider_gap;
+		}
 
-                    &:disabled { background-color: mix($selected_fg_color, $selected_bg_color, 55%); }
-                }
+		indicator {
+			min-height: $_marks_length;
+			min-width: 1px;
+		}
+	}
 
-                &:disabled { background-color: transparentize($black, .9); }
-            }
-        }
+	&.vertical {
+		slider {
+			min-height: $_slider_width;
+			min-width: $_slider_height;
 
-        // The colored part of trough
-        highlight {
-            border-radius: 2.5px;
-            background-color: $selected_bg_color;
+			margin: 0  (-$-slider_margin_v);
+			border-width: $_slider_gap 0 $_slider_gap 0;
+		}
 
-            &:disabled { background-color: transparentize($selected_bg_color, .45); }
-        }
+		indicator {
+			min-height: 1px;
+			min-width: $_marks_length;
+		}
+	}
 
-        // this is another differently styled part of the trough, the most relevant use case is for example
-        // in media player to indicate how much video stream as been cached
-        fill {
-            border-radius: 2.5px;
-            background-color: transparentize($selected_bg_color, .5);
+	value { color: alpha(currentColor, .7); }
 
-            &:disabled { background-color: transparent; }
-        }
+	marks {
+		color: alpha(currentColor, .5);
+		@each $marks_class, $marks_pos, $marks_margin in (top, top, bottom),
+			(bottom, bottom, top),
+			(top, left, right),
+			(bottom, right, left) {
+			&.#{$marks_class} {
+				margin-#{$marks_margin}: $_marks_distance;
+				margin-#{$marks_pos}: -($_marks_distance + $_marks_length);
+			}
+		}
+	}
 
-        slider {
-            $_slider_border: if($variant == 'light', transparentize(shade($button_border, .25), .5), darken($button_border, 2%));
+	&.color {
+		slider {
+			border-style: none;
+		}
+	}
+}
 
-            background-color: $button_bg;
-            border: 1px solid $_slider_border;
-            border-radius: 100%;
-
-            transition: $button_transition;
-            transition-property: background, border;
-
-            &:hover { background-color: lighten($button_bg, 5%); }
-
-            &:active {
-                background-clip: border-box;
-                background-color: $selected_bg_color;
-                border-color: $selected_bg_color;
-            }
-
-            &:disabled {
-                background-color: mix($fg_color, $bg_color, 55%);
-                border-color: transparentize($_slider_border, .2);
-            }
-
-            // Selected list-row and infobar sliders
-            menuitem:hover &,
-            row:selected &,
-            infobar & {
-                background-clip: border-box;
-                background-color: $selected_fg_color;
-                border-color: $selected_fg_color;
-
-                &:hover {
-                    background-color: mix($selected_fg_color, $selected_bg_color, 85%);
-                    border-color: mix($selected_fg_color, $selected_bg_color, 85%);
-                }
-
-                &:active {
-                    background-color: mix($selected_fg_color, $selected_bg_color, 50%);
-                    border-color: mix($selected_fg_color, $selected_bg_color, 50%);
-                }
-
-                &:disabled {
-                    background-color: mix($selected_fg_color, $selected_bg_color, 55%);
-                    border-color: mix($selected_fg_color, $selected_bg_color, 55%);
-                }
-            }
-        }
-
-        value { color: alpha(currentColor, .4); }
-
-        marks {
-            color: alpha(currentColor, .4);
-
-            @each $marks_class, $marks_pos, $marks_margin in (top, top, bottom),
-                (bottom, bottom, top),
-                (top, left, right),
-                (bottom, right, left) {
-                &.#{$marks_class} {
-                    margin-#{$marks_margin}: $_marks_distance;
-                    margin-#{$marks_pos}: -($_marks_distance + $_marks_length);
-                }
-            }
-        }
-
-        &.fine-tune marks {
-            @each $marks_class, $marks_pos, $marks_margin in (top, top, bottom),
-                (bottom, bottom, top),
-                (top, left, right),
-                (bottom, right, left) {
-                &.#{$marks_class} {
-                    margin-#{$marks_margin}: ($_marks_distance - 1px);
-                    margin-#{$marks_pos}: -($_marks_distance + $_marks_length - 2px);
-                }
-            }
-        }
-
-        &.horizontal {
-            indicator {
-                min-height: $_marks_length;
-                min-width: 1px;
-            }
-
-            &.fine-tune indicator { min-height: ($_marks_length - 1px); }
-        }
-
-        &.vertical {
-            indicator {
-                min-height: 1px;
-                min-width: $_marks_length;
-            }
-
-            &.fine-tune indicator { min-width: ($_marks_length - 1px); }
-        }
-
-        &.color {
-            trough {
-                padding: 0;
-                border: 0;
-                background-image: none;
-            }
-
-            highlight, fill { margin: 0; }
-
-            &.horizontal {
-                padding: 0 0 6px 0;
-
-                trough {
-                    border-top-left-radius: 0;
-                    border-top-right-radius: 0;
-                }
-
-                slider {
-                    &:hover, &:backdrop, &:disabled, &:backdrop:disabled, & {
-                        margin-bottom: 0;
-                        margin-top: 0;
-                    }
-                }
-            }
-
-            &.vertical {
-                &:dir(ltr) {
-                    padding: 0 0 0 6px;
-
-                    trough {
-                        border-bottom-right-radius: 0;
-                        border-top-right-radius: 0;
-                    }
-
-                    slider {
-                        &:hover, &:backdrop, &:disabled, &:backdrop:disabled, & {
-                            margin-left: 0;
-                            margin-right: 0;
-                        }
-                    }
-                }
-
-                &:dir(rtl) {
-                    padding: 0 6px 0 0;
-
-                    trough {
-                        border-bottom-left-radius: 0;
-                        border-top-left-radius: 0;
-                    }
-
-                    slider {
-                        &:hover, &:backdrop, &:disabled, &:backdrop:disabled, & {
-                            margin-right: 0;
-                            margin-left: 0;
-                        }
-                    }
-                }
-            }
-        }
-    }
+// Scale
+scale {
+	@include scale();
 }
