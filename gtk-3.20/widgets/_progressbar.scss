@@ -1,9 +1,13 @@
 // Settings
 $_progressbar_width: 8px;
 
+$progressbar_pad_v: 4px;
+$progressbar_pad_h: 2px;
+
+
 // Classes
 progressbar {
-	padding: 0;
+	padding: $progressbar_pad_v $progressbar_pad_h;
 	font-size: smaller;
 
 	&.horizontal {

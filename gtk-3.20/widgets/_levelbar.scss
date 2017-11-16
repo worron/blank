@@ -3,9 +3,16 @@ $_levelbar_width: 34px;
 $_levelbar_height: 4px;
 $_levelbar_block_margin: 3px;
 
+$_level_pad_v: $progressbar_pad_v;
+$_level_pad_h: $progressbar_pad_h;
+
 
 //Classes
 levelbar {
+	trough {
+		padding: $_level_pad_v $_level_pad_h;
+	}
+
 	&.horizontal block {
 		min-width: $_levelbar_width;
 		min-height: $_levelbar_height;
@@ -41,7 +48,7 @@ levelbar {
 		}
 
 		&.empty {
-			background-color: $bar_bg_color;
+			background-color: transparent;
 		}
 	}
 }
