@@ -13,12 +13,6 @@
 
 
 // Base states
-%selected {
-	&, &:focus {
-		background-color: $selected_bg_color;
-		color: $selected_fg_color;
-	}
-}
 
 * {
 	/* hyperlinks */

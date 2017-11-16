@@ -30,6 +30,13 @@ $_dot_color: lighten($selected_bg_color, .15);
 // Shared stuff
 $link_roundness: 4px;
 
+%selected {
+	&, &:focus {
+		background-color: $selected_bg_color;
+		color: $selected_fg_color;
+	}
+}
+
 %linked_middle {
 	border-radius: 0;
 }
