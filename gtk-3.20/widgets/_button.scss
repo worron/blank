@@ -101,8 +101,12 @@ $_spin_pad_h: 6px;
 	&:active, &:checked { color: mix($fg, $selected_bg_color, 30%); };
 }
 
-@mixin button($bg, $fg) {
-	$_active_color: darken(mix($bg, $selected_bg_color, 50%), 10%);
+@mixin button(
+	$bg: $button_bg_color,
+	$fg: $button_fg_color,
+	$_active_color: darken(mix($button_bg_color, $selected_bg_color, 50%), 10%)
+) {
+	// $_active_color: darken(mix($bg, $selected_bg_color, 50%), 10%);
 
 	@extend %button;
 	color: $fg;
