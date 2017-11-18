@@ -3,6 +3,7 @@ $_linked_gap: 1px;
 
 $_button_pad_v: 5px;
 $_button_pad_h: 8px;
+$_button_pad_flat: 5px;
 
 $_spin_pad_v: 3px;
 $_spin_pad_h: 6px;
@@ -92,6 +93,7 @@ $_spin_pad_h: 6px;
 
 @mixin flat_button($fg) {
 	color: $fg;
+	padding: $_button_pad_flat;
 
 	&, &:focus, &:focus:hover, &:hover, &:active, &:checked { background-color: transparent; }
 	&:hover { color: lighten($fg, 10%); }
@@ -124,7 +126,6 @@ $_spin_pad_h: 6px;
 		background-color: mix($_active_color, $bg_color, 50%);
 	}
 
-	.inline-toolbar &,
 	.linked > & { @include linked_object(darken($bg, 10%)); }
 	.linked.vertical > & { @include linked_vertical_object(darken($bg, 10%)); }
 
@@ -142,7 +143,7 @@ button {
 
 	@include button($button_bg_color, $button_fg_color);
 
-	&.flat { @include flat_button($button_fg_color); }
+	&.flat { @include flat_button($fg_color); }
 
 	&.circular,
 	&.circular-button {

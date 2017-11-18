@@ -4,7 +4,7 @@
 
 // default color scheme
 $bg_color: #202020;
-$fg_color: #bbbbbb;
+$fg_color: #a0a0a0;
 $base_color: #161616;
 $text_color: #aaaaaa;
 $selected_bg_color: #b1222b;
@@ -17,6 +17,12 @@ $slider_color: #525252;
 
 $tooltip_bg_color: mix($bg_color, $selected_bg_color, 85%);
 $tooltip_fg_color: $fg_color;
+
+$toolbar_bg_color: $bg_color;
+$toolbar_fg_color: $fg_color;
+
+$titlebar_bg_color: $bg_color;
+$titlebar_fg_color: $fg_color;
 
 $selected_borders_color: if($variant == 'light', darken($selected_bg_color, 30%), darken($selected_bg_color, 20%));
 $borders_color: if($variant == 'light', shade($bg_color, .85), shade($bg_color, .88));
@@ -42,14 +48,6 @@ $scrollbar_slider_color: shade($bg_color, .5);
 $scrollbar_slider_hover_color: shade($bg_color, .3);
 $scrollbar_slider_active_color: if($variant == 'light', darken($selected_bg_color, 5%), lighten($selected_bg_color, 10%));
 
-$switch_disabled_bg_color: #d8d8d8;
-$switch_disabled_border_color: #ccc;
-$switch_disabled_fg_color: mix(#444, #f0f0f0, 50%);
-$switch_disabled_slider_bg_color: #e8eaec;
-$switch_bg_color: mix($bg_color, $base_color, 30%);
-$switch_fg_color: #8e969e;
-$switch_slider_bg_color: #fbfbfb;
-
 // misc colors used by gtk+
 $info_fg_color: #fff;
 $info_bg_color: #03a9f4;
@@ -64,11 +62,11 @@ $success_color: #4caf50;
 $warning_color: #ef6c00;
 $error_color: #f44336;
 
-$toolbar_bg_color: $bg_color;
-$toolbar_fg_color: $fg_color;
+/* $toolbar_bg_color: $bg_color; */
+/* $toolbar_fg_color: $fg_color; */
 
-$titlebar_bg_color: $dark_bg_color;
-$titlebar_fg_color: $dark_fg_color;
+/* $titlebar_bg_color: $dark_bg_color; */
+/* $titlebar_fg_color: $dark_fg_color; */
 
 $menu_bg_color: $dark_bg_color;
 $menu_fg_color: $dark_fg_color;
@@ -87,8 +85,8 @@ $osd_insensitive_bg_color: mix($osd_fg, $osd_bg, 50%);
 $osd_insensitive_fg_color: mix($osd_fg, $osd_base, 60%);
 $osd_borders_color: shade($osd_bg, .85);
 
-$lightdm_bg_color: $dark_bg_color;
-$lightdm_fg_color: $dark_fg_color;
+/* $lightdm_bg_color: $dark_bg_color; */
+/* $lightdm_fg_color: $dark_fg_color; */
 
 $wm_bg: $titlebar_bg_color;
 $wm_border_focused: transparent;

@@ -58,7 +58,7 @@
     headerbar,
     .titlebar:not(headerbar) {
         &.selection-mode {
-            @include toolbar($selected_bg_color, $selected_fg_color);
+            @extend %toolbar;
 
             button {
                 @include button($selected_bg_color, $selected_fg_color);
