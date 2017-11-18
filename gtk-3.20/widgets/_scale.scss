@@ -94,8 +94,6 @@ $_scale_pad_h: $progressbar_pad_h;
 		}
 	}
 
-	value { color: alpha(currentColor, .7); }
-
 	marks {
 		color: alpha(currentColor, .5);
 		@each $marks_class, $marks_pos, $marks_margin in (top, top, bottom),
