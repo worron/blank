@@ -1,98 +1,78 @@
-/***********************
- ! Check and Radio items
-************************/
+// Settings
+$_toggle_margin: 8px;
 
-$suffix: if($variant == "dark", "-dark", "");
+// Mixins
+@mixin plain-check($unchecked, $unchecked-ins, $checked, $checked-ins, $mixed, $mixed-ins) {
+	-gtk-icon-source: url($unchecked);
 
-@mixin toggle($type) {
-    background-image: none;
-
-    -gtk-icon-source: -gtk-scaled(url("../assets/#{$type}-unchecked#{$suffix}.png"),
-                                  url("../assets/#{$type}-unchecked#{$suffix}@2.png"));
-
-    &:disabled { -gtk-icon-source: -gtk-scaled(url("../assets/#{$type}-unchecked-insensitive#{$suffix}.png"),
-                                               url("../assets/#{$type}-unchecked-insensitive#{$suffix}@2.png")); }
-
-    &:checked, &:active {
-        -gtk-icon-source: -gtk-scaled(url("../assets/#{$type}-checked#{$suffix}.png"),
-                                      url("../assets/#{$type}-checked#{$suffix}@2.png"));
-
-        &:disabled { -gtk-icon-source: -gtk-scaled(url("../assets/#{$type}-checked-insensitive#{$suffix}.png"),
-                                                   url("../assets/#{$type}-checked-insensitive#{$suffix}@2.png")); }
-    }
-
-    &:indeterminate {
-        -gtk-icon-source: -gtk-scaled(url("../assets/#{$type}-mixed#{$suffix}.png"),
-                                      url("../assets/#{$type}-mixed#{$suffix}@2.png"));
-
-        &:disabled { -gtk-icon-source: -gtk-scaled(url("../assets/#{$type}-mixed-insensitive#{$suffix}.png"),
-                                                   url("../assets/#{$type}-mixed-insensitive#{$suffix}@2.png")); }
-    }
-
-    menuitem &, modelbutton & {
-        -gtk-icon-source: -gtk-scaled(url("../assets/menuitem-#{$type}-checked-insensitive.png"),
-                                      url("../assets/menuitem-#{$type}-checked-insensitive@2.png"));
-
-        &:disabled { -gtk-icon-source: none; }
-
-        &:checked, &:active {
-            -gtk-icon-source: -gtk-scaled(url("../assets/menuitem-#{$type}-checked.png"),
-                                          url("../assets/menuitem-#{$type}-checked@2.png"));
-
-            &:hover { -gtk-icon-source: -gtk-scaled(url("../assets/menuitem-#{$type}-checked-hover.png"),
-                                                    url("../assets/menuitem-#{$type}-checked-hover@2.png")); }
-
-            &:disabled { -gtk-icon-source: -gtk-scaled(url("../assets/menuitem-#{$type}-checked-insensitive.png"),
-                                                       url("../assets/menuitem-#{$type}-checked-insensitive@2.png")); }
-        }
-
-        &:indeterminate {
-            -gtk-icon-source: -gtk-scaled(url("../assets/menuitem-#{$type}-mixed.png"),
-                                          url("../assets/menuitem-#{$type}-mixed@2.png"));
-
-            &:hover { -gtk-icon-source: -gtk-scaled(url("../assets/menuitem-#{$type}-mixed-hover.png"),
-                                                    url("../assets/menuitem-#{$type}-mixed-hover@2.png")); }
-
-            &:disabled { -gtk-icon-source: -gtk-scaled(url("../assets/menuitem-#{$type}-mixed-insensitive.png"),
-                                                       url("../assets/menuitem-#{$type}-mixed-insensitive@2.png")); }
-        }
-    }
+	&:indeterminate { -gtk-icon-source: url($unchecked-ins); }
+	&:checked {
+		-gtk-icon-source: url($checked);
+		&:disabled { -gtk-icon-source: url($checked-ins); }
+	}
+	&:indeterminate {
+		-gtk-icon-source: url($mixed);
+		&:disabled { -gtk-icon-source: url($mixed-ins); }
+	}
 }
 
-@include exports("checkradio") {
-    radio {
-        @include toggle("radio");
-        min-width: 16px;
-        min-height: 16px;
-        margin-right: $spacing;
-    }
+@mixin menuitem-check($checked, $checked-ins) {
+	-gtk-icon-source: none;
 
-    check {
-        @include toggle("checkbox");
-        min-width: 16px;
-        min-height: 16px;
-        margin-right: $spacing;
-    }
+	&:active, &:checked {
+		-gtk-icon-source: url($checked);
+		&:disabled { -gtk-icon-source: url($checked-ins); }
+	}
 
-    radio:dir(rtl), check:dir(rtl) {
-        margin-right: 0;
-        margin-left: $spacing;
-    }
+	&:indeterminate {
+		-gtk-icon-source: url("images/menuitem-checkbox-mixed.svg");
+		&:hover { -gtk-icon-source: url("images/menuitem-checkbox-mixed-hover.svg"); }
+		&:disabled { -gtk-icon-source: url("images/menuitem-checkbox-mixed-insensitive.svg"); }
+	}
+}
 
-    //selection-mode
-    @each $s,$as in ('', '-unchecked'),
-                  (':hover', '-unchecked'),
-                  (':active', '-checked'),
-                  (':backdrop', '-unchecked'),
-                  (':checked', '-checked'),
-                  (':checked:hover', '-checked'),
-                  (':checked:active', '-checked'),
-                  (':backdrop:checked', '-checked') {
-        .view.content-view.check#{$s}:not(list) {
-            -gtk-icon-shadow: none;
-            -gtk-icon-source: -gtk-scaled(url("../assets/grid-selection#{$as}#{$suffix}.png"),
-                                          url("../assets/grid-selection#{$as}#{$suffix}@2.png"));
-            background-color: transparent;
-        }
-    }
+// Classes
+check {
+	@include plain-check(
+		"images/checkbox-unchecked.svg",
+		"images/checkbox-unchecked-insensitive.svg",
+		"images/checkbox-checked.svg",
+		"images/checkbox-checked-insensitive.svg",
+		"images/checkbox-mixed.svg",
+		"images/checkbox-mixed-insensitive.svg"
+	);
+	margin-right: $_toggle_margin;
+}
+
+radio {
+	@include plain-check(
+		"images/radio-unselected.svg",
+		"images/radio-unselected-insensitive.svg",
+		"images/radio-selected.svg",
+		"images/radio-selected-insensitive.svg",
+		"images/radio-mixed.svg",
+		"images/radio-mixed-insensitive.svg"
+	);
+	margin-right: $_toggle_margin;
+}
+
+radio.right, check.right {
+	margin-right: 0;
+	margin-left: $_toggle_margin;
+}
+
+menuitem {
+	&.check {
+		@include menuitem-check(
+			"images/menuitem-checkbox-checked.svg",
+			"images/menuitem-checkbox-checked-insensitive.svg"
+		);
+	}
+
+	&.radio {
+		@include menuitem-check(
+			"images/menuitem-radio-checked.svg",
+			"images/menuitem-radio-checked-insensitive.svg"
+		);
+	}
 }
