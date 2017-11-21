@@ -99,6 +99,8 @@ $_spin_pad_h: 6px;
 	&:hover { color: lighten($fg, 10%); }
 	&:disabled { color: darken($fg, 40%); }
 	&:active, &:checked { color: mix($fg, $selected_bg_color, 30%); };
+
+	border-style: none;
 }
 
 @mixin button(

@@ -6,8 +6,6 @@ $_osd_border_radius: 4px;
 %osd_base {
 	padding: $_osd_pad;
 	border-radius: $_osd_border_radius;
-
-	.linked > button:not(.text-button) { border-style: none; }
 }
 
 @mixin osd_setup($bg, $fg) {
