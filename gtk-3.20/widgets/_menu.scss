@@ -1,7 +1,4 @@
-@import "entry";
-
-
-
+// Patterns
 @mixin menu_calendar($bg, $fg) {
     color: $fg;
 
@@ -24,42 +21,6 @@
 
     &:indeterminate,
     &:indeterminate:backdrop { color: mix($fg, $bg, 50%); }
-}
-
-
-/*********
- ! Menubar
-**********/
-
-@include exports("menubar") {
-    menubar, .menubar {
-        -GtkWidget-window-dragging: true;
-
-        padding: 0;
-        border: 0;
-        background-color: $menubar_bg_color;
-        background-image: none;
-        //box-shadow: inset 0 -1px shade($menubar_bg_color, .9);
-        color: $menubar_fg_color;
-
-        > menuitem {
-            min-height: 16px;
-            padding: ($spacing - 1px) ($spacing - 1px) * 2;
-            border: 1px solid transparent;
-            background-color: transparent;
-            background-image: none;
-            color: $menubar_fg_color;
-
-            &:hover {
-                border-color: mix($menubar_bg_color, $menubar_fg_color, 21%);
-                background-color: mix($menubar_bg_color, $menubar_fg_color, 21%);
-                background-image: none;
-                color: shade($menubar_fg_color, 1.08);
-            }
-
-            *:hover { color: shade($menubar_fg_color, 1.08); }
-        }
-    }
 }
 
 

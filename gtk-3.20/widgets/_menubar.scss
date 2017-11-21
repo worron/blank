@@ -1,0 +1,35 @@
+//Settings
+$_menubar_item_min_height: 16px;
+
+$_menubar_item_pad_v: 4px;
+$_menubar_item_pad_h: 8px;
+
+// Patterns
+%menubar_base {
+	-GtkWidget-window-dragging: true;
+
+	> menuitem {
+		min-height: $_menubar_item_min_height;
+		padding: $_menubar_item_pad_v $_menubar_item_pad_v;
+	}
+}
+
+@mixin menubar_setup($bg, $fg) {
+	background-color: $bg;
+	color: $fg;
+
+	> menuitem {
+		color: $menubar_fg_color;
+
+		&:hover {
+			background-color: lighten($menubar_bg_color, 10%);;
+			color: lighten($menubar_fg_color, 10%);;
+		}
+	}
+}
+
+// Classes
+menubar, .menubar {
+	@extend %menubar_base;
+	@include menubar_setup($menubar_bg_color, $menubar_bg_color)
+}

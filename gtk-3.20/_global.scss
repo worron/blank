@@ -29,6 +29,9 @@ $toolbar_fg_color: $fg_color;
 $titlebar_bg_color: $bg_color;
 $titlebar_fg_color: $fg_color;
 
+$menubar_bg_color: $tab_bg_color;
+$menubar_fg_color: $tab_fg_color;
+
 $selected_borders_color: if($variant == 'light', darken($selected_bg_color, 30%), darken($selected_bg_color, 20%));
 $borders_color: $base_color;
 $borders_edge: if($variant == 'light', transparentize(white, 0.2), transparentize($fg_color, 0.93));
@@ -75,9 +78,6 @@ $error_color: #f44336;
 
 $menu_bg_color: $dark_bg_color;
 $menu_fg_color: $dark_fg_color;
-
-$menubar_bg_color: $dark_bg_color;
-$menubar_fg_color: $dark_fg_color;
 
 $panel_bg_color: $dark_bg_color;
 $panel_fg_color: $dark_fg_color;
