@@ -12,7 +12,7 @@ $_osd_border_radius: 4px;
 	color: $fg;
 	background-color: $bg;
 
-	scale { @include scale($bg); }
+	scale { @include scale_setup($slider_color, $bg, $bar_bg_color); }
 
 	button:not(.text-button) { @include flat_button($fg); }
 }

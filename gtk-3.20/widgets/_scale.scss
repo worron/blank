@@ -9,56 +9,20 @@ $_slider_margin_v: (($_slider_height - $_trough_width) / 2);
 $_marks_length: 8px;
 $_marks_distance: 2px;
 
-$button_transition: all 200ms cubic-bezier(.25, .46, .45, .94);
+$_button_transition: all 200ms cubic-bezier(.25, .46, .45, .94);
 
 $_scale_pad_v: $progressbar_pad_v;
 $_scale_pad_h: $progressbar_pad_h;
 
 $_scale_value_margin: 4px;
 
-// Classes
-@mixin scale($_slider_bg_color: $bg_color) {
-	$_slider_bg_dis_color: mix($bar_bg_color, $_slider_bg_color, 50%);
 
-	trough {
-		background-color: $bar_bg_color;
-		&:disabled { background-color: $_slider_bg_dis_color; }
-
-		menuitem:hover &,
-		row:selected &,
-		infobar & {
-			highlight {
-				background-color: lighten($selected_fg_color, 10%);
-			}
-		}
-	}
-
-	// The colored part of trough
-	highlight {
-		background-color: $selected_bg_color;
-		&:disabled { background-color: $_slider_bg_dis_color; }
-	}
-
-	// this is another differently styled part of the trough, the most relevant use case is for example
-	// in media player to indicate how much video stream as been cached
-	fill {
-		background-color: transparentize($selected_bg_color, .5);
-		&:disabled { background-color: transparent; }
-	}
-
+// Patterns
+%scale_base {
 	slider {
 		border-style: solid;
-		border-color: $_slider_bg_color;
-		background-color: $slider_color;
-
-		transition: $button_transition;
+		transition: $_button_transition;
 		transition-property: background;
-
-		&:hover { background-color: lighten($slider_color, 10%); }
-
-		&:disabled {
-			background-color: $_slider_bg_dis_color;
-		}
 	}
 
 	&.horizontal {
@@ -112,14 +76,53 @@ $_scale_value_margin: 4px;
 		}
 	}
 
-	&.color {
-		slider {
-			border-style: none;
+	&.color { slider { border-style: none; } }
+}
+
+@mixin scale_setup($_slider_color, $_slider_bg_color, $_slider_trough_color, $_highlight_color: $selected_bg_color) {
+	$_slider_trough_dis_color: mix($_slider_trough_color, $_slider_bg_color, 50%);
+
+	trough {
+		background-color: $_slider_trough_color;
+		&:disabled { background-color: $_slider_trough_dis_color; }
+
+		// menuitem:hover &,
+		// row:selected &,
+		// infobar & {
+		// 	highlight {
+		// 		background-color: lighten($selected_fg_color, 10%);
+		// 	}
+		// }
+	}
+
+	// The colored part of trough
+	highlight {
+		background-color: $_highlight_color;
+		&:disabled { background-color: $_slider_trough_dis_color; }
+	}
+
+	// this is another differently styled part of the trough, the most relevant use case is for example
+	// in media player to indicate how much video stream as been cached
+	fill {
+		background-color: transparentize($_highlight_color, .5);
+		&:disabled { background-color: transparent; }
+	}
+
+	slider {
+		border-color: $_slider_bg_color;
+		background-color: $_slider_color;
+
+		&:hover { background-color: lighten($_slider_color, 10%); }
+
+		&:disabled {
+			background-color: $_slider_trough_dis_color;
 		}
 	}
 }
 
-// Scale
+
+// Classes
 scale {
-	@include scale();
+	@extend %scale_base;
+	@include scale_setup($slider_color, $bg_color, $bar_bg_color);
 }
