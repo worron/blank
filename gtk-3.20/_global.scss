@@ -82,13 +82,16 @@ $menubar_fg_color: $dark_fg_color;
 $panel_bg_color: $dark_bg_color;
 $panel_fg_color: $dark_fg_color;
 
-$osd_base: $dark_bg_color;
-$osd_text_color: $white;
-$osd_fg: $dark_fg_color;
-$osd_bg: alpha($osd_base, .8);
-$osd_insensitive_bg_color: mix($osd_fg, $osd_bg, 50%);
-$osd_insensitive_fg_color: mix($osd_fg, $osd_base, 60%);
-$osd_borders_color: shade($osd_bg, .85);
+// $osd_base: $dark_bg_color;
+// $osd_text_color: $white;
+// $osd_fg: $dark_fg_color;
+// $osd_bg: alpha($osd_base, .8);
+$osd_fg_color: $fg_color;
+$osd_bg_color: mix($selected_bg_color, $bg_color, 20%);
+
+// $osd_insensitive_bg_color: mix($osd_fg, $osd_bg, 50%);
+// $osd_insensitive_fg_color: mix($osd_fg, $osd_base, 60%);
+// $osd_borders_color: shade($osd_bg, .85);
 
 /* $lightdm_bg_color: $dark_bg_color; */
 /* $lightdm_fg_color: $dark_fg_color; */
@@ -122,9 +125,9 @@ $backdrop_borders_color: mix($bg_color, $borders_color, 90%);
 $backdrop_dark_fill: mix($backdrop_bg_color, $backdrop_borders_color, 35%);
 $backdrop_sidebar_bg_color: mix($backdrop_bg_color, $backdrop_base_color, 50%);
 
-$backdrop_osd_base: $osd_base;
-$backdrop_osd_bg: $osd_bg;
-$backdrop_osd_fg: mix($osd_fg, $backdrop_osd_base, 50%);
+// $backdrop_osd_base: $osd_base;
+// $backdrop_osd_bg: $osd_bg;
+// $backdrop_osd_fg: mix($osd_fg, $backdrop_osd_base, 50%);
 
 $backdrop_scrollbar_bg_color: darken($backdrop_bg_color, 3%);
 $backdrop_scrollbar_slider_color: mix($backdrop_fg_color, $backdrop_bg_color, 40%);

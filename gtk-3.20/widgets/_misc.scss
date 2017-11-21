@@ -74,16 +74,16 @@
 @include exports("notifications") {
     frame.app-notification {
         border-style: solid;
-        border-color: border_normal($osd_bg);
+        border-color: border_normal($osd_bg_color);
         border-width: 0 1px 1px;
         border-radius: 0 0 $roundness $roundness;
         padding: $spacing * 2;
-        background-color: $osd_bg;
+        background-color: $osd_bg_color;
         background-image: none;
-        color: $osd_fg;
+        color: $osd_fg_color;
 
         button {
-            @include button($osd_bg, $osd_fg);
+            @include button($osd_bg_color, $osd_fg_color);
         }
 
         border {
@@ -183,7 +183,7 @@
         border-radius: $roundness;
         background-clip: border-box;
 
-        &.osd.background { background-color: $osd_bg; }
+        &.osd.background { background-color: $osd_bg_color; }
 
         .toolbar { background-color: transparent; }
     }
