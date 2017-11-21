@@ -14,6 +14,7 @@ $button_transition: all 200ms cubic-bezier(.25, .46, .45, .94);
 $_scale_pad_v: $progressbar_pad_v;
 $_scale_pad_h: $progressbar_pad_h;
 
+$_scale_value_margin: 4px;
 
 // Classes
 @mixin scale($_slider_bg_color: $bg_color) {
@@ -75,6 +76,8 @@ $_scale_pad_h: $progressbar_pad_h;
 			min-height: $_marks_length;
 			min-width: 1px;
 		}
+
+		value { margin-left: $_scale_value_margin; }
 	}
 
 	&.vertical {
@@ -92,6 +95,8 @@ $_scale_pad_h: $progressbar_pad_h;
 			min-height: 1px;
 			min-width: $_marks_length;
 		}
+
+		value { margin-bottom: $_scale_value_margin; }
 	}
 
 	marks {
