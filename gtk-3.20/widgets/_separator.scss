@@ -1,0 +1,31 @@
+// Patterns
+%separator_base {
+	border-style: solid;
+	min-width: 1px;
+	min-height: 1px;
+
+	&.horizontal,
+	.toolbar.vertical > & {
+		border-width: 0 0 1px 0;
+	}
+
+	&.vertical,
+	.toolbar.horizontal > & {
+		border-width: 0 1px 0 0;
+	}
+}
+
+@mixin separator_setup($sep_color, $slp: 5%, $sdp: 5%) {
+	$s_light_color: lighten($sep_color, $slp);
+	$s_dark_color: darken($sep_color, $sdp);
+
+	background-color: $s_dark_color;
+	border-color: $s_light_color;
+}
+
+
+// Classes
+separator {
+	@extend %separator_base;
+	@include separator_setup($bg_color)
+}

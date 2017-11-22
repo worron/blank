@@ -1,15 +1,3 @@
-/***************
-! Dimmed label *
-****************/
-
-@include exports("dimlabel") {
-    .dim-label {
-        opacity: .5;
-        text-shadow: none;
-    }
-}
-
-
 /***********
  ! Tooltip *
 ************/

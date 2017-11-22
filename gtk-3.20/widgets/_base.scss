@@ -61,6 +61,11 @@ image, label, box, grid {
 	&, &:disabled { background-color: transparent; }
 }
 
+.dim-label {
+	opacity: .5;
+	text-shadow: none;
+}
+
 label {
 	&.separator {
 		@extend .dim-label;

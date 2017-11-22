@@ -290,13 +290,13 @@
  ! Separator
 ************/
 
-@include exports("separator") {
-    separator { // vbox and hbox separators
-        background: transparentize($black, .9);
-        min-width: 1px;
-        min-height: 1px;
-    }
-}
+// @include exports("separator") {
+//     separator { // vbox and hbox separators
+//         background: transparentize($black, .9);
+//         min-width: 1px;
+//         min-height: 1px;
+//     }
+// }
 
 
 /**********

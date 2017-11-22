@@ -135,8 +135,9 @@ $_spin_pad_h: 6px;
 	.linked > & { @include linked_object(darken($bg, 10%)); }
 	.linked.vertical > & { @include linked_vertical_object(darken($bg, 10%)); }
 
-	&.separator, .separator {
+	separator {
 		color: transparent;
+		background-color: transparent;
 		background-image: none;
 		border: none;
 	}
