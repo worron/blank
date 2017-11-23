@@ -1,313 +1,94 @@
-// Patterns
-@mixin menu_calendar($bg, $fg) {
-    color: $fg;
+// Settings
+$_menu_pad_v: 2px;
+$_menu_pad_h: 2px;
 
-    &.header {
-        border-bottom: 1px solid shade($bg, ($contrast + .1));
-        border-radius: 0;
+$_sep_margin_v: 3px;
+$_sep_margin_h: 12px;
 
-        &:backdrop { border-color: shade($bg, ($contrast + .1)); }
-    }
+$_menuitem_pad_v: 4px;
+$_menuitem_pad_h: 6px;
 
-    &.button {
-        @extend %undecorated_button;
-        color: alpha($fg, .55);
+$_menuitem_height: 14px;
+$_menuitem_width: 40px;
 
-        &:hover {
-            @extend %undecorated_button;
-            color: $fg;
-        }
-    }
+$_menu_check_size: 16px;
+$_menu_arrow_size: 16px;
+$_menu_check_margin: 8px;
+$_menu_arrow_margin: 10px;
+$_menu_overflow_arrow_pad: 6px 0;
 
-    &:indeterminate,
-    &:indeterminate:backdrop { color: mix($fg, $bg, 50%); }
+// Classes
+menuitem {
+	accelerator {
+		color: alpha($menu_fg_color, .6);
+		&:hover { color: alpha($selected_fg_color, .6); }
+	}
+
+	check, radio {
+		min-height: $_menu_check_size;
+		min-width: $_menu_check_size;
+
+		&:dir(ltr) { margin-right: $_menu_check_margin; }
+		&:dir(rtl) { margin-left: $_menu_check_margin; }
+	}
 }
 
+menu,
+.menu,
+.context-menu {
+	padding: $_menu_pad_v $_menu_pad_h;
+	background-color: $menu_bg_color;
+	color: $menu_fg_color;
 
-/******
- ! Menu
-*******/
+	separator {
+		margin: $_sep_margin_v $_sep_margin_h;
+		@include separator_setup($menu_bg_color, 8%, 5%)
+	}
 
-@include exports("menu") {
-    menu,
-    .menu,
-    .context-menu {
-        border: 0;
-        border-radius: 0;
-        padding: 0;
-        background-color: $menu_bg_color;
-        color: $menu_fg_color;
+	menuitem {
+		min-height: $_menuitem_height;
+		min-width: $_menuitem_width;
+		padding: $_menuitem_pad_v $_menuitem_pad_h;
 
-        .csd & { border: 0; }  // axes borders in a composited env
+		&:active, &:hover { @extend %selected; }
 
-        &:selected { background-color: $selected_bg_color; }
+		*:active, *:hover { color: $selected_fg_color; }
+		&:disabled, *:disabled { color: mix($menu_fg_color, $menu_bg_color, 50%); }
 
-        // A little hack to get some extra space above/below menuitem separators
-        separator,
-        .csd & separator {
-            background-color: shade($menu_bg_color, ($contrast + .1));
-            margin: 1px 0;
-        }
+		// submenu indicators
+		arrow {
+			min-height: $_menu_arrow_size;
+			min-width: $_menu_arrow_size;
 
-        // Firefox workaround
-        .separator,
-        .csd & .separator { color: shade($menu_bg_color, ($contrast + .1)); }
+			&:dir(ltr) {
+				-gtk-icon-source: -gtk-icontheme('pan-end-symbolic');
+				margin-left: $_menu_arrow_margin;
+			}
 
-        menuitem {
-            min-height: 14px;
-            min-width: 40px;
-            padding: $spacing - 1px;
-            border-radius: 0;
+			&:dir(rtl) {
+				-gtk-icon-source:-gtk-icontheme('pan-end-symbolic-rtl');
+				margin-right: $_menu_arrow_margin;
+			}
+		}
 
-            &:active, &:hover {
-                border: 0;
-                background-color: $selected_bg_color;
-                background-image: none;
-                color: $selected_fg_color;
-            }
+		calendar { @include calendar_setup($menu_bg_color, $menu_fg_color); }
 
-            *:active, *:hover { color: $selected_fg_color; }
+		// avoids labels color being overridden, see
+		// https://bugzilla.gnome.org/show_bug.cgi?id=767058
+		label { &:dir(rtl), &:dir(ltr) { color: inherit; } }
+	}
 
-            &:disabled, *:disabled { color: mix($menu_fg_color, $menu_bg_color, 50%); }
+	// overflow arrows
+	> arrow {
+		min-height: $_menu_arrow_size;
+		min-width: $_menu_arrow_size;
+		padding: $_menu_overflow_arrow_pad;
 
-            // submenu indicators
-            arrow {
-                min-height: 14px;
-                min-width: 14px;
+		&.top { -gtk-icon-source: -gtk-icontheme('pan-up-symbolic'); }
 
-                &:dir(ltr) {
-                    -gtk-icon-source: -gtk-icontheme('pan-end-symbolic');
-                    margin-left: 10px;
-                }
+		&.bottom { -gtk-icon-source: -gtk-icontheme('pan-down-symbolic'); }
 
-                &:dir(rtl) {
-                    -gtk-icon-source:-gtk-icontheme('pan-end-symbolic-rtl');
-                    margin-right: 10px;
-                }
-            }
-
-            &.button, &.button.flat {
-                &, &:focus, &:active, &:disabled, &:active:disabled {
-                    background-color: transparent;
-                    background-image: none;
-                    border: 0;
-                    box-shadow: none;
-                    color: currentColor;
-                }
-
-                &:hover, &:focus:hover, &:active:hover, &:selected {
-                    background-image: none;
-                    background-color: $selected_bg_color;
-                    color: $selected_fg_color;
-                }
-            }
-
-            calendar { @include menu_calendar($menu_bg_color, $menu_fg_color); }
-
-            // avoids labels color being overridden, see
-            // https://bugzilla.gnome.org/show_bug.cgi?id=767058
-            label { &:dir(rtl), &:dir(ltr) { color: inherit; } }
-        }
-
-        // overflow arrows
-        > arrow {
-            //@include button(undecorated);
-
-            min-height: 14px;
-            min-width: 14px;
-            padding: $spacing;
-            background-color: $menu_bg_color;
-            border-radius: 0;
-
-            &.top {
-                margin-top: -6px;
-                border-bottom: 1px solid mix($fg_color, $base_color, 10%);
-                -gtk-icon-source: -gtk-icontheme('pan-up-symbolic');
-            }
-
-            &.bottom {
-                margin-bottom: -6px;
-                border-top: 1px solid mix($fg_color, $base_color, 10%);
-                -gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
-            }
-
-            &:hover { background-color: mix($fg_color, $base_color, 10%); }
-
-            &:backdrop { background-color: $backdrop_menu_color; }
-
-            &:disabled {
-                color: transparent;
-                background-color: transparent;
-                border-color: transparent;
-            }
-        }
-    }
-
-    .context-menu { font: initial; } // Decouple the font of context menus from their entry/textview
-
-    .monospace { font-family: monospace; }
-
-    menuitem {
-        accelerator {
-            color: alpha($menu_fg_color, .6);
-
-            &:hover { color: alpha($selected_fg_color, .8); }
-
-            &:disabled { color: alpha(mix($menu_fg_color, $menu_bg_color, 50%), 0.4); }
-        }
-
-        check, radio {
-            min-height: 14px;
-            min-width: 14px;
-
-            &:dir(ltr) { margin-right: 7px; }
-            &:dir(rtl) { margin-left: 7px; }
-        }
-
-        window decoration {
-            box-shadow: 0 2px 3px alpha($black, .2);
-        }
-
-        entry { @include entry($menu_bg_color, $menu_fg_color); }
-    }
+		&:hover { background-color: mix($menu_fg_color, $menu_bg_color, 10%); }
+	}
 }
 
-
-/*********
- ! Popover
-**********/
-
-@include exports("popover") {
-    popover.background {
-        padding: $spacing - 3px;
-        border-radius: $roundness;
-        background-clip: border-box;
-        background-color: $menu_bg_color;
-        background-image: none;
-        color: $menu_fg_color;
-        box-shadow: 0 3px 6px alpha($black, .16);
-
-        .csd &, & {
-            @include border($menu_bg_color);
-            border-width: 1px;
-            border-style: solid;
-        }
-
-        &:backdrop { box-shadow: none; }
-
-        treeview.view {
-            &:hover, &:selected, &:selected:focus, &:backdrop:selected, &:backdrop:selected:focus { border-top-color: $selected_bg_color; }
-
-            &, &:backdrop { border-top-color: shade($menu_bg_color, ($contrast + .4)); }
-        }
-
-        view, .view, list {
-            &:hover {
-                background-image: none;
-                background-color: $selected_bg_color;
-                color: $selected_fg_color;
-            }
-
-            &, &:backdrop {
-                background-color: shade($menu_bg_color, ($contrast + .5));
-                background-image: none;
-                color: $menu_fg_color;
-                border-color: border_normal($menu_bg_color);
-            }
-        }
-
-        list row {
-            &, & .button {
-                background-color: transparent;
-                background-image: none;
-                color: $menu_fg_color;
-
-                &:focus, &:hover, &:active {
-                    background-image: none;
-                    background-color: $selected_bg_color;
-                    color: $selected_fg_color;
-                }
-            }
-        }
-
-        .frame {
-            border-color: border_normal($menu_bg_color);
-            border-radius: $roundness;
-        }
-
-        entry { @include entry($menu_bg_color, $menu_fg_color); }
-
-        button { @include button($menu_bg_color, $menu_fg_color); }
-
-        calendar { @include menu_calendar($menu_bg_color, $menu_fg_color); }
-
-        > list, > .view, > toolbar {
-            border-style: none;
-            background-color: transparent;
-        }
-    }
-
-    //gnome-calendar-fix
-    popover.events {
-        grid.vertical {
-            &, & list, & list row, & list box {
-                margin: 0; 
-                border-radius: 0;
-                background-color: $menu_bg_color; 
-            }
-        }
-
-        grid.vertical box.vertical {
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-        }
-    }
-
-    popover {
-        list.calendar-list row { padding: 0px; }
-
-        datechooser {
-            & grid.vertical navigator button {
-                min-height: 20px;
-                min-width: 20px;
-                margin: 5px;
-            }
- 
-            & grid.horizontal day.day {
-                min-height: 24px;
-                min-width: 24px;
-            }
-        }
-    }
-
-    modelbutton.flat,
-    menuitem.button.flat {
-        padding: ($spacing - 1px) ($spacing + 1px);
-        outline-color: transparent;
-        transition: none;
-
-        @extend %undecorated_button;
-
-        &:hover {
-            background-color: $selected_bg_color;
-            color: $selected_fg_color;
-        }
-
-        &:active, &:selected { &, arrow { @extend %selected_items; } }
-
-        &:checked { color: $fg_color; }
-
-        arrow {
-            &.left { -gtk-icon-source: -gtk-icontheme("pan-start-symbolic"); }
-
-            &.right { -gtk-icon-source: -gtk-icontheme("pan-end-symbolic"); }
-        }
-
-        // FIXME: temporary workaround
-        check:last-child,
-        radio:last-child { margin-left: 8px; }
-
-        check:first-child,
-        radio:first-child { margin-right: 8px; }
-    }
-}

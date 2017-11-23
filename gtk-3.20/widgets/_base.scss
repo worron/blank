@@ -35,6 +35,8 @@
 	&.csd { background-color: $bg_color; }
 }
 
+.monospace { font-family: monospace; }
+
 .gtkstyle-fallback {
 	background-color: alpha($bg_color, .5);
 	color: $fg_color;

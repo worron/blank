@@ -1,13 +1,10 @@
 // Patterns
 %separator_base {
-	border-style: solid;
 	min-width: 1px;
 	min-height: 1px;
 
-	&.horizontal,
-	.toolbar.vertical > & {
-		border-width: 0 0 1px 0;
-	}
+	border-width: 0 0 1px 0;
+	border-style: solid;
 
 	&.vertical,
 	.toolbar.horizontal > & {

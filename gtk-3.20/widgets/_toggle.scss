@@ -62,14 +62,14 @@ radio.right, check.right {
 }
 
 menuitem {
-	&.check {
+	check {
 		@include menuitem-check(
 			"images/menuitem-checkbox-checked.svg",
 			"images/menuitem-checkbox-checked-insensitive.svg"
 		);
 	}
 
-	&.radio {
+	radio {
 		@include menuitem-check(
 			"images/menuitem-radio-checked.svg",
 			"images/menuitem-radio-checked-insensitive.svg"
