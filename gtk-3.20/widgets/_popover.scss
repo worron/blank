@@ -1,0 +1,32 @@
+// Settings
+$_popup_roundness: 4px;
+$_popup_pad: 2px;
+
+$_popup_menubutton_pad_v: 3px;
+$_popup_menubutton_pad_h: 4px;
+
+// Classes
+popover {
+	padding: $_popup_pad;
+	border-radius: $_popup_roundness;
+	box-shadow: 0 3px 6px alpha(black, .4);
+
+	background-color: $menu_bg_color;
+	color: $menu_fg_color;
+
+	.frame { border-radius: $roundness; }
+
+	// calendar { @include calendar_setup($menu_bg_color, $menu_fg_color); }
+}
+
+
+modelbutton.flat,
+menuitem.button.flat {
+	padding: $_popup_menubutton_pad_v $_popup_menubutton_pad_h;
+	&:hover, &:active, &:selected { &, arrow { @extend %selected_items; } }
+	arrow {
+		&.left { -gtk-icon-source: -gtk-icontheme("pan-start-symbolic"); }
+		&.right { -gtk-icon-source: -gtk-icontheme("pan-end-symbolic"); }
+	}
+}
+
