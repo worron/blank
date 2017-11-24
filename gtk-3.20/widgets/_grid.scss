@@ -1,63 +1,34 @@
-/******************
- ! Grid and flowbox
-*******************/
+// Settings
+$_row_pad: 4px;
 
-@include exports("grid") {
-    list {
-        color: $text_color;
-        background-color: $base_color;
-        border-color: $borders_color;
+$_flowbox_pad_v: 4px;
+$_flowbox_pad_h: 6px;
 
-        &:backdrop {
-            background-color: $backdrop_base_color;
-            border-color: $backdrop_borders_color;
-        }
 
-        row { padding: $spacing; }
-    }
+// Classes
+list {
+	color: $text_color;
+	background-color: $base_color;
+	row { padding: $_row_pad; }
+}
 
-    row {
-        transition: all 150ms cubic-bezier(.25, .46, .45, .94);
+row {
+	transition: all 200ms cubic-bezier(.25, .46, .45, .94);
 
-        &:hover { transition: none; }
+	&.activatable {
+		&:hover:not(:selected) { background-color: transparentize($fg_color, .9); }
+		&:active { box-shadow: inset 0 2px 2px -2px transparentize($black, .8); }
+	}
 
-        &:backdrop { transition: 200ms ease-out; }
+	scale { @include scale_setup($slider_color, $base_color, $bar_bg_color); }
 
-        &.activatable {
-            &.has-open-popup, // this is for indicathing which row generated a popover see https://bugzilla.gnome.org/show_bug.cgi?id=754411
+	// &:selected { @extend %selected_items; }
+}
 
-            &:hover { background-color: if(variant == light, transparentize($fg_color, .9), transparentize($fg_color, .95)); }
-
-            &:active { box-shadow: inset 0 2px 2px -2px transparentize($black, .8); }
-
-            &:backdrop:hover { background-color: transparent; }
-
-            &:selected {
-                &:active { box-shadow: inset 0 2px 3px -1px transparentize($black, .5); }
-
-                &.has-open-popup,
-                &:hover { background-color: mix($selected_bg_color, $fg_color, 10%); }
-
-                &:backdrop { background-color: $selected_bg_color; }
-            }
-        }
-
-        &:selected { @extend %selected_items; }
-    }
-
-    flowbox {
-        rubberband { @extend rubberband; }
-
-        flowboxchild {
-            padding: $spacing;
-            border-radius: $roundness;
-
-            &:selected {
-                @extend %selected_items;
-
-                outline-offset: -2px;
-            }
-        }
-    }
+flowbox {
+	// rubberband { @extend rubberband; }
+	flowboxchild {
+		padding: $_flowbox_pad_v $_flowbox_pad_h;
+	}
 }
 
