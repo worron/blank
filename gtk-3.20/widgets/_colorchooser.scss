@@ -1,0 +1,27 @@
+// Settings
+$_colorbutton_pad: 6px;
+
+
+// Classes
+colorswatch {
+
+	overlay {
+		&, &:selected { background-color: transparent; }
+	}
+
+	&.dark overlay { color: alpha(white, .8); }
+	&.light overlay { color: alpha(black, .8); }
+
+	&:drop(active) overlay { border: 1px solid $drop_target_color; }
+
+	&#add-color-button {
+		overlay {
+			color: $fg_color;
+			&:hover { background-color: alpha(white, .1); }
+		}
+	}
+}
+
+button.color {
+	padding: $_colorbutton_pad;
+}
