@@ -1,5 +1,12 @@
+// Settings
+$actionbar_pad_v: 4px;
+$actionbar_pad_h: 8px;
+
+
 // Action bar
 actionbar > revealer > box {
+	padding: $actionbar_pad_v $actionbar_pad_h;
+
 	@extend %toolbar;
 	border-top: 1px solid $borders_color;
 }
