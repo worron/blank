@@ -6,6 +6,8 @@ $_view_sep_color: $bg_color;
 iconview {
 	color: $text_color;
 	background-color: $base_color;
+
+	*:selected { &:focus, & { @extend %selected_items; } }
 }
 
 textview text {
