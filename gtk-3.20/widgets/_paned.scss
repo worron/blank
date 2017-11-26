@@ -1,0 +1,15 @@
+// Settings
+$_paned_sep_size: 4px;
+
+// Classses (Need separator fix)
+paned {
+	> separator {
+		min-width: $_paned_sep_size;
+		min-height: $_paned_sep_size;
+
+		-gtk-icon-source: none; // defeats the ugly default handle decoration
+		border-style: none; // just to be sure
+		background-color: transparent;
+		background-color: $bg_color;
+	}
+}
