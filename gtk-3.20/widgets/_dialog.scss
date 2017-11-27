@@ -1,0 +1,22 @@
+// Settings
+
+// Classes
+messagedialog, .message-dialog, .prompt {
+	-GtkDialog-content-area-border: 0;
+	-GtkDialog-action-area-border: 0;
+	// -GtkDialog-button-spacing: $spacing;
+
+	margin: 0;
+	padding: 0;
+}
+
+printdialog {
+	paper {
+		color: $fg_color;
+		border: 1px solid $borders_color;
+		background: $white;
+		padding: 0;
+	}
+
+	// .dialog-action-box { margin: $spacing * 2; }
+}
