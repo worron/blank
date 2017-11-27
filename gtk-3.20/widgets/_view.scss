@@ -37,7 +37,7 @@ treeview.view {
 	&.expander {
 		-gtk-icon-source: -gtk-icontheme('pan-end-symbolic');
 
-		&:hover { color: lighten($fg_color, 20%); }
+		&:hover { color: lighten($fg_color, 10%); }
 		&:selected { color: $selected_fg_color; }
 		&:checked { -gtk-icon-source: -gtk-icontheme('pan-down-symbolic'); }
 	}

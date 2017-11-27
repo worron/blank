@@ -1,0 +1,19 @@
+// Settings
+$_expander_size: 16px;
+$_expander_pad: 4px;
+
+// Classes
+expander {
+	arrow {
+		min-width: $_expander_size;
+		min-height: $_expander_size;
+		padding: $_expander_pad;
+
+		-gtk-icon-source: -gtk-icontheme('pan-end-symbolic');
+		&:dir(rtl) { -gtk-icon-source: -gtk-icontheme('pan-end-symbolic-rtl'); }
+
+		&:hover { color: lighten($fg_color, 10%); }
+		&:selected { color: $selected_fg_color; }
+		&:checked { -gtk-icon-source: -gtk-icontheme('pan-down-symbolic'); }
+	}
+}
