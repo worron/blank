@@ -1,0 +1,15 @@
+//Settings
+$_notification_roundness: 4px;
+$_notification_pad_v: 4px;
+$_notification_pad_h: 8px;
+
+// Classes
+frame.app-notification {
+	border-radius: 0 0 $_notification_roundness $_notification_roundness;
+	padding: $_notification_pad_v $_notification_pad_h;
+
+	background-color: $osd_bg_color;
+	color: $osd_fg_color;
+
+	border { border: 0; }
+}
