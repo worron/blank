@@ -42,6 +42,17 @@ treeview.view {
 		&:checked { -gtk-icon-source: -gtk-icontheme('pan-down-symbolic'); }
 	}
 
+	&.progressbar {
+		background-color: $selected_bg_color;
+		&:selected {
+			background-color: lighten($selected_bg_color, 10%);
+		}
+	}
+
+	&.trough, &.trough:selected  {
+		background-color: $bar_bg_color;
+	}
+
 	header {
 		button {
 			font-weight: bold;
