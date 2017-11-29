@@ -18,8 +18,8 @@ searchbar,
 
 // Action buttons
 $types: (
-	suggested: $success_color,
-	destructive: $error-color
+	suggested: $info_bg_color,
+	destructive: $error_bg_color
 );
 
 @each $type, $color in $types {

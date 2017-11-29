@@ -28,9 +28,9 @@ $_linked_entry_gap: 2px;
 
 	// entry error and warning style
 	@each $e_type, $e_color, $e_fg_color in
-		(warning, $warning_bg_color, $warning_fg_color),
-		(error, $error_bg_color, $error_fg_color),
-		(search-missing, $error_bg_color, $error_fg_color)
+		(warning, $warning_bg_color, $fg_color),
+		(error, $error_bg_color, $fg_color),
+		(search-missing, $error_bg_color, $fg_color)
 	{
 		&.#{$e_type} {
 			color: $e_fg_color;

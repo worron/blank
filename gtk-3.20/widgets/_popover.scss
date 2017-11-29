@@ -14,7 +14,7 @@ popover {
 	background-color: $menu_bg_color;
 	color: $menu_fg_color;
 
-	.frame { border-radius: $roundness; }
+	.frame { border-radius: $_popup_roundness; }
 
 	// calendar { @include calendar_setup($menu_bg_color, $menu_fg_color); }
 }

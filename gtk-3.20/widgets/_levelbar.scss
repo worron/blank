@@ -35,12 +35,12 @@ levelbar {
 
 	block {
 		&.low {
-			background-color: $warning_color;
+			background-color: $warning_bg_color;
 		}
 
 		&.high,
 		&:not(.empty) {
-			background-color: $success_color;
+			background-color: $info_bg_color;
 		}
 
 		&.full {
