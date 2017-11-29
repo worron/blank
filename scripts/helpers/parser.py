@@ -1,40 +1,24 @@
 # -*- Mode: Python; indent-tabs-mode: t; python-indent: 4; tab-width: 4 -*-
-import os
 import subprocess
 
+from lxml import etree
 from .common import get_file_list, rewrite_file
 
-
-def make_pattern_from_image(dir_, image_colors):
-	"""Build pattern from svg image"""
-	file_list = get_file_list(dir_)
-
-	for file_ in file_list:
-		with open(file_, 'r+') as image_file:
-			text = image_file.read()
-
-		for key, value in image_colors.items():
-			text = text.replace(value, "@" + key)
-			text = text.replace(value.lower(), "@" + key)
-
-		with open(file_[:-3] + "pat", 'w') as pattern_file:  # FIX THIS
-			rewrite_file(pattern_file, text)
+PARSER = etree.XMLParser(remove_blank_text=True)
 
 
-def make_image_from_pattern(source_dir, destination_dir, image_colors):
-	"""Build image from pattern"""
-	for file_ in get_file_list(source_dir, ext=".pat"):
-		filename = os.path.basename(file_)
+def recolor_images(_dir, colors):
+	"""Recolor all svg images in directory"""
+	for file_ in get_file_list(_dir):
+		tree = etree.parse(file_, PARSER)
+		root = tree.getroot()
 
-		with open(file_, 'r') as image_file:
-			text = image_file.read()
+		for child in root:
+			id_ = child.get("id")
+			if id_ in colors.keys():
+				child.set("fill", colors[id_])
 
-		for key, value in image_colors.items():
-			text = text.replace("@" + key, value)
-
-			# noinspection PyTypeChecker
-			with open(os.path.join(destination_dir, filename.split(".")[0] + ".svg"), 'w') as image_file:
-				rewrite_file(image_file, text)
+		tree.write(file_, pretty_print=True)
 
 
 class ThemeParser:
@@ -73,6 +57,6 @@ class ThemeParser:
 			print("Fail to update scss\n", e)
 
 	def rebuild_images(self):
-		"""Build theme svg images from patterns"""
+		"""Rebuild image according current colors"""
 		for image_dir in self.config['Images'].values():
-			make_image_from_pattern(image_dir, image_dir, self.config.colors)
+			recolor_images(image_dir, self.config.colors)

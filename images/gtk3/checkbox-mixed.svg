@@ -1,5 +1,5 @@
-<svg id="svg6" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" id="svg6" viewBox="0 0 16 16">
   <path id="base_color" d="m0 0h16v16h-16z" fill="#161616"/>
   <path id="check_color" d="m0 0v1 15h16v-16zm2 2h12v12h-12z" fill="#404040" overflow="visible"/>
-  <path id="fg_color" d="m4 7h8v2h-8z" fill="#aaa"/>
+  <path id="fg_color" d="m4 7h8v2h-8z" fill="#BBBBBB"/>
 </svg>

@@ -1,5 +1,5 @@
-<svg id="svg6" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" id="svg6" viewBox="0 0 16 16">
   <path id="base_color" d="m0-.00000024h16v16h-16z" fill="#161616"/>
   <path id="check_color" d="m0 0c0 5.3333333 0 10.666667 0 16h16v-16zm2 2h12v12h-12z" fill="#404040" overflow="visible"/>
-  <path id="fg_color" d="m11.900391 4.0976562l-5.1875004 5.2578126-2.6191406-2.6191407-1.6972656 1.6972657 4.3300781 4.3281252 6.8828125-6.9785159z" fill="#aaa" overflow="visible"/>
+  <path id="fg_color" d="m11.900391 4.0976562l-5.1875004 5.2578126-2.6191406-2.6191407-1.6972656 1.6972657 4.3300781 4.3281252 6.8828125-6.9785159z" fill="#BBBBBB" overflow="visible"/>
 </svg>

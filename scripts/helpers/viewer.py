@@ -4,7 +4,7 @@ import tempfile
 
 from gi.repository import Gtk, GdkPixbuf
 from .common import get_file_list
-from .parser import make_pattern_from_image, make_image_from_pattern
+# from .parser import make_pattern_from_image, make_image_from_pattern
 
 
 class IconView:
