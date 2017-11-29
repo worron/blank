@@ -1,1 +1,56 @@
-@import "widgets";
+@import "functions";
+@import "colors";
+@import "colors_public";
+
+
+@import "widgets/base";
+@import "widgets/shared";
+@import "widgets/separator";
+@import "widgets/button";
+@import "widgets/entry";
+@import "widgets/switch";
+@import "widgets/progressbar";
+@import "widgets/levelbar";
+@import "widgets/scale";
+@import "widgets/toolbar";
+@import "widgets/actionbar";
+@import "widgets/notebook";
+@import "widgets/toggle";
+@import "widgets/scrollbar";
+@import "widgets/overshoot";
+@import "widgets/osd";
+@import "widgets/spinner";
+@import "widgets/menubar";
+@import "widgets/calendar";
+@import "widgets/menu";
+@import "widgets/popover";
+@import "widgets/infobar";
+@import "widgets/colorchooser";
+@import "widgets/grid";
+@import "widgets/frame";
+@import "widgets/view";
+@import "widgets/paned";
+@import "widgets/sidebar";
+@import "widgets/tooltip";
+@import "widgets/expander";
+@import "widgets/dialog";
+@import "widgets/notification";
+@import "widgets/stackswitcher";
+@import "widgets/misc";
+@import "widgets/window";
+
+// @import "apps/mate-applications";
+// @import "apps/cinnamon-applications";
+// @import "apps/gnome-applications";
+// @import "apps/unity-greeter";
+// @import "apps/gedit";
+// @import "apps/nautilus";
+// @import "apps/nemo";
+// @import "apps/panel";
+// @import "apps/synaptic";
+// @import "apps/xfce";
+// @import "apps/unity";
+// @import "apps/lightdm";
+// @import "apps/gnome-terminal";
+// @import "apps/budgie";
+
