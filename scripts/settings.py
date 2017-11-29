@@ -23,8 +23,8 @@ class MainWindow:
 
 		gui_elements = (
 			'window', "colors_box", "build_button", "exit_button", "images_iconview", "notebook",
-			"colors_scrolledwindow", "patterns_iconview", "patterns_delete_button", "images_delete_button",
-			"pattern_location_label", "pattern_directory_button", "images_size_spinbutton", "patterns_size_spinbutton"
+			"colors_scrolledwindow", "images_iconview", "images_location_label", "images_directory_button",
+			"images_size_spinbutton",
 		)
 		self.gui = {element: self.builder.get_object(element) for element in gui_elements}
 

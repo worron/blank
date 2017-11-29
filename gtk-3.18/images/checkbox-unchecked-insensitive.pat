@@ -1,1 +1,0 @@
-<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="m .9999999 1v14h14.0000001v-14z" fill="@base_color" stroke="@check_color" stroke-width="2"/></svg>

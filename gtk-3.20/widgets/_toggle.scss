@@ -5,7 +5,6 @@ $_toggle_margin: 8px;
 @mixin plain-check($unchecked, $unchecked-ins, $checked, $checked-ins, $mixed, $mixed-ins) {
 	-gtk-icon-source: url($unchecked);
 
-	&:indeterminate { -gtk-icon-source: url($unchecked-ins); }
 	&:checked {
 		-gtk-icon-source: url($checked);
 		&:disabled { -gtk-icon-source: url($checked-ins); }
@@ -26,7 +25,7 @@ $_toggle_margin: 8px;
 
 	&:indeterminate {
 		-gtk-icon-source: url("images/menuitem-checkbox-mixed.svg");
-		&:hover { -gtk-icon-source: url("images/menuitem-checkbox-mixed-hover.svg"); }
+		// &:hover { -gtk-icon-source: url("images/menuitem-checkbox-mixed-hover.svg"); }
 		&:disabled { -gtk-icon-source: url("images/menuitem-checkbox-mixed-insensitive.svg"); }
 	}
 }
