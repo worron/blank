@@ -82,7 +82,7 @@ class ColorsConfig:
 		"""Full theme rebuild with current colors"""
 		self.parser.write_colors()
 		self.parser.update_scss()
-		self.parser.rebuild_images()
+		# self.parser.rebuild_images()
 
 	def set_color_button_state(self, button_name, hex_color):
 		"""Set button rgba form hex color"""

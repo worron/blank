@@ -1,20 +1,22 @@
 $bg_color: #202020;
-$fg_color: #a0a0a0;
+$fg_color: #BBBBBB;
 $base_color: #161616;
-$text_color: #aaaaaa;
-$selected_bg_color: #b1222b;
-$selected_fg_color: #eeeeee;
+$text_color: #AAAAAA;
+$selected_bg_color: #B1222B;
+$selected_fg_color: #EEEEEE;
 $button_bg_color: #525252;
 $button_fg_color: #CCCCCC;
-$frame_color: #303030;
+$menu_bg_color: #272727;
+$menu_fg_color: #BBBBBB;
+$tab_bg_color: #303030;
+$tab_fg_color: #BBBBBB;
 $bar_bg_color: #303030;
 $slider_color: #525252;
-$tab_bg_color: #303030;
-$tab_fg_color: #bbbbbb;
-$menu_bg_color: #272727;
-$menu_fg_color: #bbbbbb;
+$frame_color: #303030;
+$link_color: #B1222B;
+$check_color: #404040;
+// Color Setup End
 
-// ==========================================================
 $tooltip_bg_color: mix($bg_color, $selected_bg_color, 85%);
 $tooltip_fg_color: $fg_color;
 
@@ -28,9 +30,6 @@ $menubar_bg_color: $tab_bg_color;
 $menubar_fg_color: $tab_fg_color;
 
 $borders_color: $base_color;
-
-$link_color: $selected_bg_color;
-
 
 $tetradic_angle: 45;
 $info_bg_color: $selected_bg_color;
