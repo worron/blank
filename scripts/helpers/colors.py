@@ -1,6 +1,6 @@
 # -*- Mode: Python; indent-tabs-mode: t; python-indent: 4; tab-width: 4 -*-
-from gi.repository import Gtk, Gdk
-from .common import hex_from_rgba
+from gi.repository import Gtk, GdkPixbuf, Gdk
+from .common import hex_from_rgba, pixbuf_from_hex
 from .parser import ThemeParser
 
 
@@ -32,77 +32,84 @@ class ColorsConfig:
 		self.config = config
 		self.gui = gui
 		self.parser = ThemeParser(self.config)
-		self.NO_PARENT = "Select parent"
+		self.NO_PARENT = "None"
+		self.PIXBUF_PATTERN_WIDTH = 128
 
-		# Fill up GUI
-		self.color_buttons = dict()
-		self.parent_buttons = dict()
-		self.pattern_checks = dict()
-		self.button_signals = dict()
-		self.gui["colors_box"].pack_start(Gtk.Separator(), False, False, 0)
+		# build color list store
+		self.colors_store = Gtk.ListStore(str, str, GdkPixbuf.Pixbuf, str)
+		self.gui["colors_treeview"].set_model(self.colors_store)
 
-		# colors list
-		current_patterns = self.config.get_list("Pattern", "colors")
+		# treeview columns
+		columns = (
+			Gtk.TreeViewColumn("Name", Gtk.CellRendererText(), text=0),
+			Gtk.TreeViewColumn("Hex", Gtk.CellRendererText(), text=1),
+			Gtk.TreeViewColumn("Color", Gtk.CellRendererPixbuf().new(), pixbuf=2),
+			Gtk.TreeViewColumn("Parent", Gtk.CellRendererText(), text=3),
+		)
+
+		for column in columns:
+			self.gui["colors_treeview"].append_column(column)
+
+			# column width tweaks
+			if column.get_title() == "Color":
+				column.set_fixed_width(self.PIXBUF_PATTERN_WIDTH + 20)
+			if column.get_title() == "Name":
+				column.set_fixed_width(200)
+
+		# signals
+		self.gui["colors_treeview"].connect("cursor_changed", self.on_color_selected)
+		self.gui["colors_treeview"].connect("row_activated", self._on_row_activated)
+		self.gui["build_button"].connect("clicked", self.rebuild_theme)
+		self.gui["color_button"].connect("color_set", self.on_color_changed)
+		self.gui["parent_button"].connect("clicked", self.on_parent_color_click)
+
+		# GUI setup
+		self.fill_color_list()
+
+	# noinspection PyUnusedLocal
+	def _on_row_activated(self, *args):
+		if self.gui["color_button"].get_sensitive():
+			self.gui["color_button"].emit("clicked")
+
+	def fill_color_list(self, last_position=0):
+		"""Fill up color data"""
+		self.colors_store.clear()
+
 		for key, value in self.config.colors.items():
-			box = Gtk.Box(spacing=8)
-			label = Gtk.Label(key)
+			raw = self.config["Colors"][key]
+			parent = raw if raw in self.config.colors.keys() else self.NO_PARENT
+			pixbuf = pixbuf_from_hex(value, width=self.PIXBUF_PATTERN_WIDTH)
+			self.colors_store.append([key, value, pixbuf, parent])
 
-			# init row elements
-			self.color_buttons[key] = Gtk.ColorButton()
-			self.parent_buttons[key] = Gtk.Button()
-			self.pattern_checks[key] = Gtk.CheckButton()
+		self.gui["colors_treeview"].set_cursor(last_position)
 
-			# set color button
-			self.set_color_button_state(key, value)
-			self.button_signals[key] = self.color_buttons[key].connect("color_set", self.on_color_changed, key)
+	def on_color_selected(self, tree):
+		"""GUI handler"""
+		path = tree.get_cursor()[0]
+		if path is not None:
+			treeiter = self.colors_store.get_iter(path)
+			hex_color = self.colors_store[treeiter][1]
+			parent = self.colors_store[treeiter][3]
 
-			# set pattern check
-			self.pattern_checks[key].set_active(key in current_patterns)
-			self.pattern_checks[key].connect("toggled", self.on_pattern_check_toggled, key)
+			self.gui["color_button"].set_sensitive(parent == self.NO_PARENT)
 
-			# set parent button
-			self.parent_buttons[key].set_property("width-request", 300)
-			self.set_parent_button_state(self.config["Colors"][key], key)
-			self.parent_buttons[key].connect("clicked", self.on_parent_color_click, key)
-
-			# built color settings row
-			box.pack_start(label, False, False, 0)
-			box.pack_end(self.pattern_checks[key], False, False, 0)
-			box.pack_end(self.color_buttons[key], False, False, 0)
-			box.pack_end(self.parent_buttons[key], False, False, 0)
-			self.gui["colors_box"].pack_start(box, False, False, 0)
-			self.gui["colors_box"].pack_start(Gtk.Separator(), False, False, 0)
-
-		# Main page buttons handlers
-		self.main_handlers = dict()
-		self.main_handlers['build_button'] = self.rebuild_theme
+			color = Gdk.RGBA()
+			color.parse(hex_color)
+			self.gui["color_button"].set_rgba(color)
 
 	# noinspection PyUnusedLocal
 	def rebuild_theme(self, widget):
 		"""Full theme rebuild with current colors"""
-		# self.parser.write_colors()
-		# self.parser.update_scss()
+		self.parser.write_colors()
+		self.parser.update_scss()
 		self.parser.rebuild_images()
 
-	def set_color_button_state(self, button_name, hex_color):
-		"""Set button rgba form hex color"""
-		color = Gdk.RGBA()
-		color.parse(hex_color)
-		self.color_buttons[button_name].set_rgba(color)
-
-	def set_parent_button_state(self, parent_color, name):
-		"""Set parent button label"""
-		is_inherited = parent_color in self.config.colors.keys()
-		self.color_buttons[name].set_sensitive(not is_inherited)
-		self.parent_buttons[name].set_label("Parent: " + parent_color if is_inherited else self.NO_PARENT)
-
 	# noinspection PyUnusedLocal
-	def on_pattern_check_toggled(self, button, name):
-		current_patterns = [key for key in self.pattern_checks if self.pattern_checks[key].get_active()]
-		self.config.set_list("Pattern", "colors", current_patterns)
+	def on_parent_color_click(self, button):
+		path = self.gui["colors_treeview"].get_cursor()[0]
+		treeiter = self.colors_store.get_iter(path)
+		name = self.colors_store[treeiter][0]
 
-	# noinspection PyUnusedLocal
-	def on_parent_color_click(self, button, name):
 		# build list of parent color candidates
 		ccd = self.config["Colors"]
 		parent_colors = [k for k in ccd.keys() if ccd[k] not in ccd.keys() and k != name]
@@ -112,27 +119,27 @@ class ColorsConfig:
 		response = dialog.run()
 
 		if response == Gtk.ResponseType.OK:
-			# set parent button state
 			selected = dialog.combo.get_active_text()
-			self.set_parent_button_state(selected, name)
 
 			# write config
 			if selected in self.config.colors.keys():
 				ccd[name] = selected
-				with self.color_buttons[name].handler_block(self.button_signals[name]):
-					self.set_color_button_state(name, ccd[selected])
 			else:
-				ccd[name] = hex_from_rgba(self.color_buttons[name].get_rgba())
+				ccd[name] = hex_from_rgba(self.gui["color_button"].get_rgba())
 
+			# reload colors
 			self.config.load_colors()
+			self.fill_color_list(last_position=path)
 
 		dialog.destroy()
 
-	def on_color_changed(self, button, name):
+	def on_color_changed(self, button):
+		path = self.gui["colors_treeview"].get_cursor()[0]
+		treeiter = self.colors_store.get_iter(path)
+		name = self.colors_store[treeiter][0]
+
 		hex_color = hex_from_rgba(button.get_rgba())
+
 		self.config["Colors"][name] = hex_color
-		for color_name in self.config.colors.keys():
-			if self.config["Colors"][color_name] == name:
-				with self.color_buttons[color_name].handler_block(self.button_signals[color_name]):
-					self.set_color_button_state(color_name, hex_color)
 		self.config.load_colors()
+		self.fill_color_list(last_position=path)

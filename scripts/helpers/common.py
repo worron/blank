@@ -1,5 +1,6 @@
 # -*- Mode: Python; indent-tabs-mode: t; python-indent: 4; tab-width: 4 -*-
 import os
+from gi.repository import GdkPixbuf
 
 
 def get_file_list(path, ext='.svg', deep=False):
@@ -13,6 +14,13 @@ def get_file_list(path, ext='.svg', deep=False):
 		if not deep:
 			break
 	return file_list
+
+
+def pixbuf_from_hex(value, width=128, height=16):
+	"""Create GDK pixbuf from color"""
+	pixbuf = GdkPixbuf.Pixbuf.new(GdkPixbuf.Colorspace.RGB, False, 8, width, height)
+	pixbuf.fill(int(value[1:] + "FF", 16))
+	return pixbuf
 
 
 def rewrite_file(file_, text):
