@@ -28,9 +28,11 @@ class ParentColorDialog(Gtk.Dialog):
 
 class ColorsConfig:
 	"""Colors settings helper"""
-	def __init__(self, config, gui):
-		self.config = config
-		self.gui = gui
+	def __init__(self, mainapp):
+		self._mainapp = mainapp
+		self.config = mainapp.config
+		self.gui = mainapp.gui
+
 		self.parser = ThemeParser(self.config)
 		self.NO_PARENT = "None"
 		self.PIXBUF_PATTERN_WIDTH = 128
@@ -103,6 +105,8 @@ class ColorsConfig:
 		self.parser.write_colors()
 		self.parser.update_scss()
 		self.parser.rebuild_images()
+
+		self._mainapp.emit("rebuild", None)  # FIXME: make signal without args
 
 	# noinspection PyUnusedLocal
 	def on_parent_color_click(self, button):

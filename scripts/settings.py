@@ -4,16 +4,22 @@ import os
 
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
+from gi.repository import Gtk, GObject
 
 from helpers.cfreader import ConfigReader
 from helpers.viewer import IconView
 from helpers.colors import ColorsConfig
 
 
-class MainWindow:
+class MainWindow(GObject.GObject):
 	"""Main program"""
+	__gsignals__ = {
+		"rebuild": (GObject.SIGNAL_RUN_FIRST, None, (object,))
+	}
+
 	def __init__(self):
+		super().__init__()
+
 		# Read config
 		self.config = ConfigReader("scripts/settings.ini")
 
@@ -23,50 +29,28 @@ class MainWindow:
 
 		gui_elements = (
 			"window", "stack", "colors_box", "icons_box", "parent_button", "color_button", "images_iconview",
-			"build_button", "colors_treeview",
-			# 'window', "colors_treeview", "build_button", "exit_button", "images_iconview", "notebook",
-			# "colors_scrolledwindow", "images_iconview", "images_location_label", "images_directory_button",
-			# "images_size_spinbutton",
+			"build_button", "colors_treeview", "images_iconview", "images_location_label", "images_directory_button",
+			"images_size_spinbutton",
 		)
 		self.gui = {element: self.builder.get_object(element) for element in gui_elements}
 
 		# Pages
-		# self.visualpage = VisualPage(self._mainapp, self)
 		self.gui["stack"].add_titled(self.gui["colors_box"], "colors", "Colors")
 		self.gui["stack"].add_titled(self.gui["icons_box"], "icons", "Icons")
 
-		# self.pages = [ColorsConfig(self.config, self.gui), IconView(self.config, self.gui)]
-		self.pages = [ColorsConfig(self.config, self.gui)]
-		# self.last_handlers = dict()
+		self.colors_page = ColorsConfig(self)
+		self.icons_page = IconView(self)
 
 		# Connect signals
 		self.signals = dict()
 		self.gui['window'].connect("delete-event", self.on_close_window)
-		# self.gui['exit_button'].connect("clicked", self.on_close_window)
-		# self.gui['notebook'].connect("switch_page", self.on_page_changed)
 
 		# Application init
 		self.gui['window'].show_all()
-		# self.gui['notebook'].emit("switch_page", self.gui['colors_scrolledwindow'], 0)
-
-	# noinspection PyUnusedLocal
-	# def on_page_changed(self, nb, page, index):
-	# 	for button in ['build_button']:
-	# 		if button in self.last_handlers:
-	# 			self.gui[button].disconnect_by_func(self.last_handlers[button])
-	# 		if button in self.pages[index].main_handlers:
-	# 			self.gui[button].connect("clicked", self.pages[index].main_handlers[button])
-	#
-	# 	self.last_handlers = self.pages[index].main_handlers
-	#
-	# 	if hasattr(self.pages[index], 'on_page_switch'):
-	# 		self.pages[index].on_page_switch()
+		self.icons_page.reload_images()
 
 	def on_close_window(self, *args):
-		# for page in self.pages:
-		# 	if hasattr(page, 'on_exit'):
-		# 		page.on_exit()
-
+		self.icons_page.clean_up()
 		self.config.save()
 		Gtk.main_quit(*args)
 
