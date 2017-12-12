@@ -2,16 +2,13 @@
 .sass-cache
 
 # Ignore CSS output
-gtk-3.18/gtk.css
 gtk-3.20/gtk.css
 
 # Ignore python cache
 **/__pycache__
-**/*.pyc
 
 # Ignore IDE settings
 .idea/
 
 # Temporary ignore some parts of referenced theme
-assets/*
 gtk-3.20/apps/*
