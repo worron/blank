@@ -1,0 +1,17 @@
+//Settings
+$_pathbar_button_pad_h: 4px;
+
+//Classes
+.linked.path-bar {
+	button {
+		border-radius: 0;
+		border: 0;
+
+		@include button($tab_bg_color, $tab_fg_color);
+	}
+
+	.slider-button {
+		padding-left: $_pathbar_button_pad_h;
+		padding-right: $_pathbar_button_pad_h;
+	}
+}
