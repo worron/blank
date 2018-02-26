@@ -1,5 +1,6 @@
 // Settings
 $_view_sep_color: $bg_color;
+$_header_button_pad_v: 3px;
 
 // Classes
 .view,
@@ -56,6 +57,9 @@ treeview.view {
 	header {
 		button {
 			font-weight: bold;
+
+			padding-top: $_header_button_pad_v;
+			padding-bottom: $_header_button_pad_v;
 
 			border-style: solid;
 			border-width: 0 1px 0 0;
