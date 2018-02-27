@@ -20,3 +20,6 @@ printdialog {
 
 	// .dialog-action-box { margin: $spacing * 2; }
 }
+
+// disable rounded corners for dialog buttons
+.dialog-action-area.linked button { border-radius: 0; }
