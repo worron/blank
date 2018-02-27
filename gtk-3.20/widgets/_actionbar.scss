@@ -15,15 +15,3 @@ searchbar,
 .location-bar {
 	border-top: 1px solid $borders_color;
 }
-
-// Action buttons
-$types: (
-	suggested: $info_bg_color,
-	destructive: $error_bg_color
-);
-
-@each $type, $color in $types {
-	.#{$type}-action {
-		@include button(mix($button_bg_color, $color, 75%), $selected_fg_color);
-	}
-}

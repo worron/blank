@@ -15,6 +15,10 @@ gtk-color-scheme = "slider_color:#525252"
 gtk-color-scheme = "frame_color:#303030"
 gtk-color-scheme = "link_color:#B1222B"
 gtk-color-scheme = "check_color:#404040"
+gtk-color-scheme = "info_bg_color:#2D961D"
+gtk-color-scheme = "warning_bg_color:#B66123"
+gtk-color-scheme = "question_bg_color:#B66123"
+gtk-color-scheme = "error_bg_color:#1F4777"
 # Color Setup End
 
 # === Default Style ===========================================================

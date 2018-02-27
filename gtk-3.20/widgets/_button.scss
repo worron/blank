@@ -108,7 +108,6 @@ $_spin_pad_h: 6px;
 	$fg: $button_fg_color,
 	$_active_color: darken(mix($button_bg_color, $selected_bg_color, 50%), 10%)
 ) {
-	// $_active_color: darken(mix($bg, $selected_bg_color, 50%), 10%);
 
 	@extend %button;
 	color: $fg;
@@ -209,4 +208,19 @@ combobox {
 	.linked.vertical > &:first-child > box > button.combo { @include linked_vertical_combobox_first($_linked_border_color); }
 	.linked.vertical > &:last-child > box > button.combo { @include linked_vertical_combobox_last(); }
 	.linked.vertical > &:only-child > box > button.combo { @include linked_combobox_only(); }
+}
+
+// Action buttons
+$types: (
+	suggested: $info_bg_color,
+	destructive: $error_bg_color
+);
+
+@each $type, $color in $types {
+	.#{$type}-action {
+		@include button(
+			mix($button_bg_color, $color, 50%), $selected_fg_color,
+			darken(mix($button_bg_color, $color, 50%), 15%)
+		);
+	}
 }
