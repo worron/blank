@@ -1,0 +1,53 @@
+//Settings
+$_nemo_toolbar_pad_top: 2px;
+$_nemo_toolbar_pad_bottom: 6px;
+$_nemo_toolitem_pad_h: 2px;
+
+// Toolbar
+.nemo-window toolbar {
+	// vertical padding
+	padding-top: $_nemo_toolbar_pad_top;
+	padding-bottom: $_nemo_toolbar_pad_bottom;
+
+	// horizontal padding for toolbar items
+	& > * > box { margin: 0 $_nemo_toolitem_pad_h 0 $_nemo_toolitem_pad_h; }
+
+	stack {
+		// path entry enlarges whole stack by height
+		// so try to prevent this
+		entry {
+			padding-top: 0px;
+			padding-bottom: 0px;
+		}
+
+		// tab colors and no rounded corners for pathpar buttons
+		.linked button {
+			@include button($tab_bg_color, $tab_fg_color);
+
+			border: none;
+			border-radius: 0;
+		}
+	}
+}
+
+// Sidebar
+.nemo-window {
+	.nemo-places-sidebar {
+		// use main background color for sidebar
+		&, & .view {
+			background-color:$bg_color;
+			&:selected { background-color: $selected_bg_color; }
+		}
+
+		// disable disk bar
+		.view { -NemoPlacesTreeView-disk-full-bar-width: 0px; }
+	}
+
+	// disable frame around sidebar
+	.sidebar .frame { border: none; }
+}
+
+// Tabs
+
+// reduce tab close button size
+#nemo-tab-close-button image { -gtk-icon-transform: scale(0.6); }

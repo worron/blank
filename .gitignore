@@ -9,6 +9,3 @@ gtk-3.20/gtk.css
 
 # Ignore IDE settings
 .idea/
-
-# Temporary ignore some parts of referenced theme
-gtk-3.20/apps/*
