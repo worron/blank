@@ -30,7 +30,7 @@ class MainWindow(GObject.GObject):
 		gui_elements = (
 			"window", "stack", "colors_box", "icons_box", "parent_button", "color_button", "images_iconview",
 			"build_button", "colors_treeview", "images_iconview", "images_location_label", "images_directory_button",
-			"images_size_spinbutton",
+			"images_size_spinbutton", "save-load-menu-button",
 		)
 		self.gui = {element: self.builder.get_object(element) for element in gui_elements}
 

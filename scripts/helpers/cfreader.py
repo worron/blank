@@ -46,3 +46,19 @@ class ConfigReader(configparser.ConfigParser):
 		"""Save config"""
 		with open(self.configfile, 'w') as configfile:
 			self.write(configfile)
+
+	def save_colors_to_file(self, file_):
+		"""Save colors section to file"""
+		colors_config = configparser.ConfigParser()
+		colors_config.read_dict({"Colors": self["Colors"]})
+
+		with open(file_, 'w') as configfile:
+			colors_config.write(configfile)
+
+	def load_colors_from_file(self, file_):
+		"""Restore colors section from file"""
+		colors_config = configparser.ConfigParser()
+		colors_config.read(file_)
+
+		self["Colors"] = colors_config["Colors"]
+		self.load_colors()

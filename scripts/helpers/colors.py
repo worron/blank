@@ -1,4 +1,6 @@
 # -*- Mode: Python; indent-tabs-mode: t; python-indent: 4; tab-width: 4 -*-
+import os
+
 from gi.repository import Gtk, GdkPixbuf, Gdk
 from .common import hex_from_rgba, pixbuf_from_hex
 from .parser import ThemeParser
@@ -57,6 +59,29 @@ class ColorsConfig:
 				column.set_fixed_width(self.PIXBUF_PATTERN_WIDTH + 20)
 			if column.get_title() == "Name":
 				column.set_fixed_width(200)
+
+		# Save/Load menu setup
+		save_load_menu = Gtk.Menu()
+		for menu_item in (("Save", self.save_colors), ("Load", self.restore_colors)):
+			item = Gtk.MenuItem(menu_item[0])
+			item.connect("activate", menu_item[1])
+			save_load_menu.append(item)
+
+		save_load_menu.show_all()
+		self.gui["save-load-menu-button"].set_popup(save_load_menu)
+
+		# File chooser dialogs
+		self.last_used_dir = os.path.expanduser("~")
+
+		self.save_palette_dialog = Gtk.FileChooserDialog(
+			"Save palette to", self.gui["window"], Gtk.FileChooserAction.SAVE,
+			(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_SAVE, Gtk.ResponseType.OK)
+		)
+
+		self.load_palette_dialog = Gtk.FileChooserDialog(
+			"Save palette to", self.gui["window"], Gtk.FileChooserAction.OPEN,
+			(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OPEN, Gtk.ResponseType.OK)
+		)
 
 		# signals
 		self.gui["colors_treeview"].connect("cursor_changed", self.on_color_selected)
@@ -147,3 +172,28 @@ class ColorsConfig:
 		self.config["Colors"][name] = hex_color
 		self.config.load_colors()
 		self.fill_color_list(last_position=path)
+
+	# noinspection PyUnusedLocal
+	def save_colors(self, *args):
+		"""Save current palette to file"""
+		self.save_palette_dialog.set_current_folder(self.last_used_dir)
+		response = self.save_palette_dialog.run()
+
+		if response == Gtk.ResponseType.OK:
+			self.last_used_dir = self.save_palette_dialog.get_current_folder()
+			self.config.save_colors_to_file(self.save_palette_dialog.get_filename())
+
+		self.save_palette_dialog.hide()
+
+	# noinspection PyUnusedLocal
+	def restore_colors(self, *args):
+		"""Restore palette from file"""
+		self.load_palette_dialog.set_current_folder(self.last_used_dir)
+		response = self.load_palette_dialog.run()
+
+		if response == Gtk.ResponseType.OK:
+			self.last_used_dir = self.load_palette_dialog.get_current_folder()
+			self.config.load_colors_from_file(self.load_palette_dialog.get_filename())
+			self.fill_color_list()
+
+		self.load_palette_dialog.hide()
